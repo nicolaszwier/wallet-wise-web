@@ -5,12 +5,13 @@ import { createContext, useCallback, useEffect, useState } from "react";
 import { localStorageKeys } from "../config/localStorageKeys";
 import { User } from "../models/User";
 import { usersService } from "@/services/usersService";
+import toast from "react-hot-toast";
 
 interface AuthContextValue {
   signedIn: boolean;
   user: User | undefined;
   signin(accessToken: string): void;
-  // signout(): void;
+  signout(): void;
 }
 
 export const AuthContext = createContext({} as AuthContextValue);
@@ -31,25 +32,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signin = useCallback((accessToken: string) => {
     localStorage.setItem(localStorageKeys.ACCESS_TOKEN, accessToken);
-
     setSignedIn(true);
   }, []);
 
-  // const signout = useCallback(() => {
-  //   localStorage.removeItem(localStorageKeys.ACCESS_TOKEN);
-  //   remove();
-
-  //   setSignedIn(false);
-  // }, [remove]);
+  const signout = useCallback(() => {
+    localStorage.removeItem(localStorageKeys.ACCESS_TOKEN);
+    localStorage.removeItem(localStorageKeys.SELECTED_PLANNING);
+    setSignedIn(false);
+  }, []);
 
   useEffect(() => {
     if (isError) {
-      // toast.error('Sua sessão expirou!');
-      console.log('expired')
-      // signout();
+      signout();
+      toast.error('Authentication error. Please signin again.');
     }
-  }, [isError]);
-  // }, [isError, signout]);
+  }, [isError, signout]);
 
   return (
     <AuthContext.Provider
@@ -57,7 +54,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         signedIn: isSuccess && signedIn,
         user: data,
         signin,
-        // signout
+        signout
       }}
     >
 
