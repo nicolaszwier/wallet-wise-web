@@ -2,18 +2,20 @@ import { usePlanning } from "@/app/hooks/usePlanning"
 import { Avatar, AvatarFallback, AvatarImage } from "@/view/components/ui/avatar"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/view/components/ui/card"
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/view/components/ui/sidebar"
+import { useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
 
 export default function SelectPlanning() {
+  const {t} = useTranslation()
   const {plannings,setSelectedPlanning} = usePlanning()
 
   return (
     <div className="flex h-full w-full items-center justify-center px-4">
     <Card className="mx-auto max-w-sm">
       <CardHeader>
-        <CardTitle className="text-2xl">Select planning</CardTitle>
+        <CardTitle className="text-2xl">{t('selectPlanning.title')}</CardTitle>
         <CardDescription>
-          Please select a planning before continue to the application
+          {t('selectPlanning.description')}
         </CardDescription>
       </CardHeader>
       <CardContent>

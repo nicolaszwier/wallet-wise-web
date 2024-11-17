@@ -17,8 +17,10 @@ import {
 } from "@/view/components/ui/sidebar"
 import { ChevronsUpDown } from 'lucide-react';
 import { usePlanning } from '@/app/hooks/usePlanning';
+import { useTranslation } from 'react-i18next';
 
 export function AppLayout() {
+  const { t } = useTranslation()
   const { pathname, key, search } = useLocation()
   const { selectedPlanning } = usePlanning()
 
@@ -57,7 +59,7 @@ export function AppLayout() {
                     <AvatarFallback className="rounded-lg">{user?.name.charAt(0)}</AvatarFallback>
                   </Avatar> */}
                   <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate text-xs">Planning</span>
+                    <span className="truncate text-xs">{t('global.planning')}</span>
                     <span className="truncate font-semibold">{selectedPlanning?.description}</span>
                   </div>
                   <ChevronsUpDown className="ml-auto size-4" />

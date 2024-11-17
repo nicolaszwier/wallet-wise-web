@@ -1,10 +1,23 @@
 {
   "global": {
     "or": "ou",
+    "planning": "Planejamento",
+    "personalFinances": "Finanças pessoais",
+    "currentBalance": "Saldo atual",
+    "expectedBalance": "Saldo esperado",
     "cta": {
       "signin": "Entrar",
       "signup": "Cadastrar",
       "submit": "Cadastrar"
+    },
+    "menu": {
+      "dashboard": "Dashboard",
+      "timeline": "Transações",
+      "monthlyBalances": "Balanços",
+      "support": "Suporte",
+      "feedback": "Feedback",
+      "account": "Minha conta",
+      "logout": "Sair"
     }
   },
   "errors": {
@@ -43,5 +56,9 @@
     "confirmPassword":"Confirme a senha",
     "passwordInfo": "Sua senha deve ter pelo menos 8 caracteres e conter: pelo menos uma letra, um dígito e um caractere especial",
     "alreadyHaveAccount": "Já tem uma conta?"
+  },
+  "selectPlanning": {
+    "title": "Selecione um planejamento",
+    "description": "Por favor selecione um planejamento antes de continuar"
   }
 }

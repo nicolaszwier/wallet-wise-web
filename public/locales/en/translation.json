@@ -1,10 +1,23 @@
 {
   "global": {
     "or": "or",
+    "planning": "Planning",
+    "personalFinances": "Personal finances",
+    "currentBalance": "Current balance",
+    "expectedBalance": "Expected balance",
     "cta": {
       "signin": "Signin",
       "signup": "Signup",
       "submit": "Submit"
+    },
+    "menu": {
+      "dashboard": "Dashboard",
+      "timeline": "Transactions timeline",
+      "monthlyBalances": "Monthly balances",
+      "support": "Support",
+      "feedback": "Feedback",
+      "account": "Account",
+      "logout": "Log out"
     }
   },
   "errors": {
@@ -43,5 +56,9 @@
     "confirmPassword":"Confirm password",
     "passwordInfo": "Your password should be at least 8 characters long and contain: at least one letter, one digit and one especial character",
     "alreadyHaveAccount": "Already have an account?"
+  },
+  "selectPlanning": {
+    "title": "Select planning",
+    "description": "Please select a planning before continue to the application"
   }
 }

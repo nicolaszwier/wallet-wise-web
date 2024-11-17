@@ -6,6 +6,7 @@ import { localStorageKeys } from "../config/localStorageKeys";
 import { User } from "../models/User";
 import { usersService } from "@/services/usersService";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 interface AuthContextValue {
   signedIn: boolean;
@@ -17,6 +18,7 @@ interface AuthContextValue {
 export const AuthContext = createContext({} as AuthContextValue);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const { t } = useTranslation()
   const queryClient = useQueryClient()
   const [signedIn, setSignedIn] = useState<boolean>(() => {
     const storedAccessToken = localStorage.getItem(localStorageKeys.ACCESS_TOKEN);
@@ -46,7 +48,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (isError) {
       signout();
-      toast.error('Authentication error. Please signin again.');
+      toast.error(t('errors.authError'));
     }
   }, [isError, signout]);
 

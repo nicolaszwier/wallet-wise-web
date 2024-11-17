@@ -21,33 +21,34 @@ import {
 import * as React from "react"
 import { Link } from "react-router-dom"
 import { Logo } from "./Logo"
+import { useTranslation } from "react-i18next"
 
 const data = {
   navSecondary: [
     {
-      title: "Support",
+      title: "global.menu.support",
       url: "/support",
       icon: LifeBuoy,
     },
     {
-      title: "Feedback",
+      title: "global.menu.feedback",
       url: "#",
       icon: Send,
     },
   ],
   items: [
     {
-      name: "Dashboard",
+      name: "global.menu.dashboard",
       url: "/",
       icon: LayoutDashboard,
     },
     {
-      name: "Transactions Timeline",
+      name: "global.menu.timeline",
       url: "/timeline",
       icon: CircleDollarSign,
     },
     {
-      name: "Monthly balances",
+      name: "global.menu.monthlyBalances",
       url: "/balances",
       icon: ChartPie,
     },
@@ -55,6 +56,7 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { t } = useTranslation()
   return (
     <Sidebar variant="inset" {...props}>
       <SidebarHeader>
@@ -67,7 +69,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">WalletWise</span>
-                  <span className="truncate text-xs">Personal finances</span>
+                  <span className="truncate text-xs">{t('global.personalFinances')}</span>
                 </div>
               </Link>
             </SidebarMenuButton>
@@ -84,7 +86,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <SidebarMenuButton asChild>
                     <Link to={item.url}>
                       <item.icon />
-                      <span>{item.name}</span>
+                      <span>{t(item.name)}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -100,7 +102,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <SidebarMenuButton asChild size="sm">
                     <Link to={item.url}>
                       <item.icon />
-                      <span>{item.title}</span>
+                      <span>{t(item.title)}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>

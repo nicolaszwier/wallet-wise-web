@@ -26,9 +26,11 @@ import {
   ChevronsUpDown,
   LogOut,
 } from "lucide-react"
+import { useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
 
 export function NavUser() {
+  const { t } = useTranslation()
   const { isMobile } = useSidebar()
   const {user, signout} = useAuth()
 
@@ -75,7 +77,7 @@ export function NavUser() {
               <Link to={'/account'}>
                 <DropdownMenuItem>
                   <BadgeCheck />
-                  Account
+                  {t('global.menu.account')}
                 </DropdownMenuItem>
               </Link>
               
@@ -83,7 +85,7 @@ export function NavUser() {
             <DropdownMenuSeparator />
             <DropdownMenuItem onMouseUp={signout}>
               <LogOut />
-              Log out
+              {t('global.menu.logout')}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
