@@ -12,9 +12,10 @@ import { Link } from "react-router-dom"
 import { useSigninController } from "./useSigninController"
 import { Spinner } from "@/view/components/ui/Spinner"
 // import { Spinner } from "@/view/components/ui/Spinner"
+import { GoogleLogin } from '@react-oauth/google';
 
 export default function Signin() {
-  const {handleSubmit, register, isPending, errors} = useSigninController()
+  const {handleSubmit, register, handleSignInWithGoogleResponse, isPending, errors} = useSigninController()
   return (
     <div className="flex h-screen w-full items-center justify-center px-4">
       <Card className="mx-auto max-w-sm">
@@ -61,6 +62,7 @@ export default function Signin() {
               Login
             </Button>
           
+            <GoogleLogin onSuccess={handleSignInWithGoogleResponse} />
           </form>
           <div className="mt-4 text-center text-sm">
             Don&apos;t have an account?{" "}

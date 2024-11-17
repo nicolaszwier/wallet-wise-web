@@ -11,9 +11,11 @@ import { Label } from "@/view/components/ui/label"
 import { Link } from "react-router-dom"
 import { useSignupController } from "./useSignupController"
 import { Spinner } from "@/view/components/ui/Spinner"
+import { GoogleLogin } from "@react-oauth/google"
 
 export default function Signup() {
   const {handleSubmit, register, isPending, errors} = useSignupController()
+  const { handleSignInWithGoogleResponse } = useSigninController()
 
   return (
     <div className="flex h-screen w-full items-center justify-center px-4">
@@ -80,6 +82,7 @@ export default function Signup() {
             {isPending && <Spinner />}
              Signup
           </Button>
+          <GoogleLogin text="signup_with" onSuccess={handleSignInWithGoogleResponse} />
         </form>
         <div className="mt-4 text-center text-sm">
           Already have an account?{" "}
