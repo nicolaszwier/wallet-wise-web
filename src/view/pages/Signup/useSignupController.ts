@@ -6,30 +6,31 @@ import { authService } from "@/services/authService";
 import { useAuth } from "@/app/hooks/useAuth";
 import { toast } from 'react-hot-toast';
 import { SignupParams } from "@/services/authService/signup";
+import { CredentialResponse } from "@react-oauth/google";
 
 const schema = z.object({
    name: z.string()
-    .min(1, "name is required"),
+    .min(1, 'errors.nameRequired'),
   email: z.string()
-    .min(1, "Email is required")
-    .email('Please inform a valid email'),
+    .min(1, 'errors.emailRequired')
+    .email('errors.emailValid'),
   password: z.string()
-    .min(8, 'Password should be at least 8 characters long')
+    .min(8, 'errors.passwordLength')
     .refine((password) => /[A-Z]/.test(password), {
-      message: 'Password should have at least one uppercase character',
+      message: 'errors.passwordUppercase',
     })
     .refine((password) => /[a-z]/.test(password), {
-      message: 'Password should have at least one lowercase character',
+      message: 'errors.passwordLowercase',
     })
-    .refine((password) => /[0-9]/.test(password), { message: 'Password should have at least one number' })
+    .refine((password) => /[0-9]/.test(password), { message: 'errors.passwordNumber' })
     .refine((password) => /[!@#$%^&*.]/.test(password), {
-      message: 'Password should have at least one special character',
+      message: 'errors.passwordSpecialChar',
     }),
-  passwordConfirmation: z.string().min(8, 'Password confirmation is required')
+  passwordConfirmation: z.string().min(8, 'errors.passwordConfirmation')
 })
 .refine((data) => data.password === data.passwordConfirmation, {
-  message: "Passwords don't match",
-  path: ["passwordConfirmation"],
+  message: 'errors.passwordsDontMatch',
+  path: ['passwordConfirmation'],
 });;
 
 type FormData = z.infer<typeof schema>;

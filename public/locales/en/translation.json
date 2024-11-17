@@ -1,0 +1,47 @@
+{
+  "global": {
+    "or": "or",
+    "cta": {
+      "signin": "Signin",
+      "signup": "Signup",
+      "submit": "Submit"
+    }
+  },
+  "errors": {
+    "nameRequired": "Name is required",
+    "emailRequired": "Email is required",
+    "emailValid": "Please inform a valid email",
+    "passwordRequired": "Password is required",
+    "passwordLength": "Password should be at least 8 characters long",
+    "passwordUppercase": "Password should have at least one uppercase character",
+    "passwordLowercase": "Password should have at least one lowercase character",
+    "passwordNumber": "Password should have at least one number",
+    "passwordSpecialChar": "Password should have at least one special character",
+    "passwordConfirmation": "Password confirmation is required",
+    "passwordsDontMatch": "Passwords don't match",
+    "invalidCredentials": "Invalid credentials",
+    "signinGoogleFailed": "Sign in with Google failed",
+    "authError": "Authentication error! Please signin again!",
+    "fetchPlannings": "Error on fetching plannings."
+  },
+  "signin":{
+    "title": "Login to WalletWise",
+    "description": " Enter your email and password below to login to your account",
+    "email": "Email",
+    "emailPlaceholder": "mail@example.com",
+    "password": "Password",
+    "doesntHaveAccount": "Doesn&apos;t have an account?",
+    "signup": "Signup"
+  },
+  "signup": {
+    "title": "Signup to WalletWise",
+    "description": "Enter the information below to create your account",
+    "name": "Name",
+    "email": "Email",
+    "emailPlaceholder": "mail@example.com",
+    "password": "Password",
+    "confirmPassword":"Confirm password",
+    "passwordInfo": "Your password should be at least 8 characters long and contain: at least one letter, one digit and one especial character",
+    "alreadyHaveAccount": "Already have an account?"
+  }
+}

@@ -11,38 +11,39 @@ import { Label } from "@/view/components/ui/label"
 import { Link } from "react-router-dom"
 import { useSigninController } from "./useSigninController"
 import { Spinner } from "@/view/components/ui/Spinner"
-// import { Spinner } from "@/view/components/ui/Spinner"
 import { GoogleLogin } from '@react-oauth/google';
+import { useTranslation } from 'react-i18next';
 
 export default function Signin() {
+  const {t} = useTranslation()
   const {handleSubmit, register, handleSignInWithGoogleResponse, isPending, errors} = useSigninController()
+
   return (
     <div className="flex h-screen w-full items-center justify-center px-4">
       <Card className="mx-auto max-w-sm">
         <CardHeader>
-          <CardTitle className="text-2xl">Login to WalletWise</CardTitle>
+          <CardTitle className="text-2xl">{t('signin.title')}</CardTitle>
           <CardDescription>
-            Enter your email and password below to login to your account
+            {t('signin.description')}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form className="grid gap-4" onSubmit={handleSubmit}>
             <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t('signin.email')}</Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="mail@example.com"
-                required
+                placeholder={t('signin.emailPlaceholder')}
                 {...register('email')}
               />
               <span className="inline-block text-sm text-destructive">
-                {errors.email?.message}
+                {t(errors.email?.message as string)}
               </span>
             </div>
             <div className="grid gap-2">
               <div className="flex items-center">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">{t('signin.password')}</Label>
                 {/* <a href="#" className="ml-auto inline-block text-sm underline">
                   Forgot your password?
                 </a> */}
@@ -50,23 +51,25 @@ export default function Signin() {
               <Input 
                 id="password" 
                 type="password" 
-                required  
+                placeholder="********"
                 {...register('password')} 
               />
               <span className="inline-block text-sm text-destructive">
-                {errors.password?.message}
+                {t(errors.password?.message as string)}
               </span>
             </div>
             <Button disabled={isPending} type="submit" className="w-full">
               {isPending && <Spinner />}
-              Login
+              {t('global.cta.signin')}
             </Button>
-          
+            <div className=" text-center text-sm text-muted-foreground">
+              {t('global.or')}
+            </div>
             <GoogleLogin onSuccess={handleSignInWithGoogleResponse} />
           </form>
           <div className="mt-4 text-center text-sm">
-            Don&apos;t have an account?{" "}
-            <Link to="/signup" className="underline">Sign up</Link>
+            {t('signin.doesntHaveAccount')}{" "}
+            <Link to="/signup" className="underline">{t('signin.signup')}</Link>
           </div>
         </CardContent>
       </Card>

@@ -12,24 +12,27 @@ import { Link } from "react-router-dom"
 import { useSignupController } from "./useSignupController"
 import { Spinner } from "@/view/components/ui/Spinner"
 import { GoogleLogin } from "@react-oauth/google"
+import { useTranslation } from "react-i18next"
+import { useSigninController } from "../Signin/useSigninController"
 
 export default function Signup() {
-  const {handleSubmit, register, isPending, errors} = useSignupController()
+  const { t } = useTranslation()
+  const { handleSubmit, register, isPending, errors } = useSignupController()
   const { handleSignInWithGoogleResponse } = useSigninController()
 
   return (
     <div className="flex h-screen w-full items-center justify-center px-4">
     <Card className="mx-auto max-w-sm">
       <CardHeader>
-        <CardTitle className="text-2xl">Signup to WalletWise</CardTitle>
+        <CardTitle className="text-2xl">{t('signup.title')}</CardTitle>
         <CardDescription>
-          Enter the information below to create your account
+          {t('signup.description')}
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form className="grid gap-4" onSubmit={handleSubmit}>
           <div className="grid gap-2">
-            <Label htmlFor="name">Name</Label>
+            <Label htmlFor="name">{t('signup.name')}</Label>
             <Input
               id="name"
               type="text"
@@ -37,56 +40,58 @@ export default function Signup() {
               {...register('name')}
             />
              <span className="inline-block text-sm text-destructive">
-              {errors.name?.message}
+             {t(errors.name?.message as string)}
             </span>
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">{t('signup.email')}</Label>
             <Input
               id="email"
               type="email"
-              placeholder="mail@example.com"
-              // required
+              placeholder={t('signup.emailPlaceholder')}
               {...register('email')}
             />
              <span className="inline-block text-sm text-destructive">
-              {errors.email?.message}
+             {t(errors.email?.message as string)}
             </span>
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">{t('signup.password')}</Label>
             <Input 
               id="password" 
               type="password" 
               {...register('password')}
             />
               <span className="inline-block text-sm text-destructive">
-                {errors.password?.message}
+              {t(errors.password?.message as string)}
               </span>
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="passwordC">Confirm Password</Label>
+            <Label htmlFor="passwordC">{t('signup.confirmPassword')}</Label>
             <Input 
               id="passwordC" 
               type="password" 
               {...register('passwordConfirmation')}
             />
             <span className="inline-block text-sm text-destructive">
-            {errors.passwordConfirmation?.message}
+              {t(errors.passwordConfirmation?.message as string)}
             </span>
             <span className="inline-block text-sm text-muted-foreground">
-              Your password should be at least 8 characters long and contain: at least one letter, one digit and one especial character
+              {t('signup.passwordInfo')}
             </span>
           </div>
           <Button disabled={isPending} type="submit" className="w-full">
             {isPending && <Spinner />}
-             Signup
+            {t('global.cta.signup')}
           </Button>
+          <div className=" text-center text-sm text-muted-foreground">
+            {t('global.or')}
+          </div>
           <GoogleLogin text="signup_with" onSuccess={handleSignInWithGoogleResponse} />
         </form>
         <div className="mt-4 text-center text-sm">
-          Already have an account?{" "}
-          <Link to={"/signin"} className="underline">Signin</Link>
+          {t('signup.alreadyHaveAccount')}{" "}
+          <Link to={"/signin"} className="underline">{t('global.cta.signin')}</Link>
         </div>
       </CardContent>
     </Card>

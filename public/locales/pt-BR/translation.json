@@ -1,0 +1,47 @@
+{
+  "global": {
+    "or": "ou",
+    "cta": {
+      "signin": "Entrar",
+      "signup": "Cadastrar",
+      "submit": "Cadastrar"
+    }
+  },
+  "errors": {
+    "nameRequired": "Nome é obrigatório",
+    "emailRequired": "Email é obrigatório",
+    "emailValid": "Por favor informe um email válido",
+    "passwordRequired": "Senha é obrigatória",
+    "passwordLength": "Senha deve conter pelo menos 8 caracteres",
+    "passwordUppercase": "Senha deve conter pelo menos uma letra maiúscula",
+    "passwordLowercase": "Senha deve conter pelo menos uma letra minúscula",
+    "passwordNumber": "Senha deve conter pelo menos um número",
+    "passwordSpecialChar": "Senha deve conter pelo menos um caractere especial",
+    "passwordConfirmation": "Confirmação de senha é obrigatório",
+    "passwordsDontMatch": "Senhas não são iguais",
+    "invalidCredentials": "Email ou senha incorretos",
+    "signinGoogleFailed": "Login com o Google não funcionou",
+    "authError": "Você não está logado, por favor faça login novamente",
+    "fetchPlannings": "Erro ao carregar planejamentos"
+  },
+  "signin":{
+    "title": "Fazer login em WalletWise",
+    "description": "Informe seu email e senha abaixo para fazer login em sua conta",
+    "email": "Email",
+    "emailPlaceholder": "email@exemplo.com",
+    "password": "Senha",
+    "doesntHaveAccount": "Ainda não tem uma conta?",
+    "signup": "Cadastre-se"
+  }, 
+  "signup": {
+    "title": "Criar conta em WalletWise",
+    "description": "Preencha as informações abaixo para criar a sua conta",
+    "name": "Nome",
+    "email": "Email",
+    "emailPlaceholder": "email@exemplo.com",
+    "password": "Senha",
+    "confirmPassword":"Confirme a senha",
+    "passwordInfo": "Sua senha deve ter pelo menos 8 caracteres e conter: pelo menos uma letra, um dígito e um caractere especial",
+    "alreadyHaveAccount": "Já tem uma conta?"
+  }
+}
