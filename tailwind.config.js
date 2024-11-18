@@ -13,8 +13,26 @@ export default {
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		colors: {
-  			background: 'hsl(var(--background))',
+				background: {
+          DEFAULT: 'var(--background)',
+          secondary: 'var(--background-secondary)',
+          tertiary: 'var(--background-tertiary)',
+        },
+				accent: {
+          DEFAULT: 'var(--accent)',
+          // secondary: 'var(--background-secondary)',
+          // tertiary: 'var(--background-tertiary)',
+        },
   			foreground: 'hsl(var(--foreground))',
+				// background: 'var(--background)',
+				// bsecondary: 'var(--background-secondary))',
+				// btertiary: 'var(--background-tertiary))',
+				green: 'var(--green)',
+				orange: 'var(--orange)',
+				pink: 'var(--pink)',
+				purple: 'var(--purple)',
+				red: 'var(--red)',
+				yellow: 'var(--yellow)',
   			card: {
   				DEFAULT: 'hsl(var(--card))',
   				foreground: 'hsl(var(--card-foreground))'
@@ -24,7 +42,7 @@ export default {
   				foreground: 'hsl(var(--popover-foreground))'
   			},
   			primary: {
-  				DEFAULT: 'hsl(var(--primary))',
+  				DEFAULT: 'var(--accent)',
   				foreground: 'hsl(var(--primary-foreground))'
   			},
   			secondary: {
@@ -43,7 +61,7 @@ export default {
   				DEFAULT: 'hsl(var(--destructive))',
   				foreground: 'hsl(var(--destructive-foreground))'
   			},
-  			border: 'hsl(var(--border))',
+  			border: 'var(--border)',
   			input: 'hsl(var(--input))',
   			ring: 'hsl(var(--ring))',
   			chart: {
@@ -54,7 +72,7 @@ export default {
   				'5': 'hsl(var(--chart-5))'
   			},
   			sidebar: {
-  				DEFAULT: 'hsl(var(--sidebar-background))',
+  				DEFAULT: 'var(--background-secondary)',
   				foreground: 'hsl(var(--sidebar-foreground))',
   				primary: 'hsl(var(--sidebar-primary))',
   				'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
