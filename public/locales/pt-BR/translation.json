@@ -5,6 +5,11 @@
     "personalFinances": "Finanças pessoais",
     "currentBalance": "Saldo atual",
     "expectedBalance": "Saldo esperado",
+    "balance": "Saldo",
+    "expenses": "Despesas",
+    "income": "Receitas",
+    "toPay": "Contas a pagar",
+    "toReceive": "Contas a receber",
     "cta": {
       "signin": "Entrar",
       "signup": "Cadastrar",
@@ -60,5 +65,14 @@
   "selectPlanning": {
     "title": "Selecione um planejamento",
     "description": "Por favor selecione um planejamento antes de continuar"
+  },
+  "dashboard": {
+    "pendingTransactionsCard": {
+      "title": "Transações pendentes",
+      "description": "Transações vencendo essa semana"
+    },
+    "monthlyBalanceCard": {
+      "title": "Balanço de {{month}}"
+    }
   }
 }

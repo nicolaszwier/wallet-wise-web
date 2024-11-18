@@ -5,6 +5,11 @@
     "personalFinances": "Personal finances",
     "currentBalance": "Current balance",
     "expectedBalance": "Expected balance",
+    "balance": "Balance",
+    "expenses": "Expenses",
+    "income": "Income",
+    "toPay": "Bills to pay",
+    "toReceive": "Income to receive",
     "cta": {
       "signin": "Signin",
       "signup": "Signup",
@@ -60,5 +65,14 @@
   "selectPlanning": {
     "title": "Select planning",
     "description": "Please select a planning before continue to the application"
+  },
+  "dashboard": {
+    "pendingTransactionsCard": {
+      "title": "Pending transactions",
+      "description": "Transactions due this week"
+    },
+    "monthlyBalanceCard": {
+      "title": "{{month}} cash flow"
+    }
   }
 }
