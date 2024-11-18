@@ -18,6 +18,7 @@ import {
 import { ChevronsUpDown } from 'lucide-react';
 import { usePlanning } from '@/app/hooks/usePlanning';
 import { useTranslation } from 'react-i18next';
+import { BalanceCard } from '../components/BalanceCard';
 
 export function AppLayout() {
   const { t } = useTranslation()
@@ -31,7 +32,7 @@ export function AppLayout() {
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        <header className="flex h-16 shrink-0 w-full items-center gap-2">
+        <header className="flex h-16 shrink-0 w-full items-center gap-2 bg-background rounded-xl sticky top-0">
           <div className="flex items-center justify-between gap-2 px-4 flex-auto">
             <SidebarTrigger className="-ml-1" />
             {/* <Separator orientation="vertical" className="mr-2 h-4" /> */}
@@ -54,19 +55,24 @@ export function AppLayout() {
                   size="lg"
                   className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground w-auto px-4"
                 >
-                  {/* <Avatar className="h-8 w-8 rounded-lg">
-                    <AvatarImage alt={user?.name} />
-                    <AvatarFallback className="rounded-lg">{user?.name.charAt(0)}</AvatarFallback>
-                  </Avatar> */}
                   <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate text-xs">{t('global.planning')}</span>
+                    <span className="truncate text-xs text-muted-foreground">{t('global.planning')}</span>
                     <span className="truncate font-semibold">{selectedPlanning?.description}</span>
                   </div>
                   <ChevronsUpDown className="ml-auto size-4" />
                 </SidebarMenuButton>
               </Link>
             )}
-            <div></div>
+            {pathname === '/timeline' && (
+              <div className='flex gap-4 h-full'>
+                <BalanceCard variant='sm' title={t('global.currentBalance')} amount={selectedPlanning?.currentBalance || 0} currency={selectedPlanning?.currency || "BRL"}/>
+                <Separator orientation='vertical'  />
+                <BalanceCard variant='sm' title={t('global.expectedBalance')} amount={selectedPlanning?.expectedBalance || 0} currency={selectedPlanning?.currency || "BRL"}/>
+               </div>
+            )}
+             {pathname !== '/timeline' && (
+              <div></div>
+             )}
           </div>
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">

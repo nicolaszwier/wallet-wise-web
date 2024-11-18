@@ -41,6 +41,13 @@ export function PlanningProvider({ children }: { children: React.ReactNode }) {
     setPlanning(planning);
   }, []);
 
+  useEffect(()=>{
+    const updatedPlanning = data?.find(el => el.id === planning?.id)
+    if (updatedPlanning) {
+      setSelectedPlanning(updatedPlanning)
+    }
+  }, [data, planning, setSelectedPlanning])
+
   useEffect(() => {
     if (isError) {
       console.log("error", error);
@@ -51,7 +58,7 @@ export function PlanningProvider({ children }: { children: React.ReactNode }) {
         toast.error(t('errors.fetchPlannings'));
       }
     }
-  }, [isError, error]);
+  }, [isError, error, t]);
 
   return (
     <PlanningContext.Provider
