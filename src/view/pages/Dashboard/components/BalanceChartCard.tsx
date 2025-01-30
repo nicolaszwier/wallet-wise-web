@@ -1,9 +1,8 @@
 import { Balance } from "@/app/models/Balance";
-import { formatCurrency } from "@/app/utils/formatCurrency";
 import { getMonthFromDate } from "@/app/utils/date";
+import { formatCurrency } from "@/app/utils/formatCurrency";
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/view/components/ui/chart";
 import { Separator } from "@/view/components/ui/separator";
-import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 

@@ -3,6 +3,8 @@ import { formatCurrency } from "@/app/utils/formatCurrency";
 import { formatDate } from "@/app/utils/date";
 import { CategoryIcon } from "@/view/components/CategoryIcon";
 import { useTranslation } from "react-i18next";
+import { ChevronRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface CardProps {
   isLoading?: boolean;
@@ -15,10 +17,13 @@ export function TransactionsDueThisWeekCard({transactions, isLoading, currency}:
 
   return (
     <div className="rounded-xl border bg-background-secondary text-card-foreground shadow md:col-span-4 lg:col-span-3">
-      <div className="flex flex-col space-y-1.5 p-6">
-        <h1 className="font-semibold leading-none tracking-tight">{t('dashboard.pendingTransactionsCard.title')}</h1>
-        <h2 className="text-sm text-muted-foreground">{t('dashboard.pendingTransactionsCard.description')}</h2>
-      </div>
+      <Link to={'/timeline'} className="p-6 flex justify-between hover:bg-background-tertiary rounded-xl">
+        <div className="flex flex-col space-y-1.5">
+          <h1 className="font-semibold leading-none tracking-tight">{t('dashboard.pendingTransactionsCard.title')}</h1>
+          <h2 className="text-sm text-muted-foreground">{t('dashboard.pendingTransactionsCard.description')}</h2>
+        </div>
+        <ChevronRight className="text-muted-foreground"/>
+      </Link>
       <div className="p-6 pt-0">
         <ul className="flex flex-col gap-1">
           {transactions.map((el) => (
