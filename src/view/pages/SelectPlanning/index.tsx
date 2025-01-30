@@ -11,7 +11,7 @@ export default function SelectPlanning() {
 
   return (
     <div className="flex h-full w-full items-center justify-center px-4">
-      <Card className="mx-auto max-w-sm bg-background-secondary">
+      <Card className="mx-auto max-w-sm bg-background-secondary mb-28">
         <CardHeader>
           <CardTitle className="text-2xl">{t('selectPlanning.title')}</CardTitle>
           <CardDescription>
