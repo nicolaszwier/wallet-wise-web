@@ -10,6 +10,7 @@
     "income": "Income",
     "toPay": "Bills to pay",
     "toReceive": "Income to receive",
+    "currentPeriod": "Current period",
     "cta": {
       "signin": "Signin",
       "signup": "Signup",
@@ -74,5 +75,10 @@
     "monthlyBalanceCard": {
       "title": "{{month}} cash flow"
     }
+  },
+  "timeline": {
+     "periodTitle": "{{start}} to {{end}}",
+     "periodFooter": "Expected balance on {{date}}",
+     "addTransaction": "Add new transaction"
   }
 }

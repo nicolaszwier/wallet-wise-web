@@ -10,6 +10,7 @@
     "income": "Receitas",
     "toPay": "Contas a pagar",
     "toReceive": "Contas a receber",
+    "currentPeriod": "Período atual",
     "cta": {
       "signin": "Entrar",
       "signup": "Cadastrar",
@@ -74,5 +75,11 @@
     "monthlyBalanceCard": {
       "title": "Balanço de {{month}}"
     }
+  },
+  "timeline": {
+     "periodTitle": "{{start}} até {{end}}",
+     "periodFooter": "Saldo esperado em {{date}}",
+     "addTransaction": "Nova transação"
   }
+  
 }
