@@ -3,5 +3,6 @@ import { Category } from "./Category";
 export interface User {
   name: string;
   email: string;
-  categories?: Category[]
+  categories?: Category[],
+  picture?: string
 }
