@@ -1,6 +1,5 @@
 import { usePlanning } from "@/app/hooks/usePlanning";
 import { BalanceCard } from "@/view/components/BalanceCard";
-import { ChevronRight } from "lucide-react";
 import { TransactionsDueThisWeekCard } from "./components/TransactionsDueThisWeekCard";
 import { useDashboardController } from "./useDashboardController";
 import { BalanceChartCard } from "./components/BalanceChartCard";

@@ -22,17 +22,14 @@ import { BalanceCard } from '../components/BalanceCard';
 
 export function AppLayout() {
   const { t } = useTranslation()
-  const { pathname, key, search } = useLocation()
+  const { pathname } = useLocation()
   const { selectedPlanning } = usePlanning()
-
-  console.log("pathname", pathname, key, search);
-  
 
   return (
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        <header className="flex h-16 shrink-0 w-full items-center gap-2 bg-background rounded-xl sticky top-0">
+        <header className="flex z-50 shrink-0 w-full items-center gap-2 bg-background rounded-xl">
           <div className="flex items-center justify-between gap-2 px-4 flex-auto">
             <SidebarTrigger className="-ml-1" />
             {/* <Separator orientation="vertical" className="mr-2 h-4" /> */}
