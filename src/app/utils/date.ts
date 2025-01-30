@@ -1,6 +1,15 @@
 export function formatDate(date: Date, locale: string) {
   return Intl.DateTimeFormat(locale, {
-    dateStyle: "medium"
+    dateStyle: "medium",
+    //  timeZone: 'UTC'
+  }).format(date);
+}
+
+export function formatShortDate(date: Date, locale: string) {
+  return Intl.DateTimeFormat(locale, {
+    day: 'numeric',
+    month: 'short',
+    // timeZone: 'UTC' //using this to format the periods, in this case should not consider the timezone so its using utc
   }).format(date);
 }
 
