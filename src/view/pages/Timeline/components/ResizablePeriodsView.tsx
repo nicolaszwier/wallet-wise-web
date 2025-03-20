@@ -31,7 +31,7 @@ export function ResizablePeriodsView({}: ComponentProps) {
           </Button>
         </div>
         <Drawer>
-          <DrawerTrigger>
+          <DrawerTrigger asChild>
             <Button size="xs">
               <Plus /> {t('timeline.addTransaction')}
             </Button>
