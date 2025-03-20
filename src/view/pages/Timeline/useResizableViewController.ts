@@ -5,7 +5,7 @@ import { PeriodRequestFilters, periodsService } from "@/services/periodsService"
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
-export function useTimelineController() {
+export function useResizableViewController() {
   const [visibleRanges, setVisibleRanges] = useState<DateRange[]>([])
   const [currentPageIndex, setCurrentPageIndex] = useState<number>(0)
   const {ranges, loadNextRanges, loadPreviousRanges} = useDateRanges()
@@ -42,6 +42,9 @@ export function useTimelineController() {
       loadNextRanges()
     }
     setCurrentPageIndex(prev => prev + 4)
+
+    console.log("ranges", ranges);
+    
   }
 
   const handlePreviousRanges = () => {
@@ -56,7 +59,7 @@ export function useTimelineController() {
     if (!start || !end) {
       return
     }
-    console.log("dataa,", start, end, data);
+    // console.log("dataa,", start, end, data);
     
     return data?.find(period => {
       const periodStart = new Date(period.periodStart?.split('Z')[0])
