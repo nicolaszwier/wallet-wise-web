@@ -34,12 +34,12 @@ export function ViewTypeSelectorDropdown() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>{t('timeline.viewTypeSelector.title')}</DropdownMenuLabel>
+        <DropdownMenuLabel>{t('transactions.viewTypeSelector.title')}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuRadioGroup value={selected} onValueChange={handleChangeSelected}>
-          <DropdownMenuRadioItem value={ViewType.COLUMNS.toString()}>{t('timeline.viewTypeSelector.options.columns')}</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value={ViewType.RESIZABLE.toString()}>{t('timeline.viewTypeSelector.options.resizable')}</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value={ViewType.TIMELINE.toString()}>{t('timeline.viewTypeSelector.options.timeline')}</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value={ViewType.COLUMNS.toString()}>{t('transactions.viewTypeSelector.options.columns')}</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value={ViewType.RESIZABLE.toString()}>{t('transactions.viewTypeSelector.options.resizable')}</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value={ViewType.TIMELINE.toString()}>{t('transactions.viewTypeSelector.options.timeline')}</DropdownMenuRadioItem>
         </DropdownMenuRadioGroup>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -76,7 +76,7 @@
       "title": "Balanço de {{month}}"
     }
   },
-  "timeline": {
+  "transactions": {
      "periodTitle": "{{start}} até {{end}}",
      "periodFooter": "Saldo esperado em {{date}}",
      "addTransaction": "Nova transação",

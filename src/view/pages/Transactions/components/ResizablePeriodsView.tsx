@@ -25,7 +25,7 @@ export function ResizablePeriodsView({}: ComponentProps) {
           <Button variant="ghost" size="icon" onClick={() => handlePreviousRanges()}>
             <ChevronLeft />
           </Button>
-          <p className="font-semibold text-sm"><span>{t('timeline.periodTitle', {start: formatShortDate(visibleRanges[0]?.start, i18n.language), end: formatDate(visibleRanges[3]?.end, i18n.language)})}</span></p>
+          <p className="font-semibold text-sm"><span>{t('transactions.periodTitle', {start: formatShortDate(visibleRanges[0]?.start, i18n.language), end: formatDate(visibleRanges[3]?.end, i18n.language)})}</span></p>
           <Button variant="ghost" size="icon" onClick={() => handleNextRanges()}>
             <ChevronRight />
           </Button>
@@ -33,7 +33,7 @@ export function ResizablePeriodsView({}: ComponentProps) {
         <Drawer>
           <DrawerTrigger asChild>
             <Button size="xs">
-              <Plus /> {t('timeline.addTransaction')}
+              <Plus /> {t('transactions.addTransaction')}
             </Button>
           </DrawerTrigger>
           <DrawerContent className="flex justify-center">

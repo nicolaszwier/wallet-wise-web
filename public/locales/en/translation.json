@@ -18,7 +18,7 @@
     },
     "menu": {
       "dashboard": "Dashboard",
-      "timeline": "Transactions timeline",
+      "timeline": "Transactions",
       "monthlyBalances": "Monthly balances",
       "support": "Support",
       "feedback": "Feedback",
@@ -76,7 +76,7 @@
       "title": "{{month}} cash flow"
     }
   },
-  "timeline": {
+  "transactions": {
      "periodTitle": "{{start}} to {{end}}",
      "periodFooter": "Expected balance on {{date}}",
      "addTransaction": "Add new transaction",

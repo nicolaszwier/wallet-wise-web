@@ -21,7 +21,7 @@ export function ColumnsPeriodContent({ dateRange, isLoading, period }: Component
   return (
     <>
       <div className="p-1 text-xs rounded-t-xl rounded-tr-xl min-h-[26px] bg-background-tertiary font-semibold pl-2 sticky top-0 flex justify-between items-center">
-        <span>{t('timeline.periodTitle', {start: formatShortDate(dateRange.start, i18n.language), end: formatShortDate(dateRange.end, i18n.language)})}</span>
+        <span>{t('transactions.periodTitle', {start: formatShortDate(dateRange.start, i18n.language), end: formatShortDate(dateRange.end, i18n.language)})}</span>
         {dateRange.isCurrent && (
           <Badge variant="default" className="truncate">{t('global.currentPeriod')}</Badge>
         )}
@@ -43,7 +43,7 @@ export function ColumnsPeriodContent({ dateRange, isLoading, period }: Component
       }
       <div className="flex justify-between p-1 pr-2 align-middle items-center">
         <div className="text-xs text-muted-foreground pl-2">
-          {t('timeline.periodFooter', {date: formatShortDate(dateRange.end, i18n.language)})}
+          {t('transactions.periodFooter', {date: formatShortDate(dateRange.end, i18n.language)})}
         </div>
         <div className="text-sm font-semibold pl-2">{formatCurrency(period?.expectedAllTimeBalance ?? 0, selectedPlanning?.currency ?? 'BRL', i18n.language)}</div>
       </div>
