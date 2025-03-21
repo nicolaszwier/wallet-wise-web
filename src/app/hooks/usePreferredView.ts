@@ -5,7 +5,7 @@ import { ViewType } from '../models/ViewType';
 export function usePreferredView() {
   const [preferredView, setPreferredView] = useState<ViewType>(() => {
     const storedView = localStorage.getItem(localStorageKeys.PREFERRED_VIEW);
-    return (storedView as ViewType) || ViewType.RESIZABLE;
+    return (storedView as ViewType) || ViewType.COLUMNS;
   });
 
   const changePreferredView = useCallback((view: ViewType) => {

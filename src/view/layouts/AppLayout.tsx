@@ -19,6 +19,7 @@ import { ChevronsUpDown } from 'lucide-react';
 import { usePlanning } from '@/app/hooks/usePlanning';
 import { useTranslation } from 'react-i18next';
 import { BalanceCard } from '../components/BalanceCard';
+import { ViewTypeSelectorDropdown } from '../pages/Timeline/components/ViewTypeSelectorDropdown';
 
 export function AppLayout() {
   const { t } = useTranslation()
@@ -31,7 +32,10 @@ export function AppLayout() {
       <SidebarInset>
         <header className="flex z-50 shrink-0 w-full items-center gap-2 bg-background rounded-xl">
           <div className="flex items-center justify-between gap-2 px-4 flex-auto">
-            <SidebarTrigger className="-ml-1" />
+            <div>
+              <SidebarTrigger className="-ml-1" />
+              <ViewTypeSelectorDropdown />
+            </div>
             {/* <Separator orientation="vertical" className="mr-2 h-4" /> */}
             {/* <Breadcrumb>
               <BreadcrumbList className="flex-nowrap flex-1">
@@ -72,7 +76,7 @@ export function AppLayout() {
              )}
           </div>
         </header>
-        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+        <div className="flex flex-1 flex-col gap-4 pt-0">
           <Outlet />
           {/* <div className="grid auto-rows-min gap-4 md:grid-cols-3">
             <div className="aspect-video rounded-xl bg-muted/50" />
