@@ -79,6 +79,14 @@
   "timeline": {
      "periodTitle": "{{start}} to {{end}}",
      "periodFooter": "Expected balance on {{date}}",
-     "addTransaction": "Add new transaction"
+     "addTransaction": "Add new transaction",
+     "viewTypeSelector": {
+      "title": "Transactions view type",
+      "options": {
+        "timeline": "Timeline",
+        "columns": "Columns",
+        "resizable": "Resizable"
+      }
+   } 
   }
 }

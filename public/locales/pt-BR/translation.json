@@ -79,7 +79,15 @@
   "timeline": {
      "periodTitle": "{{start}} até {{end}}",
      "periodFooter": "Saldo esperado em {{date}}",
-     "addTransaction": "Nova transação"
+     "addTransaction": "Nova transação",
+     "viewTypeSelector": {
+        "title": "Tipo de visualização de transações",
+        "options": {
+          "timeline": "Linha do tempo",
+          "columns": "Colunas",
+          "resizable": "Redimensionável"
+        }
+     } 
   }
   
 }
