@@ -1,15 +1,11 @@
-import { formatDate, formatShortDate } from "@/app/utils/date";
-import { Button } from "@/view/components/ui/button";
-import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
-import { useTranslation } from "react-i18next";
 import { ResizablePeriodsView } from "./components/ResizablePeriodsView";
-import { useResizableViewController } from "./useResizableViewController";
-import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/view/components/ui/drawer";
-import { usePreferredView } from "@/app/hooks/usePreferredView";
 import { ViewType } from "@/app/models/ViewType";
+import { useApp } from "@/app/hooks/useApp";
+import { ColumnsPeriodsView } from "./components/ColumnsPeriodsView";
 
 export default function Timeline() {
-  const { preferredView, changePreferredView } = usePreferredView()
+  const {preferredView} = useApp()
+  // const { preferredView, changePreferredView } = usePreferredView()
   // const { t, i18n } = useTranslation()
   // const {visibleRanges, handleNextRanges, handlePreviousRanges, isLoading, loadPeriodByDate} = useTimelineController()
   
@@ -21,8 +17,8 @@ export default function Timeline() {
       {preferredView === ViewType.TIMELINE && (
         <p> Timeline </p>
       )}
-      {preferredView === ViewType.HORIZONTAL && (
-        <p> Horizontal </p>
+      {preferredView === ViewType.COLUMNS && (
+        <ColumnsPeriodsView />
       )}
     </div>
   )
