@@ -27,29 +27,18 @@ export function AppLayout() {
   const { selectedPlanning } = usePlanning()
 
   return (
-    <SidebarProvider>
+    <SidebarProvider className="h-screen overflow-hidden">
       <AppSidebar />
-      <SidebarInset>
+      <SidebarInset className="flex flex-col">
         <header className="flex z-50 shrink-0 w-full items-center gap-2 bg-background rounded-xl">
           <div className="flex items-center justify-between gap-2 px-4 flex-auto">
             <div>
               <SidebarTrigger className="-ml-1" />
-              <ViewTypeSelectorDropdown />
+              {pathname === '/timeline' && (
+                <ViewTypeSelectorDropdown />
+              )}
             </div>
             {/* <Separator orientation="vertical" className="mr-2 h-4" /> */}
-            {/* <Breadcrumb>
-              <BreadcrumbList className="flex-nowrap flex-1">
-                <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="#">
-                    Building Your Application
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator className="hidden md:block" />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb> */}
             {pathname !== '/select-planning' && (
               <Link to={'/select-planning'}>
                 <SidebarMenuButton
@@ -76,7 +65,7 @@ export function AppLayout() {
              )}
           </div>
         </header>
-        <div className="flex flex-1 flex-col gap-4 pt-0">
+        <div className="flex flex-1 flex-col gap-4 pt-0 overflow-auto">
           <Outlet />
           {/* <div className="grid auto-rows-min gap-4 md:grid-cols-3">
             <div className="aspect-video rounded-xl bg-muted/50" />

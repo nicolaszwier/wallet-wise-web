@@ -77,7 +77,7 @@ export function ColumnsPeriodsView({}: ComponentProps) {
   return (
     <div className="flex flex-col h-full w-full">
       {/* Fixed header */}
-      <div className="flex justify-between items-center flex-shrink-0">
+      <div className="flex justify-between items-center flex-shrink-0 pl-2 pr-2">
         <div className="min-w-36"></div>
         <div className="flex justify-center items-center gap-2">
           <Button variant="ghost" size="icon" onClick={() => handlePreviousRanges()}>

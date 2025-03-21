@@ -180,7 +180,11 @@ button:focus-visible {
   * {
     @apply border-border;
   }
-  body {
+  html, body {
     @apply bg-background-secondary text-foreground;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
   }
 }
