@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight, Plus } from "lucide-react"
 import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/view/components/ui/drawer"
 import { formatDate, formatShortDate } from "@/app/utils/date"
 import { useTranslation } from "react-i18next"
+import { NewTransactionDrawer } from "./NewTransactionDrawer"
 
 interface ComponentProps {
   // dateRanges: DateRange[],
@@ -30,27 +31,7 @@ export function ResizablePeriodsView({}: ComponentProps) {
             <ChevronRight />
           </Button>
         </div>
-        <Drawer>
-          <DrawerTrigger asChild>
-            <Button size="xs">
-              <Plus /> {t('transactions.addTransaction')}
-            </Button>
-          </DrawerTrigger>
-          <DrawerContent className="flex justify-center">
-            <div className="flex flex-col max-w-[800px] justify-center m-auto w-full">
-              <DrawerHeader>
-                <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-                <DrawerDescription>This action cannot be undone.</DrawerDescription>
-              </DrawerHeader>
-              <DrawerFooter>
-                <Button>Submit</Button>
-                <DrawerClose>
-                  <Button variant="outline">Cancel</Button>
-                </DrawerClose>
-              </DrawerFooter>
-            </div>
-          </DrawerContent>
-        </Drawer>
+        <NewTransactionDrawer />
       </div>
     <ResizablePanelGroup direction="vertical" className="rounded-lg border" style={{height: 'calc(100% - 32px)'}}>
       <ResizablePanel defaultSize={50} minSize={4} className="bg-background-secondary">

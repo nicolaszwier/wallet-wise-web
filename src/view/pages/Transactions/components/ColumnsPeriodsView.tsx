@@ -1,11 +1,11 @@
 import { useResizableViewController } from "../useResizableViewController"
 import { Button } from "@/view/components/ui/button"
 import { ChevronLeft, ChevronRight, Plus } from "lucide-react"
-import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/view/components/ui/drawer"
 import { formatDate, formatShortDate } from "@/app/utils/date"
 import { useTranslation } from "react-i18next"
 import { useRef, useEffect } from "react"
 import { ColumnsPeriodContent } from "./ColumnsPeriodContent"
+import { NewTransactionDrawer } from "./NewTransactionDrawer"
 
 interface ComponentProps {
   // dateRanges: DateRange[],
@@ -76,39 +76,18 @@ export function ColumnsPeriodsView({}: ComponentProps) {
 
   return (
     <div className="flex flex-col h-full w-full">
-      {/* Fixed header */}
       <div className="flex justify-between items-center flex-shrink-0 pl-2 pr-2">
         <div className="min-w-36"></div>
         <div className="flex justify-center items-center gap-2">
           <Button variant="ghost" size="icon" onClick={() => handlePreviousRanges()}>
             <ChevronLeft />
           </Button>
-          <p className="font-semibold text-sm"><span>{t('timeline.periodTitle', {start: formatShortDate(visibleRanges[0]?.start, i18n.language), end: formatDate(visibleRanges[3]?.end, i18n.language)})}</span></p>
+          <p className="font-semibold text-sm"><span>{t('transactions.periodTitle', {start: formatShortDate(visibleRanges[0]?.start, i18n.language), end: formatDate(visibleRanges[3]?.end, i18n.language)})}</span></p>
           <Button variant="ghost" size="icon" onClick={() => handleNextRanges()}>
             <ChevronRight />
           </Button>
         </div>
-        <Drawer>
-          <DrawerTrigger asChild>
-            <Button size="xs">
-              <Plus /> {t('timeline.addTransaction')}
-            </Button>
-          </DrawerTrigger>
-          <DrawerContent className="flex justify-center">
-            <div className="flex flex-col max-w-[800px] justify-center m-auto w-full">
-              <DrawerHeader>
-                <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-                <DrawerDescription>This action cannot be undone.</DrawerDescription>
-              </DrawerHeader>
-              <DrawerFooter>
-                <Button>Submit</Button>
-                <DrawerClose>
-                  <Button variant="outline">Cancel</Button>
-                </DrawerClose>
-              </DrawerFooter>
-            </div>
-          </DrawerContent>
-        </Drawer>
+        <NewTransactionDrawer />
       </div>
       
       {/* Scrollable content container - this will take all remaining height */}
