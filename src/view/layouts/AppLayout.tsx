@@ -19,7 +19,7 @@ import { ChevronsUpDown } from 'lucide-react';
 import { usePlanning } from '@/app/hooks/usePlanning';
 import { useTranslation } from 'react-i18next';
 import { BalanceCard } from '../components/BalanceCard';
-import { ViewTypeSelectorDropdown } from '../pages/Timeline/components/ViewTypeSelectorDropdown';
+import { ViewTypeSelectorDropdown } from '../pages/Transactions/components/ViewTypeSelectorDropdown';
 
 export function AppLayout() {
   const { t } = useTranslation()

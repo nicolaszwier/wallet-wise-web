@@ -7,7 +7,7 @@ import { AppLayout } from '@/view/layouts/AppLayout';
 import Dashboard from '@/view/pages/Dashboard';
 import SelectPlanning from '@/view/pages/SelectPlanning';
 import { PlanningGuard } from './PlanningGuard';
-import Timeline from '@/view/pages/Timeline';
+import Timeline from '@/view/pages/Transactions';
 
 export function Router() {
   return (
