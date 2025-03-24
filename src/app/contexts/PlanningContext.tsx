@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { useAuth } from "../hooks/useAuth";
 import { Planning } from "../models/Planning";
 import { useTranslation } from "react-i18next";
+import { LoadingScreen } from "@/view/components/LoadingScreen";
 
 interface PlanningContextValue {
   selectedPlanning: Planning | undefined;
@@ -70,7 +71,7 @@ export function PlanningProvider({ children }: { children: React.ReactNode }) {
     >
 
       {isFetching && (
-        <div>loading planning</div>
+        <LoadingScreen />
       )}
 
       {!isFetching && children}

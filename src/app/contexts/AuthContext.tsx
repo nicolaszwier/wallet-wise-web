@@ -7,6 +7,7 @@ import { User } from "../models/User";
 import { usersService } from "@/services/usersService";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
+import { LoadingScreen } from "@/view/components/LoadingScreen";
 
 interface AuthContextValue {
   signedIn: boolean;
@@ -63,7 +64,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     >
 
       {isFetching && (
-        <div>loading screen</div>
+        <LoadingScreen />
       )}
 
       {!isFetching && children}
