@@ -8,6 +8,14 @@
     "balance": "Saldo",
     "expenses": "Despesas",
     "income": "Receitas",
+    "types": {
+      "income": "Receita",
+      "expense": "Despesa"
+    },
+    "loading": "Carregando...",
+    "filterCategories": "Pesquisar categorias",
+    "selectCategory": "Selecione uma categoria",
+    "noResults": "Nenhum resultado encontrado",
     "toPay": "Contas a pagar",
     "toReceive": "Contas a receber",
     "currentPeriod": "Período atual",
@@ -41,7 +49,13 @@
     "invalidCredentials": "Email ou senha incorretos",
     "signinGoogleFailed": "Login com o Google não funcionou",
     "authError": "Você não está logado, por favor faça login novamente",
-    "fetchPlannings": "Erro ao carregar planejamentos"
+    "fetchPlannings": "Erro ao carregar planejamentos",
+    "amountRequired": "Informe um valor",
+    "amountPositive": "Valor deve ser mais que zero",
+    "amountNumbersOnly": "Valor deve conter apenas números",
+    "descriptionRequired": "Informe uma descrição",
+    "descriptionLength": "Descrição tem um limite de 100 caracteres",
+    "categoryRequired": "Selecione uma categoria"
   },
   "signin":{
     "title": "Fazer login em WalletWise",
@@ -87,7 +101,15 @@
           "columns": "Colunas",
           "resizable": "Redimensionável"
         }
-     } 
+     },
+     "newTransaction": {
+        "titleIncome": "Cadastrar nova receita",
+        "titleExpense": "Cadastrar nova despesa",
+        "amount": "Valor",
+        "description": "Descrição",
+        "date": "Data",
+        "category": "Categoria",
+        "isPaid": "Está pago"
+     }
   }
-  
 }

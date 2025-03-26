@@ -8,6 +8,14 @@
     "balance": "Balance",
     "expenses": "Expenses",
     "income": "Income",
+    "types": {
+      "income": "Income",
+      "expense": "Expense"
+    },
+    "loading": "Loading...",
+    "filterCategories": "Filter categories",
+    "selectCategory": "Select a category",
+    "noResults": "No results found",
     "toPay": "Bills to pay",
     "toReceive": "Income to receive",
     "currentPeriod": "Current period",
@@ -41,7 +49,13 @@
     "invalidCredentials": "Invalid credentials",
     "signinGoogleFailed": "Sign in with Google failed",
     "authError": "Authentication error! Please signin again!",
-    "fetchPlannings": "Error on fetching plannings."
+    "fetchPlannings": "Error on fetching plannings.",
+    "amountRequired": "Amount is required",
+    "amountPositive": "Amount should be more than zero",
+    "amountNumbersOnly": "Amount should contain only numbers",
+    "descriptionRequired": "Description is required",
+    "descriptionLength": "Description should have less than 100 characters",
+    "categoryRequired": "Please select a category"
   },
   "signin":{
     "title": "Login to WalletWise",
@@ -87,6 +101,15 @@
         "columns": "Columns",
         "resizable": "Resizable"
       }
-   } 
+    },
+    "newTransaction": {
+      "titleIncome": "Add new income",
+      "titleExpense": "Add new expense",
+      "amount": "Amount",
+      "description": "Description",
+      "date": "Date",
+      "category": "Category",
+      "isPaid": "Is paid"
+   }
   }
 }
