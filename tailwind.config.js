@@ -18,10 +18,6 @@ export default {
           secondary: 'var(--background-secondary)',
           tertiary: 'var(--background-tertiary)',
         },
-				accent: {
-          DEFAULT: 'var(--accent)',
-					foreground: 'var(--card-foreground)'
-        },
   			foreground: 'var(--foreground)',
 				green: 'var(--green)',
 				orange: 'var(--orange)',
@@ -29,13 +25,15 @@ export default {
 				purple: 'var(--purple)',
 				red: 'var(--red)',
 				yellow: 'var(--yellow)',
+				blue: 'var(--blue)',
+				gradient: 'var(--gradient-primary)',
   			card: {
   				DEFAULT: 'var(--card)',
   				foreground: 'var(--card-foreground)'
   			},
   			popover: {
-  				DEFAULT: 'hsl(var(--popover))',
-  				foreground: 'hsl(var(--popover-foreground))'
+  				DEFAULT: 'var(--popover)',
+  				foreground: 'var(--popover-foreground)'
   			},
   			primary: {
   				DEFAULT: 'var(--primary)',
@@ -50,22 +48,22 @@ export default {
   				foreground: 'var(--muted-foreground)'
   			},
   			accent: {
-  				DEFAULT: 'hsl(var(--accent))',
-  				foreground: 'hsl(var(--accent-foreground))'
+  				DEFAULT: 'var(--accent)',
+  				foreground: 'var(--accent-foreground)'
   			},
   			destructive: {
-  				DEFAULT: 'hsl(var(--destructive))',
-  				foreground: 'hsl(var(--destructive-foreground))'
+  				DEFAULT: 'var(--destructive)',
+  				foreground: 'var(--destructive-foreground)'
   			},
   			border: 'var(--border)',
-  			input: 'hsl(var(--input))',
-  			ring: 'hsl(var(--ring))',
+  			input: 'var(--input)',
+  			ring: 'var(--ring)',
   			chart: {
-  				'1': 'hsl(var(--chart-1))',
-  				'2': 'hsl(var(--chart-2))',
-  				'3': 'hsl(var(--chart-3))',
-  				'4': 'hsl(var(--chart-4))',
-  				'5': 'hsl(var(--chart-5))'
+  				'1': 'var(--chart-1)',
+  				'2': 'var(--chart-2)',
+  				'3': 'var(--chart-3)',
+  				'4': 'var(--chart-4)',
+  				'5': 'var(--chart-5)'
   			},
   			sidebar: {
   				DEFAULT: 'var(--background-secondary)',
@@ -82,4 +80,3 @@ export default {
   },
   plugins: [require("tailwindcss-animate")],
 }
-
