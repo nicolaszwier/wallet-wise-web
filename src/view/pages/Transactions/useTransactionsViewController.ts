@@ -1,16 +1,20 @@
 import { DateRange, useDateRanges } from "@/app/hooks/useDateRanges";
 import { usePlanning } from "@/app/hooks/usePlanning";
+import { useTransactions } from "@/app/hooks/useTransactions";
 import { Period } from "@/app/models/Period";
+import { Transaction } from "@/app/models/Transaction";
 import { PeriodRequestFilters, periodsService } from "@/services/periodsService";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-export function useResizableViewController() {
+export function useTransactionsViewController() {
+  const isDraggingRef = useRef(false)
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
   const [visibleRanges, setVisibleRanges] = useState<DateRange[]>([])
   const [currentPageIndex, setCurrentPageIndex] = useState<number>(0)
   const {ranges, loadNextRanges, loadPreviousRanges} = useDateRanges()
   const {selectedPlanning} = usePlanning()
-  // const [periods, setPeriods] = useState<Period[][]>([])
+  const {selectTransaction} = useTransactions()
   const [filters, setFilters] = useState<PeriodRequestFilters>({
     sortOrder: 'desc',
     startDate: ranges[0]?.start.toISOString(),
@@ -42,9 +46,6 @@ export function useResizableViewController() {
       loadNextRanges()
     }
     setCurrentPageIndex(prev => prev + 4)
-
-    console.log("ranges", ranges);
-    
   }
 
   const handlePreviousRanges = () => {
@@ -56,30 +57,92 @@ export function useResizableViewController() {
   }
 
   const loadPeriodByDate = (start: Date, end: Date): Period | undefined => {
-    if (!start || !end) {
+    if (!start || !end || !data) {
       return
     }
-    // console.log("dataa,", start, end, data);
-    
     return data?.find(period => {
       const periodStart = new Date(period.periodStart?.split('Z')[0])
       const periodEnd = new Date(period.periodEnd?.split('Z')[0])
       return (start.getDate() == periodStart.getDate() && 
         end.getDate() == periodEnd.getDate() && 
-        start.getMonth() == periodEnd.getMonth() && 
+        start.getMonth() == periodStart.getMonth() && 
         end.getMonth() == periodEnd.getMonth() && 
-        start.getFullYear() == periodEnd.getFullYear() && 
+        start.getFullYear() == periodStart.getFullYear() && 
         end.getFullYear() == periodEnd.getFullYear() 
       )
     })
   }
 
+  const handleSelectItem = (transaction: Transaction) => {
+    console.log('transaction', transaction);
+    selectTransaction(transaction);
+    
+  }
+
+  // Create a simpler drag-to-scroll implementation
+  const handleMouseDown = (e: React.MouseEvent) => {
+    const container = scrollContainerRef.current
+    if (!container) return
+    
+    // Prevent text selection
+    e.preventDefault()
+    
+    // Record initial position
+    isDraggingRef.current = true
+    const startX = e.pageX
+    const scrollLeft = container.scrollLeft
+    
+    // Add temporary user-select: none to body
+    document.body.style.userSelect = 'none'
+    document.body.style.webkitUserSelect = 'none'
+    container.style.cursor = 'grabbing'
+    
+    // Handlers for mousemove and mouseup
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isDraggingRef.current) return
+      
+      // Calculate distance and scroll
+      const x = e.pageX
+      const walk = (x - startX) * 1.5 // Increase for faster scrolling
+      container.scrollLeft = scrollLeft - walk
+      
+      // Important: prevent default to avoid text selection
+      e.preventDefault()
+    }
+    
+    const handleMouseUp = () => {
+      isDraggingRef.current = false
+      document.body.style.userSelect = ''
+      document.body.style.webkitUserSelect = ''
+      container.style.cursor = 'grab'
+      
+      // Remove event listeners
+      document.removeEventListener('mousemove', handleMouseMove)
+      document.removeEventListener('mouseup', handleMouseUp)
+    }
+    
+    // Add event listeners to document
+    document.addEventListener('mousemove', handleMouseMove)
+    document.addEventListener('mouseup', handleMouseUp)
+  }
+
+  // Reset selection state on component unmount
+  useEffect(() => {
+    return () => {
+      document.body.style.userSelect = ''
+      document.body.style.webkitUserSelect = ''
+    }
+  }, [])
+
   return {
     visibleRanges,
     isLoading: isFetching,
+    scrollContainerRef,
     loadPeriodByDate,
     refetchPeriods: refetch,
     handleNextRanges,
-    handlePreviousRanges
+    handlePreviousRanges,
+    handleSelectItem,
+    handleMouseDown
   };
 }
