@@ -22,7 +22,13 @@
     "cta": {
       "signin": "Entrar",
       "signup": "Cadastrar",
-      "submit": "Cadastrar"
+      "submit": "Cadastrar",
+      "edit": "Editar",
+      "delete": "Excluir",
+      "pay": "Pagar",
+      "duplicate": "Duplicar",
+      "cancel": "Cancelar",
+      "update": "Alterar"
     },
     "menu": {
       "dashboard": "Dashboard",
@@ -34,7 +40,7 @@
       "logout": "Sair"
     }
   },
-  "errors": {
+  "formsValidation": {
     "nameRequired": "Nome é obrigatório",
     "emailRequired": "Email é obrigatório",
     "emailValid": "Por favor informe um email válido",
@@ -51,7 +57,7 @@
     "authError": "Você não está logado, por favor faça login novamente",
     "fetchPlannings": "Erro ao carregar planejamentos",
     "amountRequired": "Informe um valor",
-    "amountPositive": "Valor deve ser mais que zero",
+    "amountPositive": "Valor deve ser maior que zero",
     "amountNumbersOnly": "Valor deve conter apenas números",
     "descriptionRequired": "Informe uma descrição",
     "descriptionLength": "Descrição tem um limite de 100 caracteres",
@@ -93,7 +99,12 @@
   "transactions": {
      "periodTitle": "{{start}} até {{end}}",
      "periodFooter": "Saldo esperado em {{date}}",
+     "periodFooterExpensesPending": "Pagar essa semana",
+     "periodFooterIncomePending": "Receber essa semana",
      "addTransaction": "Nova transação",
+     "noTransactions": "Nenhuma transação nesse período",
+     "selectedTransaction": "{{amount}} transação selecionada",
+     "selectedTransactions": "{{amount}} transações selecionadas",
      "viewTypeSelector": {
         "title": "Tipo de visualização de transações",
         "options": {
@@ -102,14 +113,31 @@
           "resizable": "Redimensionável"
         }
      },
-     "newTransaction": {
+     "forms": {
         "titleIncome": "Cadastrar nova receita",
         "titleExpense": "Cadastrar nova despesa",
+        "titleEditIncome": "Alterar receita",
+        "titleEditExpense": "Alterar despesa",
         "amount": "Valor",
         "description": "Descrição",
         "date": "Data",
         "category": "Categoria",
         "isPaid": "Está pago"
+     },
+     "payTransactionDialog": {
+      "title": "Confirmar pagamento?",
+      "description": "Isso vai mudar o status da transação {{description}} no valor de {{amount}} para pago."
+     },
+     "actionsMessages": {
+      "updateSuccess": "Transação alterada com sucesso!",
+      "updateError": "Erro ao alterar transação. Por favor, tente novamente.",
+      "paySuccess": "Transação paga com sucesso!",
+      "payError": "Erro ao pagar transação. Por favor, tente novamente."
      }
+  },
+  "a11y": {
+    "paidTransaction": "Transação paga",
+    "pendingTransaction": "Transação pendente",
+    "dueTransaction": "Transação vencida"
   }
 }

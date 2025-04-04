@@ -22,7 +22,13 @@
     "cta": {
       "signin": "Signin",
       "signup": "Signup",
-      "submit": "Submit"
+      "submit": "Submit",
+      "edit": "Edit",
+      "delete": "Delete",
+      "pay": "Pay",
+      "duplicate": "Duplicate",
+      "cancel": "Cancel",
+      "update": "Update"
     },
     "menu": {
       "dashboard": "Dashboard",
@@ -93,7 +99,12 @@
   "transactions": {
      "periodTitle": "{{start}} to {{end}}",
      "periodFooter": "Expected balance on {{date}}",
+     "periodFooterExpensesPending": "To pay this week",
+     "periodFooterIncomePending": "To receive this week",
      "addTransaction": "Add new transaction",
+     "noTransactions": "No transactions in this period",
+     "selectedTransaction": "{{amount}} selected transaction",
+     "selectedTransactions": "{{amount}} selected transactions",
      "viewTypeSelector": {
       "title": "Transactions view type",
       "options": {
@@ -102,14 +113,31 @@
         "resizable": "Resizable"
       }
     },
-    "newTransaction": {
+    "forms": {
       "titleIncome": "Add new income",
       "titleExpense": "Add new expense",
+      "titleEditIncome": "Update income",
+      "titleEditExpense": "Update expense",
       "amount": "Amount",
       "description": "Description",
       "date": "Date",
       "category": "Category",
       "isPaid": "Is paid"
+   },
+   "payTransactionDialog": {
+    "title": "Confirm payment?",
+    "description": "This action will change the status of {{description}} transaction of {{amount}} to paid."
+   },
+   "actionsMessages": {
+    "updateSuccess": "Transaction updated successfully",
+    "updateError": "An error occurred while updating the transaction. Please try again.",
+    "paySuccess": "Transaction paid successfully",
+    "payError": "An error occurred while paying the transaction. Please try again."
    }
+  },
+  "a11y": {
+    "paidTransaction": "Paid transaction",
+    "pendingTransaction": "Pending transaction",
+    "dueTransaction": "Due transaction"
   }
 }
