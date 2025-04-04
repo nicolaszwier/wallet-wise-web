@@ -1,83 +1,41 @@
-import { useResizableViewController } from "../useResizableViewController"
 import { Button } from "@/view/components/ui/button"
-import { ChevronLeft, ChevronRight, Plus } from "lucide-react"
+import { ChevronLeft, ChevronRight } from "lucide-react"
 import { formatDate, formatShortDate } from "@/app/utils/date"
 import { useTranslation } from "react-i18next"
-import { useRef, useEffect } from "react"
 import { ColumnsPeriodContent } from "./ColumnsPeriodContent"
-import { NewTransactionDrawer } from "./NewTransactionDrawer"
+import { NewTransactionDialog } from "./NewTransactionDialog"
+import { useTransactionsViewController } from "../useTransactionsViewController"
+import { ResponsiveDialog, ResponsiveDialogContent, ResponsiveDialogFooter, ResponsiveDialogHeader } from "@/view/components/ResponsiveDialog"
+import { DialogClose, DialogDescription, DialogTitle } from "@/view/components/ui/dialog"
+import { formatCurrency } from "@/app/utils/formatCurrency"
+import { Spinner } from "@/view/components/ui/Spinner"
+import { EditTransactionDialog } from "./EditTransactionDialog"
 
-interface ComponentProps {
-  // dateRanges: DateRange[],
-  // isLoading: boolean,
-  // transactionsFilterer: (start: Date, end: Date) => Period | undefined
-}
-
-export function ColumnsPeriodsView({}: ComponentProps) {
-  const { t, i18n } = useTranslation()
-  const {visibleRanges, handleNextRanges, handlePreviousRanges, isLoading, loadPeriodByDate} = useResizableViewController()
-  const scrollContainerRef = useRef<HTMLDivElement>(null)
-  const isDraggingRef = useRef(false)
-
-  // Create a simpler drag-to-scroll implementation
-  const handleMouseDown = (e: React.MouseEvent) => {
-    const container = scrollContainerRef.current
-    if (!container) return
-    
-    // Prevent text selection
-    e.preventDefault()
-    
-    // Record initial position
-    isDraggingRef.current = true
-    const startX = e.pageX
-    const scrollLeft = container.scrollLeft
-    
-    // Add temporary user-select: none to body
-    document.body.style.userSelect = 'none'
-    document.body.style.webkitUserSelect = 'none'
-    container.style.cursor = 'grabbing'
-    
-    // Handlers for mousemove and mouseup
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!isDraggingRef.current) return
-      
-      // Calculate distance and scroll
-      const x = e.pageX
-      const walk = (x - startX) * 2 // Increase for faster scrolling
-      container.scrollLeft = scrollLeft - walk
-      
-      // Important: prevent default to avoid text selection
-      e.preventDefault()
-    }
-    
-    const handleMouseUp = () => {
-      isDraggingRef.current = false
-      document.body.style.userSelect = ''
-      document.body.style.webkitUserSelect = ''
-      container.style.cursor = 'grab'
-      
-      // Remove event listeners
-      document.removeEventListener('mousemove', handleMouseMove)
-      document.removeEventListener('mouseup', handleMouseUp)
-    }
-    
-    // Add event listeners to document
-    document.addEventListener('mousemove', handleMouseMove)
-    document.addEventListener('mouseup', handleMouseUp)
-  }
-  
-  // Reset selection state on component unmount
-  useEffect(() => {
-    return () => {
-      document.body.style.userSelect = ''
-      document.body.style.webkitUserSelect = ''
-    }
-  }, [])
+export function ColumnsPeriodsView() {
+  const { t, i18n } = useTranslation() 
+  const { 
+    selectedPlanning,
+    visibleRanges, 
+    isLoading, 
+    scrollContainerRef,
+    isPayTransactionDialogOpen,
+    activeTransaction,
+    isPendingPayTransaction,
+    handlePayTransaction,
+    handleNextRanges, 
+    handlePreviousRanges, 
+    loadPeriodByDate,
+    handleSelectItem,
+    handleMouseDown,
+    togglePayTransactionDialog,
+    openPayTransactionDialog,
+    openEditTransactionDialog
+  } = useTransactionsViewController()
 
   return (
     <div className="flex flex-col h-full w-full">
       <div className="flex justify-between items-center flex-shrink-0 pl-2 pr-2">
-        <div className="min-w-36"></div>
+        <div className="md:min-w-36"></div>
         <div className="flex justify-center items-center gap-2">
           <Button variant="ghost" size="icon" onClick={() => handlePreviousRanges()}>
             <ChevronLeft />
@@ -87,22 +45,50 @@ export function ColumnsPeriodsView({}: ComponentProps) {
             <ChevronRight />
           </Button>
         </div>
-        <NewTransactionDrawer />
+        <NewTransactionDialog />
       </div>
+      <ResponsiveDialog open={isPayTransactionDialogOpen} onOpenChange={togglePayTransactionDialog}>
+        <ResponsiveDialogContent>
+          <ResponsiveDialogHeader>
+            <DialogTitle>
+              {t('transactions.payTransactionDialog.title')}
+            </DialogTitle>
+            <DialogDescription>
+              {t('transactions.payTransactionDialog.description', {description: activeTransaction?.description, amount: formatCurrency(Math.abs(activeTransaction?.amount ?? 0), selectedPlanning?.currency ?? 'BRL', i18n.language)})}
+            </DialogDescription>
+          </ResponsiveDialogHeader>
+          <ResponsiveDialogFooter>
+            <DialogClose asChild>
+              <Button variant="ghost">{t('global.cta.cancel')}</Button>
+            </DialogClose>
+            <Button variant="secondary" disabled={isPendingPayTransaction} onClick={handlePayTransaction}>
+              {isPendingPayTransaction && <Spinner />}  
+              {t('global.cta.pay')}
+            </Button>
+          </ResponsiveDialogFooter>
+        </ResponsiveDialogContent>
+      </ResponsiveDialog>
+      <EditTransactionDialog />
       
-      {/* Scrollable content container - this will take all remaining height */}
-      <div className="flex-1 min-h-0 w-full relative p-2">
-        {/* Horizontal scrolling container */}
+      <div className="flex-1 min-h-0 w-full relative p-2 pr-8">
         <div 
           ref={scrollContainerRef}
           className="absolute inset-0 overflow-x-auto overflow-y-hidden cursor-grab"
           onMouseDown={handleMouseDown}
         >
-          {/* Content row that can expand horizontally */}
-          <div className="flex gap-2 h-full min-w-max p-4 pb-4">
+          <div className="flex gap-2 h-full min-w-max p-4">
             {visibleRanges.map((range, index) => (
               <div key={index} className="flex flex-col justify-between flex-grow min-w-80 max-w-96 bg-background-secondary rounded-xl">
-                {range && <ColumnsPeriodContent dateRange={range} isLoading={isLoading} period={loadPeriodByDate(range.start, range.end)} />}
+                {range && 
+                  <ColumnsPeriodContent 
+                    dateRange={range} 
+                    isLoading={isLoading} 
+                    period={loadPeriodByDate(range.start, range.end)} 
+                    onSelectItem={handleSelectItem}
+                    onPayItem={openPayTransactionDialog}
+                    onEditItem={openEditTransactionDialog}
+                  />
+                }
               </div>
             ))}
           </div>

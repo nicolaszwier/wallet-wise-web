@@ -1,22 +1,15 @@
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/view/components/ui/resizable"
 import { ResizablePeriodContent } from "./ResizablePeriodContent"
-import { useResizableViewController } from "../useResizableViewController"
+import { useTransactionsViewController } from "../useTransactionsViewController"
 import { Button } from "@/view/components/ui/button"
-import { ChevronLeft, ChevronRight, Plus } from "lucide-react"
-import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/view/components/ui/drawer"
+import { ChevronLeft, ChevronRight } from "lucide-react"
 import { formatDate, formatShortDate } from "@/app/utils/date"
 import { useTranslation } from "react-i18next"
-import { NewTransactionDrawer } from "./NewTransactionDrawer"
+import { NewTransactionDialog } from "./NewTransactionDialog"
 
-interface ComponentProps {
-  // dateRanges: DateRange[],
-  // isLoading: boolean,
-  // transactionsFilterer: (start: Date, end: Date) => Period | undefined
-}
-
-export function ResizablePeriodsView({}: ComponentProps) {
+export function ResizablePeriodsView() {
   const { t, i18n } = useTranslation()
-  const {visibleRanges, handleNextRanges, handlePreviousRanges, isLoading, loadPeriodByDate} = useResizableViewController()
+  const {visibleRanges, handleNextRanges, handlePreviousRanges, isLoading, loadPeriodByDate} = useTransactionsViewController()
 
   return (
     <div className="h-full relative">
@@ -31,7 +24,7 @@ export function ResizablePeriodsView({}: ComponentProps) {
             <ChevronRight />
           </Button>
         </div>
-        <NewTransactionDrawer />
+        <NewTransactionDialog />
       </div>
     <ResizablePanelGroup direction="vertical" className="rounded-lg border" style={{height: 'calc(100% - 32px)'}}>
       <ResizablePanel defaultSize={50} minSize={4} className="bg-background-secondary">

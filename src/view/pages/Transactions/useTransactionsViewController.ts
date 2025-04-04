@@ -4,17 +4,29 @@ import { useTransactions } from "@/app/hooks/useTransactions";
 import { Period } from "@/app/models/Period";
 import { Transaction } from "@/app/models/Transaction";
 import { PeriodRequestFilters, periodsService } from "@/services/periodsService";
-import { useQuery } from "@tanstack/react-query";
+import { transactionsService } from "@/services/transactionsService";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 export function useTransactionsViewController() {
   const isDraggingRef = useRef(false)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
+  const { t } = useTranslation() 
   const [visibleRanges, setVisibleRanges] = useState<DateRange[]>([])
   const [currentPageIndex, setCurrentPageIndex] = useState<number>(0)
   const {ranges, loadNextRanges, loadPreviousRanges} = useDateRanges()
   const {selectedPlanning} = usePlanning()
-  const {selectTransaction} = useTransactions()
+  const { 
+    activeTransaction,
+    isPayTransactionDialogOpen,
+    selectTransaction,
+    toggleEditTransactionDialog,
+    togglePayTransactionDialog,
+    setActiveTransaction, 
+  } = useTransactions()
+  const queryClient = useQueryClient();
   const [filters, setFilters] = useState<PeriodRequestFilters>({
     sortOrder: 'desc',
     startDate: ranges[0]?.start.toISOString(),
@@ -74,9 +86,36 @@ export function useTransactionsViewController() {
   }
 
   const handleSelectItem = (transaction: Transaction) => {
-    console.log('transaction', transaction);
     selectTransaction(transaction);
-    
+  }
+
+  const openPayTransactionDialog = (transaction: Transaction) => {
+    togglePayTransactionDialog(true)
+    setActiveTransaction(transaction);
+  }
+
+  const openEditTransactionDialog = (transaction: Transaction) => {
+    toggleEditTransactionDialog(true)
+    setActiveTransaction(transaction);
+  }
+
+  const { mutateAsync, isPending: isPendingPayTransaction, error } = useMutation({
+    mutationFn: async (data: Transaction | null) => {
+      return transactionsService.pay(data?.periodId ?? "", data?.id ?? "")
+    }
+  })
+
+  const handlePayTransaction = async () => {
+    try {
+      await mutateAsync(activeTransaction);
+      queryClient.invalidateQueries({queryKey: ['planning']});
+      toast.success(t('transactions.actionsMessages.paySuccess'), {position: "bottom-center", duration: 6000,})
+      togglePayTransactionDialog(false);
+    } catch (err) {      
+      console.error('Transaction payment error:', err);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      toast.error((error as any)?.response?.data?.message || t('transactions.actionsMessages.payError'), {position: "bottom-center", duration: 6000})
+    }
   }
 
   // Create a simpler drag-to-scroll implementation
@@ -135,14 +174,22 @@ export function useTransactionsViewController() {
   }, [])
 
   return {
+    selectedPlanning,
     visibleRanges,
     isLoading: isFetching,
     scrollContainerRef,
+    isPayTransactionDialogOpen,
+    activeTransaction,
+    isPendingPayTransaction,
+    handlePayTransaction,
+    togglePayTransactionDialog,
+    openPayTransactionDialog,
+    openEditTransactionDialog,
     loadPeriodByDate,
     refetchPeriods: refetch,
     handleNextRanges,
     handlePreviousRanges,
     handleSelectItem,
-    handleMouseDown
+    handleMouseDown,
   };
 }
