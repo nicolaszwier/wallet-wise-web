@@ -9,7 +9,7 @@ interface CategoryIconProps {
 
 export const CategoryIcon = forwardRef<HTMLDivElement, CategoryIconProps>(({icon, size, onClick}, ref) => {
   return (
-    <div ref={ref} className="rounded-lg p-1.5 bg-background-tertiary" onClick={onClick}>
+    <div ref={ref} className="rounded-lg p-1.5 bg-background-tertiary hover:text-foreground" onClick={onClick}>
       <Icon name={icon as IconName} size={size ?? 22} />
     </div>
   )

@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next"
 import { useIsMobile } from "@/app/hooks/useIsMobile"
 import { Category } from "@/app/models/Category"
 import { ChevronsUpDown } from "lucide-react"
+import { CategoryIcon } from "./CategoryIcon"
 
 interface ComponentProps {
   categories: Category[] | undefined
@@ -36,7 +37,6 @@ export function CategoriesCombobox({categories, onSelect, value}: ComponentProps
     if (category) {
       onSelect(category)
     }
-    // setOpen(false)
   }
 
   if (!isMobile) {
@@ -48,10 +48,18 @@ export function CategoriesCombobox({categories, onSelect, value}: ComponentProps
             role="combobox"
             aria-expanded={open}
             className="w-full justify-between bg-background-tertiary"
-          >
-            {selected
-              ? categories?.find((item) => item.id === selected.id)?.description
-              : t("global.selectCategory")}
+          > 
+            <span className="w-full flex items-center gap-3">
+              {selected
+                ? <>
+                    <CategoryIcon
+                    size={15} 
+                    icon={selected?.icon ?? ''}
+                    />
+                    {selected?.description}
+                  </>
+                : t("global.selectCategory")}
+            </span>
             <ChevronsUpDown className="opacity-50" />
           </Button>
         </PopoverTrigger>
@@ -71,9 +79,17 @@ export function CategoriesCombobox({categories, onSelect, value}: ComponentProps
           aria-expanded={open}
           className="w-full justify-between bg-background-tertiary"
         >
-          {selected
-            ? categories?.find((item) => item.id === selected.id)?.description
-            : t("global.selectCategory")}
+          <span className="w-full flex items-center gap-3">
+            {selected
+              ? <>
+                  <CategoryIcon
+                  size={15} 
+                  icon={selected?.icon ?? ''}
+                  />
+                  {selected?.description}
+                </>
+              : t("global.selectCategory")}
+          </span>
           <ChevronsUpDown className="opacity-50" />
         </Button>
       </DrawerTrigger>
@@ -113,6 +129,10 @@ function List({
                 setOpen(false)
               }}
             >
+              <CategoryIcon
+                size={15} 
+                icon={item?.icon ?? ''}
+              />
               {item.description}
             </CommandItem>
           ))}
