@@ -29,7 +29,7 @@ export function InputCurrency({ error, value, className, onChange }: InputCurren
         value={value}
         onChange={event => onChange?.(event.target.value)}
         className={cn(
-          'bg-background text-[40px] font-bold tracking-[-1px] outline-none w-full py-0 rounded-full',
+          'bg-background text-[40px] font-bold tracking-[-1px] outline-none w-full py-0 rounded',
           className,
           error && 'text-red-900',
         )}

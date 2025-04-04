@@ -47,7 +47,7 @@ export function CategoriesCombobox({categories, onSelect, value}: ComponentProps
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className="w-[200px] justify-between"
+            className="w-full justify-between bg-background-tertiary"
           >
             {selected
               ? categories?.find((item) => item.id === selected.id)?.description
@@ -55,7 +55,7 @@ export function CategoriesCombobox({categories, onSelect, value}: ComponentProps
             <ChevronsUpDown className="opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-[200px] p-0" align="start">
+        <PopoverContent className="w-[400px] p-0" align="start">
           {categories && <List setOpen={setOpen} setSelectedCategory={handleSelect} data={categories} />}
         </PopoverContent>
       </Popover>
@@ -69,7 +69,7 @@ export function CategoriesCombobox({categories, onSelect, value}: ComponentProps
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full justify-between"
+          className="w-full justify-between bg-background-tertiary"
         >
           {selected
             ? categories?.find((item) => item.id === selected.id)?.description
@@ -97,7 +97,7 @@ function List({
 }) {
   const { t } = useTranslation()
   return (
-    <Command>
+    <Command className="bg-background">
       <CommandInput placeholder={t('global.filterCategories')} />
       <CommandList>
         <CommandEmpty>{t('global.noResults')}</CommandEmpty>

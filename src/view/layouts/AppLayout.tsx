@@ -43,7 +43,7 @@ export function AppLayout() {
               <Link to={'/select-planning'}>
                 <SidebarMenuButton
                   size="lg"
-                  className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground w-auto px-4"
+                  className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground w-auto px-4 hover:bg-background-secondary"
                 >
                   <div className="grid flex-1 text-left text-sm leading-tight">
                     <span className="truncate text-xs text-muted-foreground">{t('global.planning')}</span>

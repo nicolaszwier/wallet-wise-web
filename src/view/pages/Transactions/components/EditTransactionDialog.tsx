@@ -47,7 +47,7 @@ export function EditTransactionDialog() {
               )}
               {transactionType === TransactionType.INCOME && (        
                 <DrawerTitle>{t('transactions.forms.titleEditIncome')}</DrawerTitle>
-              )}    
+              )}   
             {/* <DrawerDescription>This action cannot be undone.</DrawerDescription> */}
             </ResponsiveDialogHeader>
             <div className="p-4">
@@ -159,13 +159,13 @@ export function EditTransactionDialog() {
               </div>
             </div>
             <ResponsiveDialogFooter>
+              <DrawerClose asChild>
+                <Button variant="outline">Cancel</Button>
+              </DrawerClose>
               <Button disabled={isPending} type="submit" className="w-full">
                 {isPending && <Spinner />}
                 {t('global.cta.update')}
               </Button>
-              <DrawerClose asChild>
-                <Button variant="outline">Cancel</Button>
-              </DrawerClose>
             </ResponsiveDialogFooter>
           </div>
         </form>  

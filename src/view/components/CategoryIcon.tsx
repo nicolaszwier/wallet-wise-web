@@ -1,15 +1,17 @@
 import { CircleDollarSign } from "lucide-react"
+import { forwardRef } from "react"
+import { Icon, IconName } from "./Icon"
 
 interface CategoryIconProps {
-  icon?: string,
-  size?: number
+  icon: string,
+  size?: number,
+  onClick?: () => void
 }
 
-export function CategoryIcon({icon, size}: CategoryIconProps) {
-
+export const CategoryIcon = forwardRef<HTMLDivElement, CategoryIconProps>(({icon, size, onClick}, ref) => {
   return (
-    <div className="rounded-lg bg-slate-300 p-1.5">
-      <CircleDollarSign size={size ?? 22} />
+    <div ref={ref} className="rounded-lg p-1.5 bg-background-tertiary" onClick={onClick}>
+      <Icon name={icon as IconName} size={size ?? 22} />
     </div>
   )
-}
+})

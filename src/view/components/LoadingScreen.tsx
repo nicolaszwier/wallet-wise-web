@@ -1,4 +1,3 @@
-import logo from '@/assets/ww-logo.png'
 import { Logo } from './Logo';
 import { useTranslation } from 'react-i18next';
 

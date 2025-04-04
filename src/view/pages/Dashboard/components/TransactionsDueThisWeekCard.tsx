@@ -28,7 +28,7 @@ export function TransactionsDueThisWeekCard({transactions, isLoading, currency}:
         <ul className="flex flex-col gap-1">
           {transactions.map((el) => (
             <li key={el.id} className="flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left outline-none">  
-              <CategoryIcon icon="sdfsd"/>
+              <CategoryIcon icon={el.category?.icon ?? ''}/>
               <div className="grid flex-1 text-left text-sm">
                 <span className="truncate font-semibold">{el.description}</span>
                 <span className="truncate text-xs">{el.category?.description}</span>
