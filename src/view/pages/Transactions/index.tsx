@@ -4,6 +4,7 @@ import { useApp } from "@/app/hooks/useApp";
 import { ColumnsPeriodsView } from "./components/ColumnsPeriodsView";
 import { useTransactions } from "@/app/hooks/useTransactions";
 import SelectionModePopover from "./components/SelectionModePopover";
+import { TimelinePeriodsView } from "./components/TimelinePeriodsView";
 
 export default function Timeline() {
   const {preferredView} = useApp()
@@ -15,7 +16,7 @@ export default function Timeline() {
         <ResizablePeriodsView/>
       )}
       {preferredView === ViewType.TIMELINE && (
-        <p> Timeline </p>
+        <TimelinePeriodsView />
       )}
       {preferredView === ViewType.COLUMNS && (
         <ColumnsPeriodsView />
