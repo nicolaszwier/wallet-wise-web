@@ -54,9 +54,9 @@ export function PlanningProvider({ children }: { children: React.ReactNode }) {
       console.log("error", error);
       const err = error as AxiosError
       if (err.status === 401) {
-        toast.error(t('errors.authError'));
+        toast.error(t('formsValidation.authError'));
       } else {
-        toast.error(t('errors.fetchPlannings'));
+        toast.error(t('formsValidation.fetchPlannings'));
       }
     }
   }, [isError, error, t]);

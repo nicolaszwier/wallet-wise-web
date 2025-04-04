@@ -6,30 +6,29 @@ import { authService } from "@/services/authService";
 import { useAuth } from "@/app/hooks/useAuth";
 import { toast } from 'react-hot-toast';
 import { SignupParams } from "@/services/authService/signup";
-import { CredentialResponse } from "@react-oauth/google";
 
 const schema = z.object({
    name: z.string()
-    .min(1, 'errors.nameRequired'),
+    .min(1, 'formsValidation.nameRequired'),
   email: z.string()
-    .min(1, 'errors.emailRequired')
-    .email('errors.emailValid'),
+    .min(1, 'formsValidation.emailRequired')
+    .email('formsValidation.emailValid'),
   password: z.string()
-    .min(8, 'errors.passwordLength')
+    .min(8, 'formsValidation.passwordLength')
     .refine((password) => /[A-Z]/.test(password), {
-      message: 'errors.passwordUppercase',
+      message: 'formsValidation.passwordUppercase',
     })
     .refine((password) => /[a-z]/.test(password), {
-      message: 'errors.passwordLowercase',
+      message: 'formsValidation.passwordLowercase',
     })
-    .refine((password) => /[0-9]/.test(password), { message: 'errors.passwordNumber' })
+    .refine((password) => /[0-9]/.test(password), { message: 'formsValidation.passwordNumber' })
     .refine((password) => /[!@#$%^&*.]/.test(password), {
-      message: 'errors.passwordSpecialChar',
+      message: 'formsValidation.passwordSpecialChar',
     }),
-  passwordConfirmation: z.string().min(8, 'errors.passwordConfirmation')
+  passwordConfirmation: z.string().min(8, 'formsValidation.passwordConfirmation')
 })
 .refine((data) => data.password === data.passwordConfirmation, {
-  message: 'errors.passwordsDontMatch',
+  message: 'formsValidation.passwordsDontMatch',
   path: ['passwordConfirmation'],
 });;
 

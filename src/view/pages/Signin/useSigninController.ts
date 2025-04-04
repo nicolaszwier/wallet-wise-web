@@ -11,10 +11,10 @@ import { useTranslation } from "react-i18next";
 
 const schema = z.object({
   email: z.string()
-    .min(1, 'errors.emailRequired')
-    .email('errors.emailValid'),
+    .min(1, 'formsValidation.emailRequired')
+    .email('formsValidation.emailValid'),
   password: z.string()
-    .min(8, 'errors.passwordRequired'),
+    .min(8, 'formsValidation.passwordRequired'),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -48,7 +48,7 @@ export function useSigninController() {
       const { accessToken } = await mutateAsync(data);
       signin(accessToken);
     } catch {
-      toast.error(t('errors.invalidCredentials'), {position: "bottom-center"})
+      toast.error(t('formsValidation.invalidCredentials'), {position: "bottom-center"})
     }
   });
 
@@ -61,7 +61,7 @@ export function useSigninController() {
       const { accessToken } = await mutateAsyncGoogle({token : response.credential ?? ""})
       signin(accessToken);
     } catch {
-      toast.error(t('errors.signinGoogleFailed'), {position: "bottom-center"})
+      toast.error(t('formsValidation.signinGoogleFailed'), {position: "bottom-center"})
     }
   };
 

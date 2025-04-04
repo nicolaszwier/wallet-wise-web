@@ -49,10 +49,10 @@ export function NewTransactionDialog() {
             <div className="flex flex-col max-w-[800px] justify-center m-auto w-full">
               <ResponsiveDialogHeader>
                 {transactionType === TransactionType.EXPENSE && (
-                  <DrawerTitle>{t('transactions.newTransaction.titleExpense')}</DrawerTitle>
+                  <DrawerTitle>{t('transactions.forms.titleExpense')}</DrawerTitle>
                 )}
                 {transactionType === TransactionType.INCOME && (        
-                  <DrawerTitle>{t('transactions.newTransaction.titleIncome')}</DrawerTitle>
+                  <DrawerTitle>{t('transactions.forms.titleIncome')}</DrawerTitle>
                 )}    
               {/* <DrawerDescription>This action cannot be undone.</DrawerDescription> */}
               </ResponsiveDialogHeader>
@@ -66,7 +66,7 @@ export function NewTransactionDialog() {
                 <div className="mt-6 mb-4 grid gap-4">
                   <div className="flex items-baseline justify-between">
                     <div className="grid gap-2">
-                      <Label htmlFor="amount">{t('transactions.newTransaction.amount')}</Label>
+                      <Label htmlFor="amount">{t('transactions.forms.amount')}</Label>
                       <div className="flex items-center gap-2">
                         <span className="text-muted-foreground tracking-[-0.5px] text-lg">
                           {getCurrencySymbol(i18n.language, selectedPlanning?.currency ?? 'BRL')}
@@ -81,7 +81,7 @@ export function NewTransactionDialog() {
                       </div>
                     </div>
                     <div className="grid gap-2 min-w-20">
-                      <Label htmlFor="isPaid">{t('transactions.newTransaction.isPaid')}</Label>
+                      <Label htmlFor="isPaid">{t('transactions.forms.isPaid')}</Label>
                       <Controller
                         control={control}
                         name="isPaid"
@@ -101,7 +101,7 @@ export function NewTransactionDialog() {
                     </div>
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="description">{t('transactions.newTransaction.description')}</Label>
+                    <Label htmlFor="description">{t('transactions.forms.description')}</Label>
                     <Input
                       id="description"
                       type="text"
@@ -113,7 +113,7 @@ export function NewTransactionDialog() {
                     </span>
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="date">{t('transactions.newTransaction.date')}</Label>
+                    <Label htmlFor="date">{t('transactions.forms.date')}</Label>
                     <Controller
                       control={control}
                       name="date"
@@ -149,7 +149,7 @@ export function NewTransactionDialog() {
                   </div>
                  
                   <div className="grid gap-2 w-full">
-                    <Label htmlFor="category">{t('transactions.newTransaction.category')}</Label>
+                    <Label htmlFor="category">{t('transactions.forms.category')}</Label>
                     <Controller
                       control={control}
                       name="category"

@@ -49,9 +49,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (isError) {
       signout();
-      toast.error(t('errors.authError'));
+      toast.error(t('formsValidation.authError'));
     }
-  }, [isError, signout]);
+  }, [isError, signout, t]);
 
   return (
     <AuthContext.Provider
