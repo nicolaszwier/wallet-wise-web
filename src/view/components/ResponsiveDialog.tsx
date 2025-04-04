@@ -6,15 +6,16 @@ import { Dispatch, ReactNode, SetStateAction } from "react";
 interface ComponentProps {
   open?: boolean,
   onOpenChange?: Dispatch<SetStateAction<boolean>>,
+  onClose?: Dispatch<SetStateAction<void>>,
   children: ReactNode
 }
 
-export function ResponsiveDialog({open, onOpenChange, children}: ComponentProps) {
+export function ResponsiveDialog({open, onOpenChange, onClose, children}: ComponentProps) {
   const isMobile = useIsMobile()
 
   if (isMobile) {
     return (
-      <Drawer open={open} onOpenChange={onOpenChange}>
+      <Drawer open={open} onOpenChange={onOpenChange} onClose={onClose}>
         {children}
       </Drawer>
     )
