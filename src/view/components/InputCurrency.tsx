@@ -1,8 +1,7 @@
 import { NumericFormat } from 'react-number-format';
 import { cn } from '../../app/utils/cn';
 import { useTranslation } from 'react-i18next';
-import { getCurrencySymbol } from '@/app/utils/formatCurrency';
-import { usePlanning } from '@/app/hooks/usePlanning';
+// import { getCurrencySymbol } from '@/app/utils/formatCurrency';
 
 interface InputCurrencyProps {
   error?: string;
@@ -12,8 +11,8 @@ interface InputCurrencyProps {
 }
 
 export function InputCurrency({ error, value, className, onChange }: InputCurrencyProps) {
-  const { t, i18n } = useTranslation()
-  const {selectedPlanning} = usePlanning()
+  const { t } = useTranslation()
+  // const {selectedPlanning} = usePlanning()
 
   return (
     <div>

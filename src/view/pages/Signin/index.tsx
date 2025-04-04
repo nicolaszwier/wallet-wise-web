@@ -10,7 +10,7 @@ import { Input } from "@/view/components/ui/input"
 import { Label } from "@/view/components/ui/label"
 import { Link } from "react-router-dom"
 import { useSigninController } from "./useSigninController"
-import { Spinner } from "@/view/components/ui/Spinner"
+import { Spinner } from "@/view/components/ui/spinner"
 import { GoogleLogin } from '@react-oauth/google';
 import { useTranslation } from 'react-i18next';
 

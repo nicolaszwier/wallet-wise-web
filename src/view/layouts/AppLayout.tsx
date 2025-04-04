@@ -1,13 +1,5 @@
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { AppSidebar } from "@/view/components/AppSidebar"
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/view/components/ui/breadcrumb"
 import { Separator } from "@/view/components/ui/separator"
 import {
   SidebarInset,

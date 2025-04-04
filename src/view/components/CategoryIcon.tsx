@@ -1,4 +1,3 @@
-import { CircleDollarSign } from "lucide-react"
 import { forwardRef } from "react"
 import { Icon, IconName } from "./Icon"
 

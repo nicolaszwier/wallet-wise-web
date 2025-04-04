@@ -25,7 +25,7 @@ const chartConfig = {
 
 } satisfies ChartConfig
 
-export function BalanceChartCard({balance, isLoading, currency}: CardProps) {
+export function BalanceChartCard({balance, currency}: CardProps) {
   const { t, i18n } = useTranslation()
   
   // const [data, setData] = useState<any>([])

@@ -12,7 +12,7 @@ interface CardProps {
   currency: string
 }
 
-export function TransactionsDueThisWeekCard({transactions, isLoading, currency}: CardProps) {
+export function TransactionsDueThisWeekCard({transactions, currency}: CardProps) {
   const { t, i18n } = useTranslation()
 
   return (

@@ -8,7 +8,7 @@ import { useTransactionsViewController } from "../useTransactionsViewController"
 import { ResponsiveDialog, ResponsiveDialogContent, ResponsiveDialogFooter, ResponsiveDialogHeader } from "@/view/components/ResponsiveDialog"
 import { DialogClose, DialogDescription, DialogTitle } from "@/view/components/ui/dialog"
 import { formatCurrency } from "@/app/utils/formatCurrency"
-import { Spinner } from "@/view/components/ui/Spinner"
+import { Spinner } from "@/view/components/ui/spinner"
 import { EditTransactionDialog } from "./EditTransactionDialog"
 
 export function ColumnsPeriodsView() {
