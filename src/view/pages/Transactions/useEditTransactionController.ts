@@ -57,7 +57,7 @@ export function useEditTransactionController() {
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     values: {
-      amount: activeTransaction?.amount.toString() ?? "0",
+      amount: Math.abs(activeTransaction?.amount ?? 0).toString(),
       description: activeTransaction?.description ?? "",
       date: activeTransaction ? new Date(activeTransaction.date) : new Date(),
       category: activeTransaction?.category || { id: '', description: '', userId: '', active: false, type: '', icon: '' },
