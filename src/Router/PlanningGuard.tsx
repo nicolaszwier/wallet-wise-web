@@ -1,9 +1,6 @@
+import { TransactionsProvider } from "@/app/contexts/TransactionsContext";
 import { usePlanning } from "@/app/hooks/usePlanning";
 import { Navigate, Outlet } from "react-router-dom";
-
-interface AuthGuardProps {
-  // isPrivate: boolean;
-}
 
 export function PlanningGuard() {
   const { selectedPlanning } = usePlanning();
@@ -12,5 +9,10 @@ export function PlanningGuard() {
     return <Navigate to="/select-planning" replace />;
   }
 
-  return <Outlet />;
+  return (
+    <TransactionsProvider>
+      <Outlet />
+    </TransactionsProvider>
+  );
+
 }
