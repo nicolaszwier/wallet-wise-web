@@ -28,3 +28,13 @@ export function addMonth(date: Date, qty: number): Date {
   date.setMonth(date.getMonth() + qty)
   return date
 }
+
+export function isAfterCurrentDate(date: Date): boolean {
+  const currentDate = new Date()
+  // Reset hours to compare just the dates
+  currentDate.setHours(0, 0, 0, 0)
+  const compareDate = new Date(date)
+  compareDate.setHours(0, 0, 0, 0)
+  
+  return compareDate > currentDate
+}
