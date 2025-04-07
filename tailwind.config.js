@@ -56,6 +56,7 @@ export default {
   				foreground: 'var(--destructive-foreground)'
   			},
   			border: 'var(--border)',
+  			'border-light': 'var(--border-light)',
   			input: 'var(--input)',
   			ring: 'var(--ring)',
   			chart: {

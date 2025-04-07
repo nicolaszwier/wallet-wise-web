@@ -23,7 +23,7 @@ export function AppLayout() {
       <AppSidebar />
       <SidebarInset className="flex flex-col">
         <header className="flex z-50 shrink-0 w-full items-center gap-2 bg-background rounded-xl">
-          <div className="flex items-center justify-between gap-2 px-4 flex-auto">
+          <div className="flex items-center justify-between gap-2 px-4 flex-auto flex-wrap">
             <div>
               <SidebarTrigger className="-ml-1" />
               {pathname === '/timeline' && (
@@ -48,8 +48,8 @@ export function AppLayout() {
             {pathname === '/timeline' && (
               <div className='flex gap-4 h-full'>
                 <BalanceCard variant='sm' title={t('global.currentBalance')} amount={selectedPlanning?.currentBalance || 0} currency={selectedPlanning?.currency || "BRL"}/>
-                <Separator orientation='vertical'  />
-                <BalanceCard variant='sm' title={t('global.expectedBalance')} amount={selectedPlanning?.expectedBalance || 0} currency={selectedPlanning?.currency || "BRL"}/>
+                {/* <Separator orientation='vertical'  />
+                <BalanceCard variant='sm' title={t('global.expectedBalance')} amount={selectedPlanning?.expectedBalance || 0} currency={selectedPlanning?.currency || "BRL"}/> */}
                </div>
             )}
              {pathname !== '/timeline' && (
