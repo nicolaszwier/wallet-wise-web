@@ -3,7 +3,6 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 import { formatDate, formatShortDate } from "@/app/utils/date"
 import { useTranslation } from "react-i18next"
 import { ColumnsPeriodContent } from "./ColumnsPeriodContent"
-import { NewTransactionDialog } from "./NewTransactionDialog"
 import { useTransactionsViewController } from "../useTransactionsViewController"
 import { ResponsiveDialog, ResponsiveDialogContent, ResponsiveDialogFooter, ResponsiveDialogHeader } from "@/view/components/ResponsiveDialog"
 import { DialogClose, DialogDescription, DialogTitle } from "@/view/components/ui/dialog"
@@ -34,8 +33,7 @@ export function ColumnsPeriodsView() {
 
   return (
     <div className="flex flex-col h-full w-full">
-      <div className="flex justify-between items-center flex-shrink-0 pl-2 pr-2">
-        <div className="md:min-w-36"></div>
+      <div className="flex justify-center items-center flex-shrink-0 pl-2 pr-2">
         <div className="flex justify-center items-center gap-2">
           <Button variant="ghost" size="icon" onClick={() => handlePreviousRanges()}>
             <ChevronLeft />
@@ -45,7 +43,6 @@ export function ColumnsPeriodsView() {
             <ChevronRight />
           </Button>
         </div>
-        <NewTransactionDialog />
       </div>
       <ResponsiveDialog open={isPayTransactionDialogOpen} onOpenChange={togglePayTransactionDialog}>
         <ResponsiveDialogContent>

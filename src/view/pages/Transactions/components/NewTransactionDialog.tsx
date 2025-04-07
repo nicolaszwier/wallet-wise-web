@@ -40,8 +40,9 @@ export function NewTransactionDialog() {
 
   return (
     <>
-      <Button size="xs" onClick={() => setDrawerOpen(true)}>
-        <Plus /> {t('transactions.addTransaction')}
+      <Button size="icon-lg" className="border border-border-light shadow-md bg-blue" onClick={() => setDrawerOpen(true)}>
+        <Plus size={30} strokeWidth={3} />
+         {/* {t('transactions.addTransaction')} */}
       </Button>
       <ResponsiveDialog open={drawerOpen} onOpenChange={setDrawerOpen}>
         <ResponsiveDialogContent className="flex justify-center">

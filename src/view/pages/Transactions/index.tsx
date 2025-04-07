@@ -5,6 +5,7 @@ import { ColumnsPeriodsView } from "./components/ColumnsPeriodsView";
 import { useTransactions } from "@/app/hooks/useTransactions";
 import SelectionModePopover from "./components/SelectionModePopover";
 import { TimelinePeriodsView } from "./components/TimelinePeriodsView";
+import { NewTransactionDialog } from "./components/NewTransactionDialog";
 
 export default function Timeline() {
   const {preferredView} = useApp()
@@ -26,6 +27,9 @@ export default function Timeline() {
           <SelectionModePopover />
         </div>
       )}
+      <div className="absolute bottom-8 right-8">
+        <NewTransactionDialog />
+      </div>
     </div>
   )
 }
