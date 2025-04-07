@@ -192,5 +192,7 @@ button:focus-visible {
     margin: 0;
     padding: 0;
     overflow: hidden;
+    height: 100vh;  /* standard definition (as fallback) */
+    height: 100dvh; /* dynamic vh will make the trick on iOS */
   }
 }
