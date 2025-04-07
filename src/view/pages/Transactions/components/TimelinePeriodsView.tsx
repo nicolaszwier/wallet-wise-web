@@ -2,14 +2,13 @@ import { Button } from "@/view/components/ui/button"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { formatDate, formatShortDate } from "@/app/utils/date"
 import { useTranslation } from "react-i18next"
-import { ColumnsPeriodContent } from "./ColumnsPeriodContent"
-import { NewTransactionDialog } from "./NewTransactionDialog"
 import { useTransactionsViewController } from "../useTransactionsViewController"
 import { ResponsiveDialog, ResponsiveDialogContent, ResponsiveDialogFooter, ResponsiveDialogHeader } from "@/view/components/ResponsiveDialog"
 import { DialogClose, DialogDescription, DialogTitle } from "@/view/components/ui/dialog"
 import { formatCurrency } from "@/app/utils/formatCurrency"
 import { Spinner } from "@/view/components/ui/spinner"
 import { EditTransactionDialog } from "./EditTransactionDialog"
+import { TimelinePeriodContent } from "./TimelinePeriodContent"
 
 export function TimelinePeriodsView() {
   const { t, i18n } = useTranslation() 
@@ -32,8 +31,7 @@ export function TimelinePeriodsView() {
 
   return (
     <div className="flex flex-col h-full w-full">
-      <div className="flex justify-between items-center flex-shrink-0 pl-2 pr-2">
-        <div className="md:min-w-36"></div>
+      <div className="flex justify-center items-center flex-shrink-0 pl-2 pr-2">
         <div className="flex justify-center items-center gap-2">
           <Button variant="ghost" size="icon" onClick={() => handlePreviousRanges()}>
             <ChevronLeft />
@@ -43,7 +41,6 @@ export function TimelinePeriodsView() {
             <ChevronRight />
           </Button>
         </div>
-        <NewTransactionDialog />
       </div>
       <ResponsiveDialog open={isPayTransactionDialogOpen} onOpenChange={togglePayTransactionDialog}>
         <ResponsiveDialogContent>
@@ -68,23 +65,24 @@ export function TimelinePeriodsView() {
       </ResponsiveDialog>
       <EditTransactionDialog />
       
-      <div className="flex-1 min-h-0 w-full relative p-2">
-          <div className="flex flex-col gap-6 h-full min-w-max p-4">
-            {visibleRanges.map((range, index) => (
-              <div key={index} className="flex flex-col justify-between flex-grow min-w-[300px] w-full max-w-[1280px] m-auto bg-background-secondary rounded-xl">
-                {range && 
-                  <ColumnsPeriodContent 
-                    dateRange={range} 
-                    isLoading={isLoading} 
-                    period={loadPeriodByDate(range.start, range.end)} 
-                    onSelectItem={handleSelectItem}
-                    onPayItem={openPayTransactionDialog}
-                    onEditItem={openEditTransactionDialog}
-                  />
-                }
-              </div>
-            ))}
-          </div>
+      <div className="flex-1 min-h-0 w-full relative p-6 h-full min-w-max flex-col flex">
+        {visibleRanges.map((range, index) => {
+          const period = loadPeriodByDate(range.start, range.end)
+          return (
+            <div key={index} className="">
+              {range && 
+                <TimelinePeriodContent 
+                  dateRange={range} 
+                  isLoading={isLoading} 
+                  period={period} 
+                  onSelectItem={handleSelectItem}
+                  onPayItem={openPayTransactionDialog}
+                  onEditItem={openEditTransactionDialog}
+                />
+              }
+            </div>
+          )
+        })}
       </div>
     </div>
   )
