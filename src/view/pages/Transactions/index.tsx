@@ -27,7 +27,7 @@ export default function Timeline() {
           <SelectionModePopover />
         </div>
       )}
-      <div className="absolute bottom-8 right-8">
+      <div className="fixed bottom-5 right-5 sm:bottom-9 sm:right-11">
         <NewTransactionDialog />
       </div>
     </div>
