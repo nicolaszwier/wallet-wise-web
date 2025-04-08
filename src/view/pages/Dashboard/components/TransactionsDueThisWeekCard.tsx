@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { TransactionItemSkeleton } from "@/view/components/TransactionItemSkeleton";
+import { Button } from "@/view/components/ui/button";
 
 interface CardProps {
   isLoading?: boolean;
@@ -17,15 +18,19 @@ export function TransactionsDueThisWeekCard({transactions, currency, isLoading}:
   const { t, i18n } = useTranslation()
 
   return (
-    <div className="rounded-xl border bg-background-secondary text-card-foreground shadow md:col-span-4 lg:col-span-3">
-      <Link to={'/timeline'} className="p-6 flex justify-between hover:bg-background-tertiary rounded-xl">
+    <div className="rounded-xl border bg-background-secondary text-card-foreground shadow md:col-span-4 lg:col-span-3 2xl:col-span-2">
+      <div className="p-6 flex justify-between rounded-xl ">
         <div className="flex flex-col space-y-1.5">
           <h1 className="font-semibold leading-none tracking-tight">{t('dashboard.pendingTransactionsCard.title')}</h1>
           <h2 className="text-sm text-muted-foreground">{t('dashboard.pendingTransactionsCard.description')}</h2>
         </div>
-        <ChevronRight className="text-muted-foreground"/>
-      </Link>
-      <div className="p-6 pt-0">
+        <Link to={'/timeline'}>
+          <Button size="icon" variant="ghost" className="hover:bg-background-tertiary">
+            <ChevronRight className="text-muted-foreground"/>
+          </Button>
+        </Link>
+      </div>
+      <div className="p-6 pt-0 max-h-[170px] overflow-y-auto">
         <ul className="flex flex-col gap-1">
           {isLoading && (
              <>
@@ -48,7 +53,6 @@ export function TransactionsDueThisWeekCard({transactions, currency, isLoading}:
                   </div>
                 </li>
               ))}
-
               {transactions.length === 0 && (
                 <div className="flex items-center justify-center h-full text-sm text-muted-foreground mt-4">
                 {t('transactions.noTransactionsPending')}  
