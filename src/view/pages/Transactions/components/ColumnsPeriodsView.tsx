@@ -75,7 +75,7 @@ export function ColumnsPeriodsView() {
         >
           <div className="flex gap-2 h-full min-w-max p-4">
             {visibleRanges.map((range, index) => (
-              <div key={index} className="flex flex-col justify-between flex-grow min-w-80 max-w-96 bg-background-secondary rounded-xl">
+              <div key={index} className="flex flex-col flex-grow min-w-80 max-w-96 bg-background-secondary rounded-xl">
                 {range && 
                   <ColumnsPeriodContent 
                     dateRange={range} 

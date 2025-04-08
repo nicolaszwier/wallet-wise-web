@@ -3,10 +3,10 @@ import { usePlanning } from "@/app/hooks/usePlanning"
 import { formatShortDate } from "@/app/utils/date"
 import { formatCurrency } from "@/app/utils/formatCurrency"
 import { Badge } from "@/view/components/ui/badge"
-import { Skeleton } from "@/view/components/ui/skeleton"
 import { useTranslation } from "react-i18next"
 import { TransactionListItem } from "./TransactionListItem"
 import { Period } from "@/app/models/Period"
+import { TransactionItemSkeleton } from "@/view/components/TransactionItemSkeleton"
 
 interface ComponentProps {
   dateRange: DateRange,
@@ -27,13 +27,11 @@ export function ResizablePeriodContent({ dateRange, isLoading, period }: Compone
         )}
       </div>
       {isLoading ? 
-        <div className="p-4 flex items-start space-x-4 flex-grow">
-          <Skeleton className="h-8 w-8 rounded-full" />
-          <div className="space-y-2">
-            <Skeleton className="h-3 w-[250px]" />
-            <Skeleton className="h-3 w-[250px]" />
-          </div>
-        </div> 
+        <>
+          <TransactionItemSkeleton />
+          <TransactionItemSkeleton />
+          <TransactionItemSkeleton />
+        </>
         : 
         <div className="flex-grow p-1">
           {period?.transactions.map((transaction) => (

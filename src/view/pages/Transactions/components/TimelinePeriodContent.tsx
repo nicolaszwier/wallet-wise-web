@@ -3,7 +3,6 @@ import { usePlanning } from "@/app/hooks/usePlanning"
 import { formatShortDate } from "@/app/utils/date"
 import { formatCurrency } from "@/app/utils/formatCurrency"
 import { Badge } from "@/view/components/ui/badge"
-import { Skeleton } from "@/view/components/ui/skeleton"
 import { useTranslation } from "react-i18next"
 import { TransactionListItem } from "./TransactionListItem"
 import { Period } from "@/app/models/Period"
@@ -11,6 +10,7 @@ import { useTransactions } from "@/app/hooks/useTransactions"
 import { Transaction } from "@/app/models/Transaction"
 import { sumPendingTransactionsByType } from "@/app/utils/transactions"
 import { TransactionType } from "@/app/models/TransactionType"
+import { TransactionItemSkeleton } from "@/view/components/TransactionItemSkeleton"
 
 interface ComponentProps {
   dateRange: DateRange,
@@ -27,8 +27,8 @@ export function TimelinePeriodContent({ dateRange, isLoading, period, onSelectIt
   const {selectedTransactions} = useTransactions()
 
   return (
-    <div className="mb-6">
-      <div className="flex flex-col justify-between flex-grow min-w-[300px] w-full max-w-[1280px] m-auto bg-background-secondary rounded-xl">
+    <div className="min-w-[300px] w-full max-w-[1280px] m-auto mb-6">
+      <div className="flex flex-col justify-between flex-grow  bg-background-secondary rounded-xl">
         <div className="p-1 text-xs rounded-t-xl rounded-tr-xl min-h-[26px] bg-background-tertiary font-semibold pl-2 sticky top-0 flex justify-between items-center">
           <span>{t('transactions.periodTitle', {start: formatShortDate(dateRange.start, i18n.language), end: formatShortDate(dateRange.end, i18n.language)})}</span>
           {dateRange.isCurrent && (
@@ -36,13 +36,11 @@ export function TimelinePeriodContent({ dateRange, isLoading, period, onSelectIt
           )}
         </div>
         {isLoading ? 
-          <div className="p-4 flex items-start space-x-4 flex-grow">
-            <Skeleton className="h-8 w-8 rounded-full" />
-            <div className="space-y-2">
-              <Skeleton className="h-3 w-[250px]" />
-              <Skeleton className="h-3 w-[250px]" />
-            </div>
-          </div> 
+          <div className="flex-grow">
+            <TransactionItemSkeleton />
+            <TransactionItemSkeleton />
+            <TransactionItemSkeleton />
+          </div>
           : 
           <div className="flex-grow p-1">
             {period?.transactions.map((transaction) => (

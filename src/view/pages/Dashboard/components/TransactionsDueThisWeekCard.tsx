@@ -5,6 +5,7 @@ import { CategoryIcon } from "@/view/components/CategoryIcon";
 import { useTranslation } from "react-i18next";
 import { ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { TransactionItemSkeleton } from "@/view/components/TransactionItemSkeleton";
 
 interface CardProps {
   isLoading?: boolean;
@@ -12,7 +13,7 @@ interface CardProps {
   currency: string
 }
 
-export function TransactionsDueThisWeekCard({transactions, currency}: CardProps) {
+export function TransactionsDueThisWeekCard({transactions, currency, isLoading}: CardProps) {
   const { t, i18n } = useTranslation()
 
   return (
@@ -26,19 +27,36 @@ export function TransactionsDueThisWeekCard({transactions, currency}: CardProps)
       </Link>
       <div className="p-6 pt-0">
         <ul className="flex flex-col gap-1">
-          {transactions.map((el) => (
-            <li key={el.id} className="flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left outline-none">  
-              <CategoryIcon icon={el.category?.icon ?? ''}/>
-              <div className="grid flex-1 text-left text-sm">
-                <span className="truncate font-semibold">{el.description}</span>
-                <span className="truncate text-xs">{el.category?.description}</span>
-              </div>
-              <div className="flex justify-end flex-col items-end text-right">
-                <span className="truncate text-xs">{formatDate(new Date(el.date), i18n.language)}</span>
-                <span className="truncate font-semibold">{formatCurrency(el.amount, currency, i18n.language)}</span>
-              </div>
-            </li>
-          ))}
+          {isLoading && (
+             <>
+              <TransactionItemSkeleton />
+              <TransactionItemSkeleton />
+              <TransactionItemSkeleton />
+            </>
+          )}
+          {!isLoading && (
+            <>
+              {transactions.map((el) => (
+                <li key={el.id} className="flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left outline-none">  
+                  <CategoryIcon icon={el.category?.icon ?? ''}/>
+                  <div className="grid flex-1 text-left text-sm">
+                    <span className="truncate font-semibold">{el.description}</span>
+                    <span className="truncate text-xs">{el.category?.description}</span>
+                  </div>
+                  <div className="flex justify-end flex-col items-end text-right">
+                    <span className="truncate text-xs">{formatDate(new Date(el.date), i18n.language)}</span>
+                    <span className="truncate font-semibold">{formatCurrency(el.amount, currency, i18n.language)}</span>
+                  </div>
+                </li>
+              ))}
+
+              {transactions.length === 0 && (
+                <div className="flex items-center justify-center h-full text-sm text-muted-foreground mt-4">
+                {t('transactions.noTransactionsPending')}  
+                </div>
+              )}
+            </>
+          )}
         </ul>
       </div>
     </div>
