@@ -103,6 +103,7 @@
      "periodFooterIncomePending": "To receive this week",
      "addTransaction": "Add new transaction",
      "noTransactions": "No transactions in this period",
+     "noTransactionsPending": "No transactions pending",
      "selectedTransaction": "{{amount}} selected transaction",
      "selectedTransactions": "{{amount}} selected transactions",
      "viewTypeSelector": {

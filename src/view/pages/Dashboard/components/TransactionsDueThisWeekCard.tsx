@@ -31,7 +31,6 @@ export function TransactionsDueThisWeekCard({transactions, currency, isLoading}:
              <>
               <TransactionItemSkeleton />
               <TransactionItemSkeleton />
-              <TransactionItemSkeleton />
             </>
           )}
           {!isLoading && (

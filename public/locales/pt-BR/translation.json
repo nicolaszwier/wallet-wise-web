@@ -103,6 +103,7 @@
      "periodFooterIncomePending": "Receber essa semana",
      "addTransaction": "Nova transação",
      "noTransactions": "Nenhuma transação nesse período",
+     "noTransactionsPending": "Nenhuma transação pendente",
      "selectedTransaction": "{{amount}} transação selecionada",
      "selectedTransactions": "{{amount}} transações selecionadas",
      "viewTypeSelector": {
