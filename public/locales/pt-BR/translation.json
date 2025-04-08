@@ -93,7 +93,8 @@
       "description": "Transações vencendo essa semana"
     },
     "monthlyBalanceCard": {
-      "title": "Balanço de {{month}}"
+      "title": "Balanço de {{month}}",
+      "description": "Total de receitas e despesas para o mês atual"
     }
   },
   "transactions": {

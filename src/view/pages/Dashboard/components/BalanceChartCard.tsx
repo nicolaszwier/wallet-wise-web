@@ -1,10 +1,13 @@
 import { Balance } from "@/app/models/Balance";
 import { getMonthFromDate } from "@/app/utils/date";
 import { formatCurrency } from "@/app/utils/formatCurrency";
+import { Button } from "@/view/components/ui/button";
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/view/components/ui/chart";
 import { Separator } from "@/view/components/ui/separator";
 import { Skeleton } from "@/view/components/ui/skeleton";
+import { ChevronRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
 interface CardProps {
@@ -30,9 +33,18 @@ export function BalanceChartCard({balance, currency, isLoading}: CardProps) {
   const { t, i18n } = useTranslation()
 
   return (
-      <div className="rounded-xl border bg-background-secondary text-back-foreground shadow md:col-span-4 lg:col-span-4">
-        <div className="flex flex-col space-y-1.5 p-6">
-          <h1 className="font-semibold leading-none tracking-tight">{t('dashboard.monthlyBalanceCard.title', {month: getMonthFromDate(new Date(), i18n.language)})}</h1>
+      <div className="rounded-xl border bg-background-secondary text-back-foreground shadow md:col-span-4 lg:col-span-4 xl:col-span-3">
+        
+        <div className="p-6 flex justify-between rounded-xl">
+          <div className="flex flex-col space-y-1.5">
+            <h1 className="font-semibold leading-none tracking-tight">{t('dashboard.monthlyBalanceCard.title', {month: getMonthFromDate(new Date(), i18n.language)})}</h1>
+            <h2 className="text-sm text-muted-foreground">{t('dashboard.monthlyBalanceCard.description')}</h2>
+          </div>
+          <Link to={'/balances'}>
+            <Button size="icon" variant="ghost" className="hover:bg-background-tertiary">
+              <ChevronRight className="text-muted-foreground"/>
+            </Button>
+          </Link>
         </div>
         <div className="p-6 pt-0 flex gap-8">
           {!isLoading && (

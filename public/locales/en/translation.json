@@ -93,7 +93,8 @@
       "description": "Transactions due this week"
     },
     "monthlyBalanceCard": {
-      "title": "{{month}} cash flow"
+      "title": "{{month}} cash flow",
+      "description": "Expenses and income totals for the current month"
     }
   },
   "transactions": {
