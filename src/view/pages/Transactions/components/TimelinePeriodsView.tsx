@@ -65,7 +65,7 @@ export function TimelinePeriodsView() {
       </ResponsiveDialog>
       <EditTransactionDialog />
       
-      <div className="flex-1 min-h-0 w-full relative p-6 h-full min-w-max flex-col flex">
+      <div className="flex-1 min-h-0 w-full relative p-4 h-full min-w-max flex-col flex">
         {visibleRanges.map((range, index) => {
           const period = loadPeriodByDate(range.start, range.end)
           return (

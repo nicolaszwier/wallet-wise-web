@@ -188,11 +188,16 @@ button:focus-visible {
   }
   html, body {
     @apply bg-background-secondary text-foreground;
-    height: 100%;
     margin: 0;
     padding: 0;
-    overflow: hidden;
+    overflow: auto;
     height: 100vh;  /* standard definition (as fallback) */
     height: 100dvh; /* dynamic vh will make the trick on iOS */
+  }
+
+  @media (min-width: 640px) {
+    html, body {
+      overflow: hidden;
+    }
   }
 }

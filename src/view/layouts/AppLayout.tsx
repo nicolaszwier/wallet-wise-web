@@ -19,7 +19,7 @@ export function AppLayout() {
   const { selectedPlanning } = usePlanning()
 
   return (
-    <SidebarProvider className="h-screen overflow-hidden">
+    <SidebarProvider className="sm:h-screen sm:overflow-hidden">
       <AppSidebar />
       <SidebarInset className="flex flex-col">
         <header className="flex z-50 shrink-0 w-full items-center gap-2 bg-background rounded-xl">
