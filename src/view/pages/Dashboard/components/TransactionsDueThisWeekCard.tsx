@@ -30,7 +30,7 @@ export function TransactionsDueThisWeekCard({transactions, currency, isLoading}:
           </Button>
         </Link>
       </div>
-      <div className="p-6 pt-0 max-h-[170px] overflow-y-auto">
+      <div className="p-4 pt-0 max-h-[170px] overflow-y-auto">
         <ul className="flex flex-col gap-1">
           {isLoading && (
              <>
