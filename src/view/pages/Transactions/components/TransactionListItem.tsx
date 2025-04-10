@@ -28,21 +28,21 @@ export function TransactionListItem({transaction, currency, isSelected, onSelect
 
   return (
     <div className={cn(
-      "flex w-full items-center gap-2 overflow-hidden rounded-md p-2 my-1 cursor-default text-left outline-none hover:bg-background-tertiary transition-all",
-      isSelected ? "bg-background hover:bg-background" : "bg-background-secondary " 
+      "flex w-full items-center gap-2 overflow-hidden rounded-md p-3 py-3 cursor-default text-left outline-none hover:bg-background-tertiary transition-all",
+      isSelected ? "bg-background-tertiary hover:bg-background-tertiary" : "bg-background-secondary " 
     )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     > 
     {!isHovered && !isSelected ? (
       <CategoryIcon 
-        size={16} 
+        size={17} 
         icon={transaction.category?.icon ?? ''}
         onClick={handleCheckedChange}
       />
     ) : (
-      <div className="w-[28px] flex justify-center">
-        <Checkbox className="w-6 h-6" checked={isSelected} onCheckedChange={handleCheckedChange}/>
+      <div className="w-[33px] flex justify-center">
+        <Checkbox className="w-7 h-7" checked={isSelected} onCheckedChange={handleCheckedChange}/>
       </div>
     )}
       <div className="grid flex-1 text-left">
@@ -68,7 +68,7 @@ export function TransactionListItem({transaction, currency, isSelected, onSelect
         </div>
       </div>
       {(!isHovered || isSelected) && (
-        <div className="flex justify-end flex-col items-end text-right itemmm-hover:invisible">
+        <div className="flex justify-end flex-col items-end text-right">
           <span className="truncate text-xs">{formatDate(new Date(transaction.date), i18n.language)}</span>
           <span className="truncate text-xs font-semibold">{formatCurrency(transaction.amount, currency, i18n.language)}</span>
         </div>

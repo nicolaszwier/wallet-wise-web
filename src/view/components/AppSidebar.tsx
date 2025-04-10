@@ -20,7 +20,7 @@ import {
   Send
 } from "lucide-react"
 import * as React from "react"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import { Logo } from "./Logo"
 import { useTranslation } from "react-i18next"
 
@@ -58,9 +58,10 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { t } = useTranslation()
-  const {setOpenMobile} = useSidebar()
+  const { setOpenMobile } = useSidebar()
+  const { pathname } = useLocation()
   return (
-    <Sidebar variant="inset" collapsible="icon" {...props}>
+    <Sidebar variant="sidebar" collapsible="icon" {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -85,7 +86,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarMenu>
               {data.items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild onClick={() => {setOpenMobile(false)}}>
+                  <SidebarMenuButton asChild onClick={() => {setOpenMobile(false)}} isActive={pathname == item.url}>
                     <Link to={item.url}>
                       <item.icon />
                       <span>{t(item.title)}</span>

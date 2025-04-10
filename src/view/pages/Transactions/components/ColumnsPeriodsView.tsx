@@ -54,11 +54,11 @@ export function ColumnsPeriodsView() {
               {t('transactions.payTransactionDialog.description', {description: activeTransaction?.description, amount: formatCurrency(Math.abs(activeTransaction?.amount ?? 0), selectedPlanning?.currency ?? 'BRL', i18n.language)})}
             </DialogDescription>
           </ResponsiveDialogHeader>
-          <ResponsiveDialogFooter>
+          <ResponsiveDialogFooter className="flex flex-col-reverse">
             <DialogClose asChild>
               <Button variant="ghost">{t('global.cta.cancel')}</Button>
             </DialogClose>
-            <Button variant="secondary" disabled={isPendingPayTransaction} onClick={handlePayTransaction}>
+            <Button disabled={isPendingPayTransaction} onClick={handlePayTransaction}>
               {isPendingPayTransaction && <Spinner />}  
               {t('global.cta.pay')}
             </Button>

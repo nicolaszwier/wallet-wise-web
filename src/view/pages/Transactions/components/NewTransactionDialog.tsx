@@ -171,14 +171,14 @@ export function NewTransactionDialog() {
                   
                 </div>
               </div>
-              <ResponsiveDialogFooter>
+              <ResponsiveDialogFooter className="sm:flex flex-col-reverse px-4">
+                <DrawerClose asChild>
+                  <Button variant="ghost">Cancel</Button>
+                </DrawerClose>
                 <Button disabled={isPending} type="submit" className="w-full">
                   {isPending && <Spinner />}
                   {t('global.cta.submit')}
                 </Button>
-                <DrawerClose asChild>
-                  <Button variant="outline">Cancel</Button>
-                </DrawerClose>
               </ResponsiveDialogFooter>
             </div>
           </form>  

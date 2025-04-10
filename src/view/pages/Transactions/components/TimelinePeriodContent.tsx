@@ -28,13 +28,13 @@ export function TimelinePeriodContent({ dateRange, isLoading, period, onSelectIt
 
   return (
     <div className="min-w-[300px] w-full max-w-[1280px] m-auto mb-6">
-      <div className="flex flex-col justify-between flex-grow  bg-background-secondary rounded-xl">
-        <div className="p-1 text-xs rounded-t-xl rounded-tr-xl min-h-[26px] bg-background-tertiary font-semibold pl-2 sticky top-0 flex justify-between items-center">
+        <div className="p-2 text-xs rounded-t-xl rounded-tr-xl min-h-[26px] font-semibold pl-2 sticky top-0 flex justify-between items-center">
           <span>{t('transactions.periodTitle', {start: formatShortDate(dateRange.start, i18n.language), end: formatShortDate(dateRange.end, i18n.language)})}</span>
           {dateRange.isCurrent && (
             <Badge variant="default" className="truncate">{t('global.currentPeriod')}</Badge>
           )}
         </div>
+      <div className="flex flex-col justify-between flex-grow  bg-background-secondary rounded-xl">
         {isLoading ? 
           <div className="flex-grow">
             <TransactionItemSkeleton />
@@ -42,7 +42,7 @@ export function TimelinePeriodContent({ dateRange, isLoading, period, onSelectIt
             <TransactionItemSkeleton />
           </div>
           : 
-          <div className="flex-grow p-1">
+          <>
             {period?.transactions.map((transaction) => (
               <TransactionListItem 
                 key={transaction.id} 
@@ -60,7 +60,7 @@ export function TimelinePeriodContent({ dateRange, isLoading, period, onSelectIt
                 {t('transactions.noTransactions')}  
               </div>
             )}
-          </div>
+          </>
         }
       </div>
       {period && period?.transactions.length > 0 && (
