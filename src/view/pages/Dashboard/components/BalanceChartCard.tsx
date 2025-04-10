@@ -34,7 +34,6 @@ export function BalanceChartCard({balance, currency, isLoading}: CardProps) {
 
   return (
       <div className="rounded-xl border bg-background-secondary text-back-foreground shadow md:col-span-4 lg:col-span-4 xl:col-span-3">
-        
         <div className="p-6 flex justify-between rounded-xl">
           <div className="flex flex-col space-y-1.5">
             <h1 className="font-semibold leading-none tracking-tight">{t('dashboard.monthlyBalanceCard.title', {month: getMonthFromDate(new Date(), i18n.language)})}</h1>
@@ -71,8 +70,8 @@ export function BalanceChartCard({balance, currency, isLoading}: CardProps) {
           )}
           {isLoading && (
             <div className="min-w-[140px] sm:min-w-[200px] md:min-w-[260px] flex gap-7 p-3">
-              <Skeleton className="w-[100px] h-[125px]"/>
-              <Skeleton className="w-[100px] h-[125px]"/>
+              <Skeleton className="w-[75px] sm:w-[100px] h-[125px]"/>
+              <Skeleton className="w-[75px] sm:w-[100px] h-[125px]"/>
             </div>
           )}
           <div className="flex flex-col justify-center text-center w-full">

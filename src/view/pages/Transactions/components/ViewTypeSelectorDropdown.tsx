@@ -38,7 +38,7 @@ export function ViewTypeSelectorDropdown() {
         <DropdownMenuSeparator />
         <DropdownMenuRadioGroup value={selected} onValueChange={handleChangeSelected}>
           <DropdownMenuRadioItem value={ViewType.COLUMNS.toString()}>{t('transactions.viewTypeSelector.options.columns')}</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value={ViewType.RESIZABLE.toString()}>{t('transactions.viewTypeSelector.options.resizable')}</DropdownMenuRadioItem>
+          {/* <DropdownMenuRadioItem value={ViewType.RESIZABLE.toString()}>{t('transactions.viewTypeSelector.options.resizable')}</DropdownMenuRadioItem> */}
           <DropdownMenuRadioItem value={ViewType.TIMELINE.toString()}>{t('transactions.viewTypeSelector.options.timeline')}</DropdownMenuRadioItem>
         </DropdownMenuRadioGroup>
       </DropdownMenuContent>

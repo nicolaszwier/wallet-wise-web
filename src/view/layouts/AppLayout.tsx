@@ -22,7 +22,7 @@ export function AppLayout() {
     <SidebarProvider className="sm:h-screen sm:overflow-hidden">
       <AppSidebar />
       <SidebarInset className="flex flex-col">
-        <header className="flex z-50 shrink-0 w-full items-center gap-2 bg-background rounded-xl">
+        <header className="flex z-50 shrink-0 w-full items-center gap-2 bg-background rounded-xl min-h-16">
           <div className="flex items-center justify-between gap-2 px-4 flex-auto flex-wrap">
             <div>
               <SidebarTrigger className="-ml-1" />
@@ -59,19 +59,8 @@ export function AppLayout() {
         </header>
         <div className="flex flex-1 flex-col gap-4 pt-0 overflow-auto">
           <Outlet />
-          {/* <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-            <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
-          </div>
-          <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" /> */}
         </div>
       </SidebarInset>
     </SidebarProvider>
-    // <div className="flex w-full h-full">
-    //   <div className="w-full h-full flex items-center justify-center flex-col">
-    //       <Outlet />
-    //   </div>
-    // </div>
   );
 }

@@ -9,7 +9,8 @@ import {
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
-  SidebarMenuItem
+  SidebarMenuItem,
+  useSidebar
 } from "@/view/components/ui/sidebar"
 import {
   ChartPie,
@@ -38,17 +39,17 @@ const data = {
   ],
   items: [
     {
-      name: "global.menu.dashboard",
+      title: "global.menu.dashboard",
       url: "/",
       icon: LayoutDashboard,
     },
     {
-      name: "global.menu.timeline",
+      title: "global.menu.timeline",
       url: "/timeline",
       icon: CircleDollarSign,
     },
     {
-      name: "global.menu.monthlyBalances",
+      title: "global.menu.monthlyBalances",
       url: "/balances",
       icon: ChartPie,
     },
@@ -57,8 +58,9 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { t } = useTranslation()
+  const {setOpenMobile} = useSidebar()
   return (
-    <Sidebar variant="inset" {...props}>
+    <Sidebar variant="inset" collapsible="icon" {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -82,11 +84,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarGroupContent>
             <SidebarMenu>
               {data.items.map((item) => (
-                <SidebarMenuItem key={item.name}>
-                  <SidebarMenuButton asChild>
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild onClick={() => {setOpenMobile(false)}}>
                     <Link to={item.url}>
                       <item.icon />
-                      <span>{t(item.name)}</span>
+                      <span>{t(item.title)}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
