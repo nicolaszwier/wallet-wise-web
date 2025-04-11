@@ -4,7 +4,7 @@ import * as React from "react"
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
 import { Button } from "./ui/button"
 import { Drawer, DrawerContent, DrawerTrigger } from "./ui/drawer"
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "./ui/command"
+import { Command, CommandEmpty, CommandInput, CommandItem, CommandList } from "./ui/command"
 import { useTranslation } from "react-i18next"
 import { useIsMobile } from "@/app/hooks/useIsMobile"
 import { Category } from "@/app/models/Category"
@@ -117,26 +117,24 @@ function List({
       <CommandInput placeholder={t('global.filterCategories')} />
       <CommandList>
         <CommandEmpty>{t('global.noResults')}</CommandEmpty>
-        <CommandGroup>
-          {data.map((item) => (
-            <CommandItem
-              key={item.id}
-              value={item.description}
-              onSelect={(value) => {
-                setSelectedCategory(
-                  data.find((category) => category.description === value) || null
-                )
-                setOpen(false)
-              }}
-            >
-              <CategoryIcon
-                size={15} 
-                icon={item?.icon ?? ''}
-              />
-              {item.description}
-            </CommandItem>
-          ))}
-        </CommandGroup>
+        {data.map((item) => (
+          <CommandItem
+            key={item.id}
+            value={item.description}
+            onSelect={(value) => {
+              setSelectedCategory(
+                data.find((category) => category.description === value) || null
+              )
+              setOpen(false)
+            }}
+          >
+            <CategoryIcon
+              size={15} 
+              icon={item?.icon ?? ''}
+            />
+            {item.description}
+          </CommandItem>
+        ))}
       </CommandList>
     </Command>
   )

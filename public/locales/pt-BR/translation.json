@@ -122,6 +122,7 @@
         "titleEditExpense": "Alterar despesa",
         "amount": "Valor",
         "description": "Descrição",
+        "descriptionPlaceholder": "Almoço...",
         "date": "Data",
         "category": "Categoria",
         "isPaid": "Está pago"

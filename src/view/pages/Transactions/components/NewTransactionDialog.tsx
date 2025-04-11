@@ -106,6 +106,7 @@ export function NewTransactionDialog() {
                     <Input
                       id="description"
                       type="text"
+                      placeholder={t('transactions.forms.descriptionPlaceholder')}
                       // required
                       {...register('description')}
                     />
@@ -138,7 +139,7 @@ export function NewTransactionDialog() {
                             mode="single"
                             selected={value}
                             onSelect={onChange}
-                            initialFocus
+                            // initialFocus
                           />
                         </PopoverContent>
                       </Popover>

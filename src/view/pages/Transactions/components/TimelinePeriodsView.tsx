@@ -1,6 +1,6 @@
 import { Button } from "@/view/components/ui/button"
-import { ChevronLeft, ChevronRight } from "lucide-react"
-import { formatDate, formatShortDate } from "@/app/utils/date"
+// import { ChevronLeft, ChevronRight } from "lucide-react"
+// import { formatDate, formatShortDate } from "@/app/utils/date"
 import { useTranslation } from "react-i18next"
 import { useTransactionsViewController } from "../useTransactionsViewController"
 import { ResponsiveDialog, ResponsiveDialogContent, ResponsiveDialogFooter, ResponsiveDialogHeader } from "@/view/components/ResponsiveDialog"
@@ -20,8 +20,8 @@ export function TimelinePeriodsView() {
     activeTransaction,
     isPendingPayTransaction,
     handlePayTransaction,
-    handleNextRanges, 
-    handlePreviousRanges, 
+    // handleNextRanges, 
+    // handlePreviousRanges, 
     loadPeriodByDate,
     handleSelectItem,
     togglePayTransactionDialog,
@@ -32,7 +32,7 @@ export function TimelinePeriodsView() {
   return (
     <div className="flex flex-col h-full w-full">
       <div className="flex justify-center items-center flex-shrink-0 pl-2 pr-2">
-        <div className="flex justify-center items-center gap-2">
+        {/* <div className="flex justify-center items-center gap-2">
           <Button variant="ghost" size="icon" onClick={() => handlePreviousRanges()}>
             <ChevronLeft />
           </Button>
@@ -40,7 +40,7 @@ export function TimelinePeriodsView() {
           <Button variant="ghost" size="icon" onClick={() => handleNextRanges()}>
             <ChevronRight />
           </Button>
-        </div>
+        </div> */}
       </div>
       <ResponsiveDialog open={isPayTransactionDialogOpen} onOpenChange={togglePayTransactionDialog}>
         <ResponsiveDialogContent>

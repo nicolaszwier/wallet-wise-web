@@ -122,6 +122,7 @@
       "titleEditExpense": "Update expense",
       "amount": "Amount",
       "description": "Description",
+      "descriptionPlaceholder": "Groceries...",
       "date": "Date",
       "category": "Category",
       "isPaid": "Is paid"
