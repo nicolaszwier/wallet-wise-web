@@ -139,7 +139,6 @@ export function NewTransactionDialog() {
                             mode="single"
                             selected={value}
                             onSelect={onChange}
-                            // initialFocus
                           />
                         </PopoverContent>
                       </Popover>
