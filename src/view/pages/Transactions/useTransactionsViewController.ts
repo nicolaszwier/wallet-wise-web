@@ -138,7 +138,7 @@ export function useTransactionsViewController() {
       await deleteTransaction(activeTransaction);
       queryClient.invalidateQueries({queryKey: ['planning']});
       toast.success(t('transactions.actionsMessages.deleteSuccess'), {position: "bottom-center", duration: 6000,})
-      togglePayTransactionDialog(false);
+      toggleDeleteTransactionDialog(false);
     } catch (err) {      
       console.error('Transaction delete error:', err);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
