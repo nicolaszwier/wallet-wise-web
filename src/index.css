@@ -82,7 +82,7 @@ button:focus-visible {
       --background: hsl(248, 100%, 92%);
       --background-secondary: hsl(249, 100%, 96%); 
       --background-tertiary:  hsl(0, 0%, 100%);
-      --green: hsl(177, 52%, 45%);
+      --green: hsl(177, 97%, 40%, 1);
       --orange: hsl(21, 99%, 62%);
       --pink: hsl(321, 99%, 62%);
       --purple: hsl(261, 99%, 62%);
