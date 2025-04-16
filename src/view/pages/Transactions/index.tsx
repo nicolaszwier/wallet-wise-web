@@ -23,11 +23,11 @@ export default function Timeline() {
         <ColumnsPeriodsView />
       )}
       {isSelectionMode && (
-        <div className="w-full flex justify-center absolute bottom-5 p-3">
+        <div className="fixed w-full flex justify-center bottom-5 p-3 z-40">
           <SelectionModePopover />
         </div>
       )}
-      <div className="fixed bottom-5 right-5 sm:bottom-9 sm:right-11">
+      <div className="fixed bottom-5 right-5 sm:bottom-9 sm:right-11 z-30">
         <NewTransactionDialog />
       </div>
     </div>

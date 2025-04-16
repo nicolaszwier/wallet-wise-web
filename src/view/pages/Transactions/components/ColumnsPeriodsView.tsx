@@ -18,16 +18,21 @@ export function ColumnsPeriodsView() {
     isLoading, 
     scrollContainerRef,
     isPayTransactionDialogOpen,
+    isDeleteTransactionDialogOpen,
     activeTransaction,
     isPendingPayTransaction,
+    isPendingDeleteTransaction,
     handlePayTransaction,
-    handleNextRanges, 
+    handleNextRanges,
+    handleDeleteTransaction,
     handlePreviousRanges, 
     loadPeriodByDate,
     handleSelectItem,
     handleMouseDown,
     togglePayTransactionDialog,
+    toggleDeleteTransactionDialog,
     openPayTransactionDialog,
+    openDeleteTransactionDialog,
     openEditTransactionDialog
   } = useTransactionsViewController()
 
@@ -65,6 +70,27 @@ export function ColumnsPeriodsView() {
           </ResponsiveDialogFooter>
         </ResponsiveDialogContent>
       </ResponsiveDialog>
+      <ResponsiveDialog open={isDeleteTransactionDialogOpen} onOpenChange={toggleDeleteTransactionDialog}>
+        <ResponsiveDialogContent>
+          <ResponsiveDialogHeader>
+            <DialogTitle>
+              {t('transactions.deleteTransactionDialog.title')}
+            </DialogTitle>
+            <DialogDescription>
+              {t('transactions.deleteTransactionDialog.description', {description: activeTransaction?.description, amount: formatCurrency(Math.abs(activeTransaction?.amount ?? 0), selectedPlanning?.currency ?? 'BRL', i18n.language)})}
+            </DialogDescription>
+          </ResponsiveDialogHeader>
+          <ResponsiveDialogFooter className="flex flex-col-reverse">
+            <DialogClose asChild>
+              <Button variant="ghost">{t('global.cta.cancel')}</Button>
+            </DialogClose>
+            <Button disabled={isPendingDeleteTransaction} onClick={handleDeleteTransaction}>
+              {isPendingDeleteTransaction && <Spinner />}  
+              {t('global.cta.delete')}
+            </Button>
+          </ResponsiveDialogFooter>
+        </ResponsiveDialogContent>
+      </ResponsiveDialog>
       <EditTransactionDialog />
       
       <div className="flex-1 min-h-0 w-full relative p-2 pr-8">
@@ -84,6 +110,7 @@ export function ColumnsPeriodsView() {
                     onSelectItem={handleSelectItem}
                     onPayItem={openPayTransactionDialog}
                     onEditItem={openEditTransactionDialog}
+                    onDeleteItem={openDeleteTransactionDialog}
                   />
                 }
               </div>

@@ -17,16 +17,21 @@ export function TimelinePeriodsView() {
     visibleRanges, 
     isLoading, 
     isPayTransactionDialogOpen,
+    isDeleteTransactionDialogOpen,
     activeTransaction,
     isPendingPayTransaction,
+    isPendingDeleteTransaction,
     handlePayTransaction,
+    handleDeleteTransaction,
     // handleNextRanges, 
     // handlePreviousRanges, 
     loadPeriodByDate,
     handleSelectItem,
     togglePayTransactionDialog,
+    toggleDeleteTransactionDialog,
     openPayTransactionDialog,
-    openEditTransactionDialog
+    openEditTransactionDialog,
+    openDeleteTransactionDialog
   } = useTransactionsViewController()
 
   return (
@@ -63,6 +68,28 @@ export function TimelinePeriodsView() {
           </ResponsiveDialogFooter>
         </ResponsiveDialogContent>
       </ResponsiveDialog>
+      <ResponsiveDialog open={isDeleteTransactionDialogOpen} onOpenChange={toggleDeleteTransactionDialog}>
+        <ResponsiveDialogContent>
+          <ResponsiveDialogHeader>
+            <DialogTitle>
+              {t('transactions.deleteTransactionDialog.title')}
+            </DialogTitle>
+            <DialogDescription>
+              {t('transactions.deleteTransactionDialog.description', {description: activeTransaction?.description, amount: formatCurrency(Math.abs(activeTransaction?.amount ?? 0), selectedPlanning?.currency ?? 'BRL', i18n.language)})}
+            </DialogDescription>
+          </ResponsiveDialogHeader>
+          <ResponsiveDialogFooter className="flex flex-col-reverse">
+            <DialogClose asChild>
+              <Button variant="ghost">{t('global.cta.cancel')}</Button>
+            </DialogClose>
+            <Button disabled={isPendingDeleteTransaction} onClick={handleDeleteTransaction}>
+              {isPendingDeleteTransaction && <Spinner />}  
+              {t('global.cta.delete')}
+            </Button>
+          </ResponsiveDialogFooter>
+        </ResponsiveDialogContent>
+      </ResponsiveDialog>
+
       <EditTransactionDialog />
       
       <div className="flex-1 min-h-0 w-full relative p-4 h-full min-w-max flex-col flex">
@@ -78,6 +105,7 @@ export function TimelinePeriodsView() {
                   onSelectItem={handleSelectItem}
                   onPayItem={openPayTransactionDialog}
                   onEditItem={openEditTransactionDialog}
+                  onDeleteItem={openDeleteTransactionDialog}
                 />
               }
             </div>

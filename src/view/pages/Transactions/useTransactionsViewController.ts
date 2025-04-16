@@ -3,7 +3,7 @@ import { usePlanning } from "@/app/hooks/usePlanning";
 import { useTransactions } from "@/app/hooks/useTransactions";
 import { Period } from "@/app/models/Period";
 import { Transaction } from "@/app/models/Transaction";
-import { PeriodRequestFilters, periodsService } from "@/services/periodsService";
+import { periodsService } from "@/services/periodsService";
 import { transactionsService } from "@/services/transactionsService";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
@@ -19,19 +19,23 @@ export function useTransactionsViewController() {
   const {ranges, loadNextRanges, loadPreviousRanges} = useDateRanges()
   const {selectedPlanning} = usePlanning()
   const { 
+    filters,
     activeTransaction,
     isPayTransactionDialogOpen,
+    isDeleteTransactionDialogOpen,
+    setFilters,
     selectTransaction,
     toggleEditTransactionDialog,
     togglePayTransactionDialog,
+    toggleDeleteTransactionDialog,
     setActiveTransaction, 
   } = useTransactions()
   const queryClient = useQueryClient();
-  const [filters, setFilters] = useState<PeriodRequestFilters>({
-    sortOrder: 'desc',
-    startDate: ranges[0]?.start.toISOString(),
-    endDate: ranges[ranges.length - 1]?.end.toISOString()
-  });
+  // const [filters, setFilters] = useState<PeriodRequestFilters>({
+  //   sortOrder: 'desc',
+  //   startDate: ranges[0]?.start.toISOString(),
+  //   endDate: ranges[ranges.length - 1]?.end.toISOString()
+  // });
   
   const { data, isFetching, refetch } = useQuery({
     queryKey: ['periods', selectedPlanning?.id, filters.startDate, filters.endDate],
@@ -99,7 +103,12 @@ export function useTransactionsViewController() {
     setActiveTransaction(transaction);
   }
 
-  const { mutateAsync, isPending: isPendingPayTransaction, error } = useMutation({
+  const openDeleteTransactionDialog = (transaction: Transaction) => {
+    toggleDeleteTransactionDialog(true)
+    setActiveTransaction(transaction);
+  }
+
+  const { mutateAsync: payTransaction, isPending: isPendingPayTransaction, error } = useMutation({
     mutationFn: async (data: Transaction | null) => {
       return transactionsService.pay(data?.periodId ?? "", data?.id ?? "")
     }
@@ -107,7 +116,7 @@ export function useTransactionsViewController() {
 
   const handlePayTransaction = async () => {
     try {
-      await mutateAsync(activeTransaction);
+      await payTransaction(activeTransaction);
       queryClient.invalidateQueries({queryKey: ['planning']});
       toast.success(t('transactions.actionsMessages.paySuccess'), {position: "bottom-center", duration: 6000,})
       togglePayTransactionDialog(false);
@@ -117,6 +126,26 @@ export function useTransactionsViewController() {
       toast.error((error as any)?.response?.data?.message || t('transactions.actionsMessages.payError'), {position: "bottom-center", duration: 6000})
     }
   }
+
+  const { mutateAsync: deleteTransaction, isPending: isPendingDeleteTransaction, error: errorDelete } = useMutation({
+    mutationFn: async (data: Transaction | null) => {
+      return transactionsService.remove(data?.periodId ?? "", data?.id ?? "")
+    }
+  })
+
+  const handleDeleteTransaction = async () => {
+    try {
+      await deleteTransaction(activeTransaction);
+      queryClient.invalidateQueries({queryKey: ['planning']});
+      toast.success(t('transactions.actionsMessages.deleteSuccess'), {position: "bottom-center", duration: 6000,})
+      togglePayTransactionDialog(false);
+    } catch (err) {      
+      console.error('Transaction delete error:', err);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      toast.error((errorDelete as any)?.response?.data?.message || t('transactions.actionsMessages.deleteError'), {position: "bottom-center", duration: 6000})
+    }
+  }
+
 
   // Create a simpler drag-to-scroll implementation
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -179,10 +208,15 @@ export function useTransactionsViewController() {
     isLoading: isFetching,
     scrollContainerRef,
     isPayTransactionDialogOpen,
+    isDeleteTransactionDialogOpen,
     activeTransaction,
     isPendingPayTransaction,
+    isPendingDeleteTransaction,
+    handleDeleteTransaction,
     handlePayTransaction,
     togglePayTransactionDialog,
+    toggleDeleteTransactionDialog,
+    openDeleteTransactionDialog,
     openPayTransactionDialog,
     openEditTransactionDialog,
     loadPeriodByDate,

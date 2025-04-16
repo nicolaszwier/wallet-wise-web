@@ -13,7 +13,7 @@ export default function SelectionModePopover() {
   const { t, i18n } = useTranslation()
 
   return (
-    <Card className="bg-background-tertiary min-w[250px] w-full max-w-[500px] shadow-lg">
+    <Card className="bg-background-tertiary min-w[250px] w-full max-w-[500px] shadow-lg border-muted border">
       <CardHeader className="flex justify-between">
       </CardHeader>
       <CardContent>

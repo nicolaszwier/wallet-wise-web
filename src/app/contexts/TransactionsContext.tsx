@@ -1,15 +1,23 @@
 import { createContext, Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
 import { Transaction } from "../models/Transaction";
+import { PeriodRequestFilters } from "@/services/periodsService";
+import { getRelativeDate } from "../utils/date";
 
 interface TransactionsContextValue {
+  filters: PeriodRequestFilters
   isSelectionMode: boolean;
   selectedTransactionsTotal: number;
   selectedTransactions: Transaction[];
   activeTransaction: null | Transaction;
+  isFilterTransactionsDialogOpen: boolean;
   isPayTransactionDialogOpen: boolean;
+  isDeleteTransactionDialogOpen: boolean;
   isEditTransactionDialogOpen: boolean;
+  setFilters: Dispatch<SetStateAction<PeriodRequestFilters>>,
   setActiveTransaction(transaction: null | Transaction): void
+  toggleFilterTransactionsDialog: Dispatch<SetStateAction<boolean>>,
   togglePayTransactionDialog: Dispatch<SetStateAction<boolean>>,
+  toggleDeleteTransactionDialog: Dispatch<SetStateAction<boolean>>,
   toggleEditTransactionDialog: Dispatch<SetStateAction<boolean>>,
   selectTransaction(transaction: Transaction): void;
   clearSelectedTransactions(): void;
@@ -22,8 +30,16 @@ export function TransactionsProvider({ children }: { children: React.ReactNode }
   const [selectedTransactions, setSelectedTransactions] = useState<Transaction[]>([]);
   const [selectedTransactionsTotal, setSelectedTransactionsTotal] = useState(0);
   const [isPayTransactionDialogOpen, setIsPayTransactionDialogOpen] = useState(false);
+  const [isDeleteTransactionDialogOpen, setIsDeleteTransactionDialogOpen] = useState(false);
   const [isEditTransactionDialogOpen, setIsEditTransactionDialogOpen] = useState(false);
+  const [isFilterTransactionsDialogOpen, setIsFilterTransactionsDialogOpen] = useState(false);
   const [activeTransaction, setActiveTransaction] = useState<null | Transaction>(null);
+  const [filters, setFilters] = useState<PeriodRequestFilters>({
+    sortOrder: 'desc',
+    startDate: getRelativeDate(new Date(), -2, 'month').toISOString(),
+    endDate: getRelativeDate(new Date(), 3, 'month').toISOString()
+  });
+  
 
   const selectTransaction = (transaction: Transaction) => {
     setSelectedTransactions(prevState => {
@@ -65,30 +81,26 @@ export function TransactionsProvider({ children }: { children: React.ReactNode }
     setSelectedTransactionsTotal(0);
   }, []);
 
-  // const openPayTransactionDialog = useCallback((isOpen:boolean, transaction: Transaction) => {
-  //   setActiveTransaction(transaction)
-  //   setIsPayTransactionDialogOpen(isOpen)
-  // }, []);
-
-  // const closePayTransactionDialog = useCallback(() => {
-  //   setActiveTransaction(null)
-  //   setIsPayTransactionDialogOpen(false)
-  // }, []);
-
   return (
     <TransactionsContext.Provider
       value={{
+        filters,
         selectedTransactions,
         activeTransaction,
         isSelectionMode,
         selectedTransactionsTotal,
         isPayTransactionDialogOpen,
+        isDeleteTransactionDialogOpen,
         isEditTransactionDialogOpen,
+        isFilterTransactionsDialogOpen,
+        setFilters,
         selectTransaction,
         setActiveTransaction,
         clearSelectedTransactions,
         togglePayTransactionDialog: setIsPayTransactionDialogOpen,
-        toggleEditTransactionDialog: setIsEditTransactionDialogOpen
+        toggleDeleteTransactionDialog: setIsDeleteTransactionDialogOpen,
+        toggleEditTransactionDialog: setIsEditTransactionDialogOpen,
+        toggleFilterTransactionsDialog: setIsFilterTransactionsDialogOpen
       }}
     >
       {children}

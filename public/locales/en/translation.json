@@ -131,11 +131,20 @@
     "title": "Confirm payment?",
     "description": "This action will change the status of {{description}} transaction of {{amount}} to paid."
    },
+   "deleteTransactionDialog": {
+    "title": "Delete transaction?",
+    "description": "This action will permanently delete the {{description}} transaction of {{amount}}."
+   },
+   "filterDialog": {
+      "title": "Filter transactions"
+     },
    "actionsMessages": {
     "updateSuccess": "Transaction updated successfully",
     "updateError": "An error occurred while updating the transaction. Please try again.",
     "paySuccess": "Transaction paid successfully",
-    "payError": "An error occurred while paying the transaction. Please try again."
+    "payError": "An error occurred while paying the transaction. Please try again.",
+    "deleteSuccess": "Transaction deleted successfully",
+    "deleteError": "An error occurred while deleting the transaction. Please try again."
    }
   },
   "a11y": {

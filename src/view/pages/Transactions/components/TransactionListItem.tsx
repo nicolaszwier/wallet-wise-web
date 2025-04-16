@@ -18,9 +18,10 @@ interface ComponentProps {
   onSelect?: (transaction: Transaction) => void
   onPay?: (transaction: Transaction) => void
   onEdit?: (transaction: Transaction) => void
+  onDelete?: (transaction: Transaction) => void
 }
 
-export function TransactionListItem({transaction, currency, isSelected, onSelect, onEdit, onPay }: ComponentProps) {
+export function TransactionListItem({transaction, currency, isSelected, onSelect, onEdit, onPay, onDelete }: ComponentProps) {
   const { t } = useTranslation()
   const isMobile = useIsMobile()
 
@@ -51,13 +52,13 @@ export function TransactionListItem({transaction, currency, isSelected, onSelect
                 <Trash size={18}/>
               </div>
             ),
-            onClick: () => alert('Pressed the DELETe button'),
+            onClick: () => {onDelete?.(transaction)},
           },
         ]}
         actionButtonMinWidth={56}
         hideDotsButton
-        onOpen={() => console.log('Item opened')}
-        onClose={() => console.log('Item closed')}
+        // onOpen={() => console.log('Item opened')}
+        // onClose={() => console.log('Item closed')}
       >
         <ItemContent 
           currency={currency}
@@ -80,12 +81,13 @@ export function TransactionListItem({transaction, currency, isSelected, onSelect
       isMobile={isMobile}
       onEdit={onEdit}
       onPay={onPay}
+      onDelete={onDelete}
       onSelect={onSelect}
     />
   )
 }
 
-function ItemContent({transaction, currency, isSelected, onSelect, onEdit, onPay, isMobile }: ComponentProps & { isMobile: boolean }) {
+function ItemContent({transaction, currency, isSelected, onSelect, onEdit, onPay, onDelete, isMobile }: ComponentProps & { isMobile: boolean }) {
   const { t, i18n } = useTranslation()
   const [isHovered, setIsHovered] = useState(false)
 
@@ -158,7 +160,7 @@ function ItemContent({transaction, currency, isSelected, onSelect, onEdit, onPay
           <Button title={t('global.cta.edit')} variant="ghost" size="xs" onClick={() => {onEdit?.(transaction)}}>
             <PencilIcon />
           </Button>
-          <Button title={t('global.cta.delete')} variant="ghost" size="xs" onClick={() => {}}>
+          <Button title={t('global.cta.delete')} variant="ghost" size="xs" onClick={() => {onDelete?.(transaction)}}>
             <Trash />
           </Button>
         </div>

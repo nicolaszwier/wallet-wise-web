@@ -28,7 +28,7 @@ export default function Dashboard() {
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7 mt-4 pb-10">
         <TransactionsDueThisWeekCard transactions={transactions} currency={selectedPlanning?.currency || "BRL"} isLoading={isLoading} />
-        <BalanceChartCard balance={balance!} currency={selectedPlanning?.currency || "BRL"}  isLoading={isLoadingBalance}/>
+        <BalanceChartCard balance={balance!} currency={selectedPlanning?.currency || "BRL"} isLoading={isLoadingBalance}/>
       </div>
     </div>
   )

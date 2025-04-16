@@ -19,9 +19,10 @@ interface ComponentProps {
   onSelectItem?: (transaction: Transaction) => void
   onPayItem?: (transaction: Transaction) => void
   onEditItem?: (transaction: Transaction) => void
+  onDeleteItem?: (transaction: Transaction) => void
 }
 
-export function TimelinePeriodContent({ dateRange, isLoading, period, onSelectItem, onEditItem, onPayItem }: ComponentProps) {
+export function TimelinePeriodContent({ dateRange, isLoading, period, onSelectItem, onEditItem, onPayItem, onDeleteItem }: ComponentProps) {
   const { t, i18n } = useTranslation()
   const {selectedPlanning} = usePlanning()
   const {selectedTransactions} = useTransactions()
@@ -52,6 +53,7 @@ export function TimelinePeriodContent({ dateRange, isLoading, period, onSelectIt
                 onSelect={onSelectItem}
                 onEdit={onEditItem}
                 onPay={onPayItem}
+                onDelete={onDeleteItem}
               />
             ))}
 

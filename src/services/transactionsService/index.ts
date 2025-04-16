@@ -8,7 +8,8 @@ export const transactionsService = {
   fetchMonthlyBalance,
   create,
   update,
-  pay
+  pay,
+  remove
 };
 
 type TransactionsResponse = Transaction[];
@@ -46,5 +47,10 @@ export async function update(payload: TransactionPayload) {
 
 export async function pay(periodId: string, transactionId: string) {
   const { data } = await httpClient.put<DefaultResponse>(`/transactions/pay/${periodId}/${transactionId}`);
+  return data;
+}
+
+export async function remove(periodId: string, transactionId: string) {
+  const { data } = await httpClient.delete<DefaultResponse>(`/transactions/${periodId}/${transactionId}`);
   return data;
 }
