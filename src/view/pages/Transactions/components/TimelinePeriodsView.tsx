@@ -9,7 +9,7 @@ import { formatCurrency } from "@/app/utils/formatCurrency"
 import { Spinner } from "@/view/components/ui/spinner"
 import { EditTransactionDialog } from "./EditTransactionDialog"
 import { TimelinePeriodContent } from "./TimelinePeriodContent"
-import { ListFilter } from "lucide-react"
+// import { ListFilter } from "lucide-react"
 
 export function TimelinePeriodsView() {
   const { t, i18n } = useTranslation() 
