@@ -1,6 +1,6 @@
 import { Button } from "@/view/components/ui/button"
-import { ChevronLeft, ChevronRight } from "lucide-react"
-import { formatDate, formatShortDate } from "@/app/utils/date"
+// import { ChevronLeft, ChevronRight } from "lucide-react"
+// import { formatDate, formatShortDate } from "@/app/utils/date"
 import { useTranslation } from "react-i18next"
 import { ColumnsPeriodContent } from "./ColumnsPeriodContent"
 import { useTransactionsViewController } from "../useTransactionsViewController"
@@ -14,7 +14,8 @@ export function ColumnsPeriodsView() {
   const { t, i18n } = useTranslation() 
   const { 
     selectedPlanning,
-    visibleRanges, 
+    ranges,
+    rangeRefs,
     isLoading, 
     scrollContainerRef,
     isPayTransactionDialogOpen,
@@ -23,9 +24,9 @@ export function ColumnsPeriodsView() {
     isPendingPayTransaction,
     isPendingDeleteTransaction,
     handlePayTransaction,
-    handleNextRanges,
+    // handleNextRanges,
     handleDeleteTransaction,
-    handlePreviousRanges, 
+    // handlePreviousRanges, 
     loadPeriodByDate,
     handleSelectItem,
     handleMouseDown,
@@ -38,7 +39,7 @@ export function ColumnsPeriodsView() {
 
   return (
     <div className="flex flex-col h-full w-full">
-      <div className="flex justify-center items-center flex-shrink-0 pl-2 pr-2">
+      {/* <div className="flex justify-center items-center flex-shrink-0 pl-2 pr-2">
         <div className="flex justify-center items-center gap-2">
           <Button variant="ghost" size="icon" onClick={() => handlePreviousRanges()}>
             <ChevronLeft />
@@ -48,7 +49,7 @@ export function ColumnsPeriodsView() {
             <ChevronRight />
           </Button>
         </div>
-      </div>
+      </div> */}
       <ResponsiveDialog open={isPayTransactionDialogOpen} onOpenChange={togglePayTransactionDialog}>
         <ResponsiveDialogContent>
           <ResponsiveDialogHeader>
@@ -100,8 +101,13 @@ export function ColumnsPeriodsView() {
           onMouseDown={handleMouseDown}
         >
           <div className="flex gap-2 h-full min-w-max p-4">
-            {visibleRanges.map((range, index) => (
-              <div key={index} className="flex flex-col flex-grow min-w-80 max-w-96 bg-background-secondary rounded-xl">
+            {ranges.map((range, index) => (
+              <div 
+                key={index} 
+                className="flex flex-col flex-grow min-w-80 max-w-96 bg-background-secondary rounded-xl"
+                ref={el => { rangeRefs.current[index] = el; }}
+                id={range.isCurrent ? "current-period" : `period-${index}`}
+                >
                 {range && 
                   <ColumnsPeriodContent 
                     dateRange={range} 

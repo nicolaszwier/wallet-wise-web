@@ -9,12 +9,14 @@ import { formatCurrency } from "@/app/utils/formatCurrency"
 import { Spinner } from "@/view/components/ui/spinner"
 import { EditTransactionDialog } from "./EditTransactionDialog"
 import { TimelinePeriodContent } from "./TimelinePeriodContent"
+import { ListFilter } from "lucide-react"
 
 export function TimelinePeriodsView() {
   const { t, i18n } = useTranslation() 
   const { 
     selectedPlanning,
-    visibleRanges, 
+    ranges,
+    rangeRefs,
     isLoading, 
     isPayTransactionDialogOpen,
     isDeleteTransactionDialogOpen,
@@ -34,18 +36,17 @@ export function TimelinePeriodsView() {
     openDeleteTransactionDialog
   } = useTransactionsViewController()
 
+ 
   return (
     <div className="flex flex-col h-full w-full">
-      <div className="flex justify-center items-center flex-shrink-0 pl-2 pr-2">
-        {/* <div className="flex justify-center items-center gap-2">
-          <Button variant="ghost" size="icon" onClick={() => handlePreviousRanges()}>
-            <ChevronLeft />
-          </Button>
-          <p className="font-semibold text-sm"><span>{t('transactions.periodTitle', {start: formatShortDate(visibleRanges[0]?.start, i18n.language), end: formatDate(visibleRanges[3]?.end, i18n.language)})}</span></p>
-          <Button variant="ghost" size="icon" onClick={() => handleNextRanges()}>
-            <ChevronRight />
-          </Button>
-        </div> */}
+      <div className="flex justify-center items-center flex-shrink-0 pl-2 pr-2 sticky top-0 z-[100]">
+        {/* <Button variant="ghost" size="icon" onClick={() => {}}>
+          <ListFilter />
+        </Button> */}
+        {/* <p className="font-semibold text-sm"><span>{t('transactions.periodTitle', {start: formatShortDate(visibleRanges[0]?.start, i18n.language), end: formatDate(visibleRanges[3]?.end, i18n.language)})}</span></p>
+        <Button variant="ghost" size="icon" onClick={() => handleNextRanges()}>
+          <ChevronRight />
+        </Button> */}
       </div>
       <ResponsiveDialog open={isPayTransactionDialogOpen} onOpenChange={togglePayTransactionDialog}>
         <ResponsiveDialogContent>
@@ -93,10 +94,15 @@ export function TimelinePeriodsView() {
       <EditTransactionDialog />
       
       <div className="flex-1 min-h-0 w-full relative p-4 h-full min-w-max flex-col flex">
-        {visibleRanges.map((range, index) => {
+        {ranges.map((range, index) => {
           const period = loadPeriodByDate(range.start, range.end)
           return (
-            <div key={index} className="">
+            <div 
+              key={index} 
+              className=""
+              ref={el => { rangeRefs.current[index] = el; }}
+              id={range.isCurrent ? "current-period" : `period-${index}`}
+            >
               {range && 
                 <TimelinePeriodContent 
                   dateRange={range} 

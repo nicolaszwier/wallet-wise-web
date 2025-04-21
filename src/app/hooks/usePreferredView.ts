@@ -6,8 +6,11 @@ import { useIsMobile } from './useIsMobile';
 export function usePreferredView() {
   const isMobile = useIsMobile()
   const [preferredView, setPreferredView] = useState<ViewType>(() => {
-    const storedView = localStorage.getItem(localStorageKeys.PREFERRED_VIEW);
-    return (storedView as ViewType) || isMobile ? ViewType.TIMELINE : ViewType.COLUMNS;
+    const storedView = localStorage.getItem(localStorageKeys.PREFERRED_VIEW); 
+    if (!storedView) {
+      return isMobile ? ViewType.TIMELINE : ViewType.COLUMNS;
+    } 
+    return (storedView as ViewType);
   });
 
   const changePreferredView = useCallback((view: ViewType) => {

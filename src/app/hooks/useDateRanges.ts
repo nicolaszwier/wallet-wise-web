@@ -1,4 +1,5 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
+import { useTransactions } from './useTransactions';
 
 export interface DateRange {
   start: Date;
@@ -13,6 +14,8 @@ interface UseDateRangesReturn {
 }
 
 export function useDateRanges (initialCount: number = 4): UseDateRangesReturn {
+  const { filters } = useTransactions();
+  
   // Helper function to generate a week range
   const getWeekRange = (startDate: Date): DateRange => {
     const start = new Date(startDate);
@@ -23,22 +26,24 @@ export function useDateRanges (initialCount: number = 4): UseDateRangesReturn {
     return { start, end, isCurrent: false };
   };
 
-  // Generate ranges function
-  const generateRanges = useCallback((startDate: Date, count: number): DateRange[] => {
+  // Generate ranges function based on start and end dates
+  const generateRangesBetweenDates = useCallback((startDate: Date, endDate: Date, sortOrder: 'asc' | 'desc' = 'asc'): DateRange[] => {
     const newRanges: DateRange[] = [];
     const currentDate = new Date(startDate);
-
-    for (let i = 0; i < count; i++) {
+    
+    // Ensure we don't go beyond the end date
+    while (currentDate <= endDate) {
       newRanges.push(getWeekRange(currentDate));
       currentDate.setDate(currentDate.getDate() + 7);
     }
-
-    return newRanges;
+    
+    // Sort ranges according to sortOrder
+    return sortOrder === 'asc' ? newRanges : [...newRanges].reverse();
   }, []);
 
   // State to store all the date ranges
   const [ranges, setRanges] = useState<DateRange[]>(() => {
-    // Initialize ranges with the current week in second position
+    // Default initial ranges if no filters are set
     const today = new Date();
     const currentDay = today.getDay();
     const daysToSubtract = currentDay === 0 ? 6 : currentDay - 1;
@@ -46,37 +51,116 @@ export function useDateRanges (initialCount: number = 4): UseDateRangesReturn {
     // Start from 1 weeks before the current week
     const firstDate = new Date(today);
     firstDate.setDate(today.getDate() - daysToSubtract - 7);
-
-    return generateRanges(firstDate, initialCount);
+    
+    const defaultRanges: DateRange[] = [];
+    const currentDate = new Date(firstDate);
+    
+    for (let i = 0; i < initialCount; i++) {
+      defaultRanges.push(getWeekRange(currentDate));
+      currentDate.setDate(currentDate.getDate() + 7);
+    }
+    
+    return defaultRanges;
   });
+  
+  // Update ranges when filters change
+  useEffect(() => {
+    if (filters.startDate && filters.endDate) {
+      const startDate = new Date(filters.startDate);
+      const endDate = new Date(filters.endDate);
+      
+      // Adjust startDate to beginning of week (Monday)
+      const startDay = startDate.getDay();
+      const daysToAdjust = startDay === 0 ? 1 : (startDay === 1 ? 0 : -(startDay - 1));
+      startDate.setDate(startDate.getDate() + daysToAdjust);
+      
+      setRanges(generateRangesBetweenDates(startDate, endDate, filters.sortOrder));
+    }
+  }, [filters.startDate, filters.endDate, filters.sortOrder, generateRangesBetweenDates]);
 
   // Function to load next set of ranges
   const loadNextRanges = useCallback((count: number = 4): void => {
     setRanges(currentRanges => {
-      const lastRange = currentRanges[currentRanges.length - 1];
-      const nextStartDate = new Date(lastRange.end);
-      nextStartDate.setDate(nextStartDate.getDate() + 1);
+      if (currentRanges.length === 0) return currentRanges;
       
-      const newRanges = generateRanges(nextStartDate, count);
-      return [...currentRanges, ...newRanges];
+      if (filters.sortOrder === 'desc') {
+        // When sorted in descending order, "next" means older (previous) dates
+        const firstRange = currentRanges[0];
+        const previousEndDate = new Date(firstRange.start);
+        previousEndDate.setDate(previousEndDate.getDate() - 1);
+        
+        const newRanges: DateRange[] = [];
+        const endDate = new Date(previousEndDate);
+        
+        for (let i = count - 1; i >= 0; i--) {
+          const startDate = new Date(endDate);
+          startDate.setDate(startDate.getDate() - 6);
+          
+          newRanges.unshift(getWeekRange(startDate));
+          endDate.setDate(startDate.getDate() - 1);
+        }
+        
+        return [...newRanges.reverse(), ...currentRanges];
+      } else {
+        // When sorted in ascending order, "next" means newer (future) dates
+        const lastRange = currentRanges[currentRanges.length - 1];
+        const nextStartDate = new Date(lastRange.end);
+        nextStartDate.setDate(nextStartDate.getDate() + 1);
+        
+        const newRanges: DateRange[] = [];
+        const currentDate = new Date(nextStartDate);
+        
+        for (let i = 0; i < count; i++) {
+          newRanges.push(getWeekRange(currentDate));
+          currentDate.setDate(currentDate.getDate() + 7);
+        }
+        
+        return [...currentRanges, ...newRanges];
+      }
     });
-  }, [generateRanges]);
+  }, [filters.sortOrder]);
 
   // Function to load previous set of ranges
   const loadPreviousRanges = useCallback((count: number = 4): void => {
     setRanges(currentRanges => {
-      const firstRange = currentRanges[0];
-      const previousEndDate = new Date(firstRange.start);
-      previousEndDate.setDate(previousEndDate.getDate() - 1);
+      if (currentRanges.length === 0) return currentRanges;
       
-      // Go back by (count - 1) weeks to get the start date
-      const startDate = new Date(previousEndDate);
-      startDate.setDate(startDate.getDate() - (7 * (count - 1)));
-      
-      const newRanges = generateRanges(startDate, count);
-      return [...newRanges, ...currentRanges];
+      if (filters.sortOrder === 'desc') {
+        // When sorted in descending order, "previous" means newer (future) dates
+        const lastRange = currentRanges[currentRanges.length - 1];
+        const nextStartDate = new Date(lastRange.end);
+        nextStartDate.setDate(nextStartDate.getDate() + 1);
+        
+        const newRanges: DateRange[] = [];
+        const currentDate = new Date(nextStartDate);
+        
+        for (let i = 0; i < count; i++) {
+          newRanges.push(getWeekRange(currentDate));
+          currentDate.setDate(currentDate.getDate() + 7);
+        }
+        
+        return [...currentRanges, ...newRanges.reverse()];
+      } else {
+        // When sorted in ascending order, "previous" means older (past) dates
+        const firstRange = currentRanges[0];
+        const previousEndDate = new Date(firstRange.start);
+        previousEndDate.setDate(previousEndDate.getDate() - 1);
+        
+        const newRanges: DateRange[] = [];
+        const endDate = new Date(previousEndDate);
+        
+        for (let i = count - 1; i >= 0; i--) {
+          const startDate = new Date(endDate);
+          startDate.setDate(startDate.getDate() - 6);
+          
+          newRanges.unshift(getWeekRange(startDate));
+          endDate.setDate(startDate.getDate() - 1);
+        }
+        
+        return [...newRanges, ...currentRanges];
+      }
     });
-  }, [generateRanges]);
+  }, [filters.sortOrder]);
 
   // Calculate if the current date is within each range
   const rangesWithCurrent = useMemo((): DateRange[] => {

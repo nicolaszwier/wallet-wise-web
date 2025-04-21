@@ -29,7 +29,7 @@ export function ViewTypeSelectorDropdown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button size="xs" variant="ghost">
+        <Button size="icon" variant="ghost">
             <LayoutGrid />
         </Button>
       </DropdownMenuTrigger>

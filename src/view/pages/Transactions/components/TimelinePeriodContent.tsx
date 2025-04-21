@@ -29,7 +29,7 @@ export function TimelinePeriodContent({ dateRange, isLoading, period, onSelectIt
 
   return (
     <div className="min-w-[300px] w-full max-w-[1280px] m-auto mb-6">
-        <div className="p-2 text-xs rounded-t-xl rounded-tr-xl min-h-[26px] font-semibold pl-2 sticky top-0 flex justify-between items-center">
+        <div className="p-2 text-xs rounded-t-xl rounded-tr-xl min-h-[26px] font-semibold pl-2 sticky top-0 bg-background flex justify-between items-center">
           <span>{t('transactions.periodTitle', {start: formatShortDate(dateRange.start, i18n.language), end: formatShortDate(dateRange.end, i18n.language)})}</span>
           {dateRange.isCurrent && (
             <Badge variant="default" className="truncate">{t('global.currentPeriod')}</Badge>

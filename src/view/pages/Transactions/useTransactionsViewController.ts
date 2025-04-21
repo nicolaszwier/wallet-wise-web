@@ -1,8 +1,10 @@
+import { useApp } from "@/app/hooks/useApp";
 import { DateRange, useDateRanges } from "@/app/hooks/useDateRanges";
 import { usePlanning } from "@/app/hooks/usePlanning";
 import { useTransactions } from "@/app/hooks/useTransactions";
 import { Period } from "@/app/models/Period";
 import { Transaction } from "@/app/models/Transaction";
+import { ViewType } from "@/app/models/ViewType";
 import { periodsService } from "@/services/periodsService";
 import { transactionsService } from "@/services/transactionsService";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -14,16 +16,17 @@ export function useTransactionsViewController() {
   const isDraggingRef = useRef(false)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const { t } = useTranslation() 
-  const [visibleRanges, setVisibleRanges] = useState<DateRange[]>([])
+  const [visibleRanges, ] = useState<DateRange[]>([])
   const [currentPageIndex, setCurrentPageIndex] = useState<number>(0)
   const {ranges, loadNextRanges, loadPreviousRanges} = useDateRanges()
   const {selectedPlanning} = usePlanning()
+  const {preferredView} = useApp()
   const { 
     filters,
     activeTransaction,
     isPayTransactionDialogOpen,
     isDeleteTransactionDialogOpen,
-    setFilters,
+    // setFilters,
     selectTransaction,
     toggleEditTransactionDialog,
     togglePayTransactionDialog,
@@ -31,11 +34,7 @@ export function useTransactionsViewController() {
     setActiveTransaction, 
   } = useTransactions()
   const queryClient = useQueryClient();
-  // const [filters, setFilters] = useState<PeriodRequestFilters>({
-  //   sortOrder: 'desc',
-  //   startDate: ranges[0]?.start.toISOString(),
-  //   endDate: ranges[ranges.length - 1]?.end.toISOString()
-  // });
+  const rangeRefs = useRef<(HTMLDivElement | null)[]>([]);
   
   const { data, isFetching, refetch } = useQuery({
     queryKey: ['periods', selectedPlanning?.id, filters.startDate, filters.endDate],
@@ -44,18 +43,18 @@ export function useTransactionsViewController() {
     staleTime: 1000 * 60
   });
 
-  useEffect(() => {
-    console.log('[useEffect] ranges', ranges);
-    console.log('[useEffect] currentPageIndex', currentPageIndex);
+  // useEffect(() => {
+  //   console.log('[useEffect] ranges', ranges);
+  //   console.log('[useEffect] currentPageIndex', currentPageIndex);
     
-    setFilters(prev => ({
-      ...prev,
-      startDate: ranges[currentPageIndex]?.start.toISOString(),
-      endDate: ranges[currentPageIndex + 3]?.end.toISOString() ?? new Date()
-    }));
+  //   setFilters(prev => ({
+  //     ...prev,
+  //     startDate: ranges[currentPageIndex]?.start.toISOString(),
+  //     endDate: ranges[currentPageIndex + 3]?.end.toISOString() ?? new Date()
+  //   }));
     
-    setVisibleRanges(ranges.slice(currentPageIndex, currentPageIndex + 4));
-  }, [ranges, currentPageIndex]);
+  //   setVisibleRanges(ranges.slice(currentPageIndex, currentPageIndex + 4));
+  // }, [ranges, currentPageIndex]);
 
   const handleNextRanges = () => {
     if (currentPageIndex + 4 >= ranges.length - 4) {
@@ -201,9 +200,36 @@ export function useTransactionsViewController() {
       document.body.style.webkitUserSelect = ''
     }
   }, [])
+  
+   // Initialize refs array with the correct length
+   useEffect(() => {
+     rangeRefs.current = rangeRefs.current.slice(0, ranges.length);
+   }, [ranges.length]);
+   
+   // Scroll to the current range when ranges change or component mounts
+   useEffect(() => {
+     // Find the index of the current range
+     const currentRangeIndex = ranges.findIndex(range => range.isCurrent);
+     
+     if (currentRangeIndex !== -1) {
+       // Scroll to the range before the current with a longer delay to ensure DOM is fully rendered
+       setTimeout(() => {
+         const element = document.getElementById(preferredView === ViewType.COLUMNS ? `current-period` : `period-${currentRangeIndex - 1}`);
+         if (element) {
+           element.scrollIntoView({
+             behavior: 'smooth',
+             block: 'start'
+           });
+         }
+       }, 1200);
+     }
+   }, [preferredView, ranges]);
+ 
 
   return {
     selectedPlanning,
+    ranges,
+    rangeRefs,
     visibleRanges,
     isLoading: isFetching,
     scrollContainerRef,

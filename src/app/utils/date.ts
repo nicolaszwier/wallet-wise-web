@@ -19,14 +19,25 @@ export function getMonthFromDate(date: Date, locale: string) {
   }).format(date);
 }
 
-export function subtractMonth(date: Date, qty: number): Date {
-  date.setMonth(date.getMonth() - qty)
-  return date
-}
-
-export function addMonth(date: Date, qty: number): Date {
-  date.setMonth(date.getMonth() + qty)
-  return date
+export function getRelativeDate(date: Date, amount: number, unit: 'day' | 'week' | 'month' | 'year'): Date {
+  const newDate = new Date(date)
+  
+  switch (unit) {
+    case 'day':
+      newDate.setDate(newDate.getDate() + amount)
+      break
+    case 'week':
+      newDate.setDate(newDate.getDate() + (amount * 7))
+      break
+    case 'month':
+      newDate.setMonth(newDate.getMonth() + amount)
+      break
+    case 'year':
+      newDate.setFullYear(newDate.getFullYear() + amount)
+      break
+  }
+  
+  return newDate
 }
 
 export function isAfterCurrentDate(date: Date): boolean {
