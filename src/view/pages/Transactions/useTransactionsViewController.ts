@@ -1,5 +1,6 @@
 import { useApp } from "@/app/hooks/useApp";
 import { DateRange, useDateRanges } from "@/app/hooks/useDateRanges";
+import { useIsMobile } from "@/app/hooks/useIsMobile";
 import { usePlanning } from "@/app/hooks/usePlanning";
 import { useTransactions } from "@/app/hooks/useTransactions";
 import { Period } from "@/app/models/Period";
@@ -13,6 +14,7 @@ import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 
 export function useTransactionsViewController() {
+  const isMobile = useIsMobile()
   const isDraggingRef = useRef(false)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const { t } = useTranslation() 
@@ -26,7 +28,8 @@ export function useTransactionsViewController() {
     activeTransaction,
     isPayTransactionDialogOpen,
     isDeleteTransactionDialogOpen,
-    // setFilters,
+    showEmptyPeriods,
+    setFilters,
     selectTransaction,
     toggleEditTransactionDialog,
     togglePayTransactionDialog,
@@ -55,6 +58,13 @@ export function useTransactionsViewController() {
     
   //   setVisibleRanges(ranges.slice(currentPageIndex, currentPageIndex + 4));
   // }, [ranges, currentPageIndex]);
+
+  useEffect(() => {
+    setFilters(prev => ({
+      ...prev,
+      sortOrder: preferredView === ViewType.COLUMNS ? 'asc' : 'desc',
+    }))
+  }, [preferredView, setFilters])
 
   const handleNextRanges = () => {
     if (currentPageIndex + 4 >= ranges.length - 4) {
@@ -145,11 +155,10 @@ export function useTransactionsViewController() {
     }
   }
 
-
   // Create a simpler drag-to-scroll implementation
   const handleMouseDown = (e: React.MouseEvent) => {
     const container = scrollContainerRef.current
-    if (!container) return
+    if (!container || isMobile) return
     
     // Prevent text selection
     e.preventDefault()
@@ -214,7 +223,7 @@ export function useTransactionsViewController() {
      if (currentRangeIndex !== -1) {
        // Scroll to the range before the current with a longer delay to ensure DOM is fully rendered
        setTimeout(() => {
-         const element = document.getElementById(preferredView === ViewType.COLUMNS ? `current-period` : `period-${currentRangeIndex - 1}`);
+         const element = document.getElementById(preferredView === ViewType.COLUMNS ? `period-${currentRangeIndex + 1}` : `period-${currentRangeIndex - 1}`);
          if (element) {
            element.scrollIntoView({
              behavior: 'smooth',
@@ -238,6 +247,7 @@ export function useTransactionsViewController() {
     activeTransaction,
     isPendingPayTransaction,
     isPendingDeleteTransaction,
+    showEmptyPeriods,
     handleDeleteTransaction,
     handlePayTransaction,
     togglePayTransactionDialog,

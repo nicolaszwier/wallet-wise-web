@@ -23,6 +23,7 @@
       "signin": "Entrar",
       "signup": "Cadastrar",
       "submit": "Cadastrar",
+      "filter": "Filtrar",
       "edit": "Editar",
       "delete": "Excluir",
       "pay": "Pagar",
@@ -150,6 +151,8 @@
   "a11y": {
     "paidTransaction": "Transação paga",
     "pendingTransaction": "Transação pendente",
-    "dueTransaction": "Transação vencida"
+    "dueTransaction": "Transação vencida",
+    "showEmptyPeriods": "Mostrar periodos sem transações",
+    "hideEmptyPeriods": "Esconder periodos sem transações"
   }
 }

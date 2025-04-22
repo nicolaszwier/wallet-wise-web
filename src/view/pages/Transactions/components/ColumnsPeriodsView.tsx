@@ -23,6 +23,7 @@ export function ColumnsPeriodsView() {
     activeTransaction,
     isPendingPayTransaction,
     isPendingDeleteTransaction,
+    showEmptyPeriods,
     handlePayTransaction,
     // handleNextRanges,
     handleDeleteTransaction,
@@ -101,26 +102,32 @@ export function ColumnsPeriodsView() {
           onMouseDown={handleMouseDown}
         >
           <div className="flex gap-2 h-full min-w-max p-4">
-            {ranges.map((range, index) => (
-              <div 
-                key={index} 
-                className="flex flex-col flex-grow min-w-80 max-w-96 bg-background-secondary rounded-xl"
-                ref={el => { rangeRefs.current[index] = el; }}
-                id={range.isCurrent ? "current-period" : `period-${index}`}
-                >
-                {range && 
-                  <ColumnsPeriodContent 
-                    dateRange={range} 
-                    isLoading={isLoading} 
-                    period={loadPeriodByDate(range.start, range.end)} 
-                    onSelectItem={handleSelectItem}
-                    onPayItem={openPayTransactionDialog}
-                    onEditItem={openEditTransactionDialog}
-                    onDeleteItem={openDeleteTransactionDialog}
-                  />
-                }
-              </div>
-            ))}
+            {ranges.map((range, index) => {
+              const period = loadPeriodByDate(range.start, range.end)
+              const isVisible = showEmptyPeriods || (period?.transactions ?? []).length > 0 || isLoading
+              if (!isVisible) return null
+
+              return (
+                <div 
+                  key={index} 
+                  className="flex flex-col flex-grow min-w-80 sm:min-w-96 max-w-96 bg-background-secondary rounded-xl"
+                  ref={el => { rangeRefs.current[index] = el; }}
+                  id={range.isCurrent ? "current-period" : `period-${index}`}
+                  >
+                  {range && 
+                    <ColumnsPeriodContent 
+                      dateRange={range} 
+                      isLoading={isLoading} 
+                      period={loadPeriodByDate(range.start, range.end)} 
+                      onSelectItem={handleSelectItem}
+                      onPayItem={openPayTransactionDialog}
+                      onEditItem={openEditTransactionDialog}
+                      onDeleteItem={openDeleteTransactionDialog}
+                    />
+                  }
+                </div>
+              )
+            })}
           </div>
         </div>
       </div>

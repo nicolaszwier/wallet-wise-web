@@ -13,12 +13,14 @@ interface TransactionsContextValue {
   isPayTransactionDialogOpen: boolean;
   isDeleteTransactionDialogOpen: boolean;
   isEditTransactionDialogOpen: boolean;
+  showEmptyPeriods: boolean;
   setFilters: Dispatch<SetStateAction<PeriodRequestFilters>>,
   setActiveTransaction(transaction: null | Transaction): void
   toggleFilterTransactionsDialog: Dispatch<SetStateAction<boolean>>,
   togglePayTransactionDialog: Dispatch<SetStateAction<boolean>>,
   toggleDeleteTransactionDialog: Dispatch<SetStateAction<boolean>>,
   toggleEditTransactionDialog: Dispatch<SetStateAction<boolean>>,
+  toggleShowEmptyPeriods(): void,
   selectTransaction(transaction: Transaction): void;
   clearSelectedTransactions(): void;
 }
@@ -34,6 +36,7 @@ export function TransactionsProvider({ children }: { children: React.ReactNode }
   const [isEditTransactionDialogOpen, setIsEditTransactionDialogOpen] = useState(false);
   const [isFilterTransactionsDialogOpen, setIsFilterTransactionsDialogOpen] = useState(false);
   const [activeTransaction, setActiveTransaction] = useState<null | Transaction>(null);
+  const [showEmptyPeriods, setShowEmptyPeriods] = useState<boolean>(true);
   const [filters, setFilters] = useState<PeriodRequestFilters>({
     sortOrder: 'desc',
     startDate: getRelativeDate(new Date(), -2, 'month').toISOString(),
@@ -74,6 +77,10 @@ export function TransactionsProvider({ children }: { children: React.ReactNode }
       setIsSelectionMode(false)
     }
   };
+ 
+  const toggleShowEmptyPeriods = () => {
+    setShowEmptyPeriods(prev => !prev);
+  };
 
   const clearSelectedTransactions = useCallback(() => {
     setSelectedTransactions([]);
@@ -93,6 +100,8 @@ export function TransactionsProvider({ children }: { children: React.ReactNode }
         isDeleteTransactionDialogOpen,
         isEditTransactionDialogOpen,
         isFilterTransactionsDialogOpen,
+        showEmptyPeriods,
+        toggleShowEmptyPeriods,
         setFilters,
         selectTransaction,
         setActiveTransaction,

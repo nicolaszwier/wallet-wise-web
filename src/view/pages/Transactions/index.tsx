@@ -6,6 +6,7 @@ import { useTransactions } from "@/app/hooks/useTransactions";
 import SelectionModePopover from "./components/SelectionModePopover";
 import { TimelinePeriodsView } from "./components/TimelinePeriodsView";
 import { NewTransactionDialog } from "./components/NewTransactionDialog";
+import { TransactionsFiltersDialog } from "./components/TransactionsFiltersDialog";
 
 export default function Timeline() {
   const {preferredView} = useApp()
@@ -30,6 +31,7 @@ export default function Timeline() {
       <div className="fixed bottom-5 right-5 sm:bottom-9 sm:right-11 z-30">
         <NewTransactionDialog />
       </div>
+      <TransactionsFiltersDialog />
     </div>
   )
 }

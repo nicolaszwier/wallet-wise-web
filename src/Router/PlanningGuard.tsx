@@ -1,4 +1,3 @@
-import { TransactionsProvider } from "@/app/contexts/TransactionsContext";
 import { usePlanning } from "@/app/hooks/usePlanning";
 import { Navigate, Outlet } from "react-router-dom";
 
@@ -10,9 +9,7 @@ export function PlanningGuard() {
   }
 
   return (
-    <TransactionsProvider>
       <Outlet />
-    </TransactionsProvider>
   );
 
 }

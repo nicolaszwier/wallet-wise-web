@@ -23,6 +23,7 @@
       "signin": "Signin",
       "signup": "Signup",
       "submit": "Submit",
+      "filter": "Filter",
       "edit": "Edit",
       "delete": "Delete",
       "pay": "Pay",
@@ -150,6 +151,8 @@
   "a11y": {
     "paidTransaction": "Paid transaction",
     "pendingTransaction": "Pending transaction",
-    "dueTransaction": "Due transaction"
+    "dueTransaction": "Due transaction",
+    "showEmptyPeriods": "Show empty periods",
+    "hideEmptyPeriods": "Hide empty periods"
   }
 }

@@ -32,7 +32,10 @@ export function BalanceCard({title, amount, currency, variant, className}: CardP
       </div>
     )}
     {variant === 'sm' && (
-      <div className="">
+      <div className={cn(
+        "",
+        className
+      )}>
         <div className="flex flex-row items-center justify-between space-y-0">
           <div className="tracking-tight text-xs font-medium text-muted-foreground">{title}</div>
         </div>
