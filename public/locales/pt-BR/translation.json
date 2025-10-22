@@ -137,7 +137,10 @@
       "description": "Isso vai remover permanentemente a transação {{description}} no valor de {{amount}}."
      },
      "filterDialog": {
-      "title": "Filtrar transações"
+      "title": "Filtrar transações",
+      "startDate": "Data de início",
+      "endDate": "Data de fim",
+      "sortOrder": "Ordenar por"
      },
      "actionsMessages": {
       "updateSuccess": "Transação alterada com sucesso!",

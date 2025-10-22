@@ -137,7 +137,10 @@
     "description": "This action will permanently delete the {{description}} transaction of {{amount}}."
    },
    "filterDialog": {
-      "title": "Filter transactions"
+      "title": "Filter transactions",
+      "startDate": "Start date",
+      "endDate": "End date",
+      "sortOrder": "Sort order"
      },
    "actionsMessages": {
     "updateSuccess": "Transaction updated successfully",
