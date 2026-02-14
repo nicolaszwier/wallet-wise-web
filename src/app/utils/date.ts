@@ -40,6 +40,14 @@ export function getRelativeDate(date: Date, amount: number, unit: 'day' | 'week'
   return newDate
 }
 
+export function formatMonthYear(month: number, year: number, locale: string) {
+  const date = new Date(year, month - 1);
+  return Intl.DateTimeFormat(locale, {
+    month: "long",
+    year: "numeric",
+  }).format(date);
+}
+
 export function isAfterCurrentDate(date: Date): boolean {
   const currentDate = new Date()
   // Reset hours to compare just the dates

@@ -13,10 +13,11 @@ import { Category } from "@/app/models/Category";
 
 const schema = z.object({
   amount: z.string()
-    // .nonempty('formsValidation.amountRequired')
-    // .positive('formsValidation.amountPositive')
-    .min(1, 'formsValidation.amountRequired'),
-    // .refine((amount) => /[0-9]/.test(amount.toString()), { message: 'formsValidation.amountNumbersOnly' }),
+    .min(1, 'formsValidation.amountRequired')
+    .refine((val) => {
+      const num = parseFloat(val.replace(',', '.'));
+      return !Number.isNaN(num) && num > 0;
+    }, { message: 'formsValidation.amountRequired' }),
   description: z.string()
     .min(1, 'formsValidation.descriptionRequired')
     .max(100, 'formsValidation.descriptionLength'),

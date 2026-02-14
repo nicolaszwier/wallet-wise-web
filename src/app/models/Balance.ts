@@ -10,11 +10,11 @@ export interface Balance {
   categories: BalanceCategory[];
 }
 
-interface BalanceCategory {
+export interface BalanceCategory {
   categoryId: string;
-  type: TransactionType
+  type: TransactionType;
   description: string;
   icon: string;
-  balance: number
+  balance: number;
   balancePaidOnly: number;
 }

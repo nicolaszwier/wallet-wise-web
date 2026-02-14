@@ -104,6 +104,7 @@
      "periodFooterExpensesPending": "To pay this week",
      "periodFooterIncomePending": "To receive this week",
      "addTransaction": "Add new transaction",
+     "scrollToCurrentPeriod": "Go to current period",
      "noTransactions": "No transactions in this period",
      "noTransactionsPending": "No transactions pending",
      "selectedTransaction": "{{amount}} selected transaction",
@@ -150,6 +151,12 @@
     "deleteSuccess": "Transaction deleted successfully",
     "deleteError": "An error occurred while deleting the transaction. Please try again."
    }
+  },
+  "balances": {
+    "tabs": {
+      "monthlyBalance": "Monthly Balance",
+      "balanceByCategory": "Balance by category"
+    }
   },
   "a11y": {
     "paidTransaction": "Paid transaction",

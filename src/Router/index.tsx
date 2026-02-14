@@ -8,6 +8,7 @@ import Dashboard from '@/view/pages/Dashboard';
 import SelectPlanning from '@/view/pages/SelectPlanning';
 import { PlanningGuard } from './PlanningGuard';
 import Timeline from '@/view/pages/Transactions';
+import Balances from '@/view/pages/Balances';
 
 export function Router() {
   return (
@@ -28,7 +29,7 @@ export function Router() {
             <Route element={<PlanningGuard />}>
               <Route path="/" element={<Dashboard />} />
               <Route path="/timeline" element={<Timeline />} />
-              <Route path="/balances" element={<h1>Balances</h1>} />
+              <Route path="/balances" element={<Balances />} />
             </Route>
           </Route>
         </Route>

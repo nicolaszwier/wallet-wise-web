@@ -63,7 +63,7 @@ export function CategoriesCombobox({categories, onSelect, value}: ComponentProps
             <ChevronsUpDown className="opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-[400px] p-0" align="start">
+        <PopoverContent className="w-[400px] max-h-[min(400px,80vh)] p-0 overflow-hidden flex flex-col" align="start">
           {categories && <List setOpen={setOpen} setSelectedCategory={handleSelect} data={categories} />}
         </PopoverContent>
       </Popover>
@@ -113,23 +113,30 @@ function List({
 }) {
   const { t } = useTranslation()
   return (
-    <Command className="bg-background">
+    <Command
+      className="bg-background flex flex-col min-h-0 flex-1"
+      filter={(value, search, keywords) => {
+        const searchable = (keywords?.length ? keywords.join(" ") : value).toLowerCase()
+        return searchable.includes(search.toLowerCase()) ? 1 : 0
+      }}
+    >
       <CommandInput placeholder={t('global.filterCategories')} />
       <CommandList>
         <CommandEmpty>{t('global.noResults')}</CommandEmpty>
         {data.map((item) => (
           <CommandItem
             key={item.id}
-            value={item.description}
-            onSelect={(value) => {
+            value={item.id}
+            keywords={[item.description]}
+            onSelect={(selectedValue) => {
               setSelectedCategory(
-                data.find((category) => category.description === value) || null
+                data.find((category) => category.id === selectedValue) || null
               )
               setOpen(false)
             }}
           >
             <CategoryIcon
-              size={15} 
+              size={15}
               icon={item?.icon ?? ''}
             />
             {item.description}

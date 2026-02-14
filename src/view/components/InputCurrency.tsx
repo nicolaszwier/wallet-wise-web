@@ -1,6 +1,7 @@
 import { NumericFormat } from 'react-number-format';
 import { cn } from '../../app/utils/cn';
 import { useTranslation } from 'react-i18next';
+import { usePlanning } from '@/app/hooks/usePlanning';
 // import { getCurrencySymbol } from '@/app/utils/formatCurrency';
 
 interface InputCurrencyProps {
@@ -10,23 +11,27 @@ interface InputCurrencyProps {
   onChange?(value: string): void;
 }
 
+const isBRL = (currency: string) => currency === 'BRL'
+
 export function InputCurrency({ error, value, className, onChange }: InputCurrencyProps) {
   const { t } = useTranslation()
-  // const {selectedPlanning} = usePlanning()
+  const { selectedPlanning } = usePlanning()
+  const currency = selectedPlanning?.currency ?? 'BRL'
+  const thousandSeparator = isBRL(currency) ? '.' : ','
+  const decimalSeparator = isBRL(currency) ? ',' : '.'
 
   return (
     <div>
       <NumericFormat
-        thousandSeparator
-        // thousandSeparator={selectedPlanning?.currency === 'BRL' ? '.' : ','}
-        // decimalSeparator={selectedPlanning?.currency === 'BRL' ? ',' : '.'}
+        thousandSeparator={thousandSeparator}
+        decimalSeparator={decimalSeparator}
         defaultValue={0}
         allowNegative={false}
         allowedDecimalSeparators={['%']}
         // decimalScale={2}
         // prefix={getCurrencySymbol(i18n.language, selectedPlanning?.currency ?? 'BRL') + ' '}
         value={value}
-        onChange={event => onChange?.(event.target.value)}
+        onValueChange={values => onChange?.(values.value ?? '')}
         className={cn(
           'bg-background text-[40px] font-bold tracking-[-1px] outline-none w-full py-0 rounded',
           className,
