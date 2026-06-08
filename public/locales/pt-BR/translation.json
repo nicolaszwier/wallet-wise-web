@@ -40,7 +40,8 @@
       "support": "Suporte",
       "feedback": "Feedback",
       "account": "Minha conta",
-      "logout": "Sair"
+      "logout": "Sair",
+      "expenseSplitter": "Divisor de despesas"
     }
   },
   "formsValidation": {
@@ -160,6 +161,82 @@
     "tabs": {
       "monthlyBalance": "Balanço mensal",
       "balanceByCategory": "Balanço por categoria"
+    }
+  },
+  "expenseSplitter": {
+    "title": "Divisor de despesas",
+    "split": "Divisão",
+    "switchSplit": "Trocar divisão",
+    "splitName": "Nome",
+    "splitNamePlaceholder": "ex.: Viagem a Paris, Jantar com amigos",
+    "currency": "Moeda",
+    "newSplit": "Nova divisão",
+    "createSplit": "Criar outra divisão",
+    "createSplitHint": "Comece uma divisão separada para outro grupo ou ocasião.",
+    "createSplitPlaceholder": "Nome da nova divisão...",
+    "addSplit": "Adicionar",
+    "deleteSplit": "Excluir esta divisão",
+    "participants": "Participantes",
+    "addParticipantPlaceholder": "Nome do amigo...",
+    "emptyParticipants": "Adicione pelo menos dois participantes para começar.",
+    "needTwoParticipants": "Adicione pelo menos dois participantes para continuar.",
+    "cannotRemovePayer": "Não é possível remover um participante que pagou uma despesa.",
+    "expenses": "Despesas",
+    "addExpense": "Adicionar despesa",
+    "emptyExpenses": "Nenhuma despesa adicionada ainda.",
+    "payer": "Quem pagou?",
+    "paidBy": "Pago por {{name}}",
+    "participantsInExpense": "Quem divide esta despesa?",
+    "results": "Acertos",
+    "owes": "deve",
+    "netBalance": "Saldos líquidos",
+    "allSettled": "Tudo quitado!",
+    "markAsPaid": "Marcar pagamento de {{from}} para {{to}} como pago",
+    "paid": "pago",
+    "share": {
+      "copy": "Copiar",
+      "export": "Exportar",
+      "includeExpenses": "Incluir despesas",
+      "sharedWith": "dividido com",
+      "copySuccess": "Resultados copiados para a área de transferência",
+      "copyError": "Não foi possível copiar",
+      "exportSuccess": "Resultados exportados com sucesso"
+    },
+    "participant": {
+      "you": "Você"
+    },
+    "export": {
+      "walletWiseTitle": "Exportar para WalletWise",
+      "title": "Minhas despesas",
+      "paidTitle": "Despesas que paguei",
+      "paidEmpty": "Você não pagou nenhuma despesa nesta divisão.",
+      "oweTitle": "O que eu devo",
+      "oweEmpty": "Você não deve nada nesta divisão.",
+      "oweTo": "Devo para {{name}}",
+      "oweDescription": "Divisão {{session}} — devo para {{name}}",
+      "owedTitle": "O que me devem",
+      "owedEmpty": "Ninguém te deve nesta divisão.",
+      "owedFrom": "De {{name}}",
+      "incomeDescription": "Divisão {{session}} — de {{name}}",
+      "exportExpense": "Adicionar despesa",
+      "exportIncome": "Adicionar receita",
+      "exportAllIncome": "Adicionar todas como receita",
+      "export": "Exportar",
+      "exportAll": "Exportar todas",
+      "exported": "Exportada",
+      "dialogTitle": "Adicionar despesa ao WalletWise",
+      "dialogTitleIncome": "Adicionar receita ao WalletWise",
+      "dialogTitleAll": "Adicionar {{count}} despesas",
+      "dialogTitleIncomeAll": "Adicionar {{count}} receitas",
+      "bulkHint": "Cada item será criado como uma transação separada com sua descrição e valor.",
+      "selectPlanning": "Selecione um planejamento",
+      "planningRequired": "Selecione um planejamento",
+      "submit": "Criar despesa",
+      "submitIncome": "Criar receita",
+      "isReceived": "Já recebido",
+      "success": "Transação criada com sucesso",
+      "successAll": "{{count}} transações criadas com sucesso",
+      "error": "Falha ao criar transação. Tente novamente."
     }
   },
   "a11y": {

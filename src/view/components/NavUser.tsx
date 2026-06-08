@@ -21,9 +21,11 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/view/components/ui/sidebar"
+
 import {
   BadgeCheck,
   ChevronsUpDown,
+  LogIn,
   LogOut,
 } from "lucide-react"
 import { useTranslation } from "react-i18next"
@@ -32,7 +34,22 @@ import { Link } from "react-router-dom"
 export function NavUser() {
   const { t } = useTranslation()
   const { isMobile } = useSidebar()
-  const {user, signout} = useAuth()
+  const { signedIn, user, signout } = useAuth()
+
+  if (!signedIn) {
+    return (
+      <SidebarMenu>
+        <SidebarMenuItem>
+          <SidebarMenuButton asChild>
+            <Link to="/signin">
+              <LogIn className="size-4" />
+              <span>{t('global.cta.signin')}</span>
+            </Link>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+      </SidebarMenu>
+    )
+  }
 
   return (
     <SidebarMenu>

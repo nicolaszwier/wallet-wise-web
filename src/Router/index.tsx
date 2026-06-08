@@ -9,11 +9,16 @@ import SelectPlanning from '@/view/pages/SelectPlanning';
 import { PlanningGuard } from './PlanningGuard';
 import Timeline from '@/view/pages/Transactions';
 import Balances from '@/view/pages/Balances';
+import ExpenseSplitter from '@/view/pages/ExpenseSplitter';
 
 export function Router() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route element={<AppLayout />}>
+          <Route path="/splitter" element={<ExpenseSplitter />} />
+        </Route>
+
         <Route element={<AuthGuard isPrivate={false} />}>
           <Route element={<AuthLayout />}>
             <Route path="/signin" element={<Signin />} />

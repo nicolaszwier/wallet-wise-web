@@ -40,7 +40,8 @@
       "support": "Support",
       "feedback": "Feedback",
       "account": "Account",
-      "logout": "Log out"
+      "logout": "Log out",
+      "expenseSplitter": "Expense splitter"
     }
   },
   "formsValidation": {
@@ -160,6 +161,82 @@
     "tabs": {
       "monthlyBalance": "Monthly Balance",
       "balanceByCategory": "Balance by category"
+    }
+  },
+  "expenseSplitter": {
+    "title": "Expense splitter",
+    "split": "Split",
+    "switchSplit": "Switch split",
+    "splitName": "Name",
+    "splitNamePlaceholder": "e.g. Paris trip, Dinner with friends",
+    "currency": "Currency",
+    "newSplit": "New split",
+    "createSplit": "Create another split",
+    "createSplitHint": "Start a separate split for a different group or occasion.",
+    "createSplitPlaceholder": "Name for the new split...",
+    "addSplit": "Add",
+    "deleteSplit": "Delete this split",
+    "participants": "Participants",
+    "addParticipantPlaceholder": "Friend's name...",
+    "emptyParticipants": "Add at least two participants to start splitting.",
+    "needTwoParticipants": "Add at least two participants to continue.",
+    "cannotRemovePayer": "Cannot remove a participant who paid an expense.",
+    "expenses": "Expenses",
+    "addExpense": "Add expense",
+    "emptyExpenses": "No expenses added yet.",
+    "payer": "Who paid?",
+    "paidBy": "Paid by {{name}}",
+    "participantsInExpense": "Who shares this expense?",
+    "results": "Settlements",
+    "owes": "owes",
+    "netBalance": "Net balances",
+    "allSettled": "Everyone is settled up!",
+    "markAsPaid": "Mark payment from {{from}} to {{to}} as paid",
+    "paid": "paid",
+    "share": {
+      "copy": "Copy",
+      "export": "Export",
+      "includeExpenses": "Include expenses",
+      "sharedWith": "shared with",
+      "copySuccess": "Results copied to clipboard",
+      "copyError": "Could not copy to clipboard",
+      "exportSuccess": "Results exported successfully"
+    },
+    "participant": {
+      "you": "You"
+    },
+    "export": {
+      "walletWiseTitle": "Export to WalletWise",
+      "title": "My expenses",
+      "paidTitle": "Expenses I paid",
+      "paidEmpty": "You haven't paid any expenses in this split.",
+      "oweTitle": "What I owe",
+      "oweEmpty": "You don't owe anyone in this split.",
+      "oweTo": "Owe {{name}}",
+      "oweDescription": "Split {{session}} — owe {{name}}",
+      "owedTitle": "What others owe me",
+      "owedEmpty": "No one owes you in this split.",
+      "owedFrom": "From {{name}}",
+      "incomeDescription": "Split {{session}} — from {{name}}",
+      "exportExpense": "Add expense",
+      "exportIncome": "Add income",
+      "exportAllIncome": "Add all as income",
+      "export": "Export",
+      "exportAll": "Export all",
+      "exported": "Exported",
+      "dialogTitle": "Add expense to WalletWise",
+      "dialogTitleIncome": "Add income to WalletWise",
+      "dialogTitleAll": "Add {{count}} expenses",
+      "dialogTitleIncomeAll": "Add {{count}} incomes",
+      "bulkHint": "Each item will be created as a separate transaction with its own description and amount.",
+      "selectPlanning": "Select a planning",
+      "planningRequired": "Please select a planning",
+      "submit": "Create expense",
+      "submitIncome": "Create income",
+      "isReceived": "Already received",
+      "success": "Transaction created successfully",
+      "successAll": "{{count}} transactions created successfully",
+      "error": "Failed to create transaction. Please try again."
     }
   },
   "a11y": {

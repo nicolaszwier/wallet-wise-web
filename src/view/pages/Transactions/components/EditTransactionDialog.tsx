@@ -17,7 +17,6 @@ import { cn } from "@/app/utils/cn"
 import { CategoriesCombobox } from "@/view/components/CategoriesCombobox"
 import { Category } from "@/app/models/Category"
 import { InputCurrency } from "@/view/components/InputCurrency"
-import { getCurrencySymbol } from "@/app/utils/formatCurrency"
 import { ResponsiveDialog, ResponsiveDialogContent, ResponsiveDialogFooter, ResponsiveDialogHeader } from "@/view/components/ResponsiveDialog"
 import { useEditTransactionController } from "../useEditTransactionController"
 
@@ -25,7 +24,6 @@ export function EditTransactionDialog() {
   const { t, i18n } = useTranslation()
   const { 
     user, 
-    selectedPlanning,
     isPending, 
     errors, 
     control, 
@@ -55,18 +53,13 @@ export function EditTransactionDialog() {
                 <div className="flex items-baseline justify-between">
                   <div className="grid gap-2">
                     <Label htmlFor="amount">{t('transactions.forms.amount')}</Label>
-                    <div className="flex items-center gap-2">
-                      <span className="text-muted-foreground tracking-[-0.5px] text-lg">
-                        {getCurrencySymbol(i18n.language, selectedPlanning?.currency ?? 'BRL')}
-                      </span>
-                      <Controller
-                        control={control}
-                        name="amount"
-                        render={({ field: { onChange, value }}) => (
-                          <InputCurrency value={value} className={transactionType === TransactionType.EXPENSE ? 'text-red' : 'text-green'} onChange={onChange} error={errors.amount?.message as string}/> 
-                        )}
-                      />
-                    </div>
+                    <Controller
+                      control={control}
+                      name="amount"
+                      render={({ field: { onChange, value }}) => (
+                        <InputCurrency value={value} className={transactionType === TransactionType.EXPENSE ? 'text-red' : 'text-green'} onChange={onChange} error={errors.amount?.message as string}/> 
+                      )}
+                    />
                   </div>
                   <div className="grid gap-2 min-w-20">
                     <Label htmlFor="isPaid">{t('transactions.forms.isPaid')}</Label>
