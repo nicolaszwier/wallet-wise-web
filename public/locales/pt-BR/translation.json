@@ -58,6 +58,7 @@
     "invalidCredentials": "Email ou senha incorretos",
     "signinGoogleFailed": "Login com o Google não funcionou",
     "signinAppleFailed": "Login com a Apple não funcionou",
+    "signinAppleLocalhost": "Login com a Apple não funciona em localhost. Use ngrok (ou um domínio personalizado via /etc/hosts) e registre essa origem HTTPS no Apple Developer.",
     "authError": "Você não está logado, por favor faça login novamente",
     "fetchPlannings": "Erro ao carregar planejamentos",
     "amountRequired": "Informe um valor",
