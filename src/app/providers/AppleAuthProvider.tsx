@@ -1,24 +1,11 @@
 import { useEffect } from "react";
-
-let initialized = false;
+import { initAppleAuth } from "@/app/utils/appleAuth";
 
 export function AppleAuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    const clientId = import.meta.env.VITE_APPLE_CLIENT_ID;
-    const redirectURI = import.meta.env.VITE_APPLE_REDIRECT_URI;
-
-    if (!clientId || !redirectURI || initialized) {
-      return;
-    }
-
-    AppleID.auth.init({
-      clientId,
-      scope: "name email",
-      redirectURI,
-      usePopup: true,
+    void initAppleAuth().catch((error) => {
+      console.error("Apple Sign-In init failed:", error);
     });
-
-    initialized = true;
   }, []);
 
   return children;

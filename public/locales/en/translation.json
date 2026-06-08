@@ -58,6 +58,7 @@
     "invalidCredentials": "Invalid credentials",
     "signinGoogleFailed": "Sign in with Google failed",
     "signinAppleFailed": "Sign in with Apple failed",
+    "signinAppleLocalhost": "Apple Sign-In does not work on localhost. Use ngrok (or a custom domain via /etc/hosts) and register that HTTPS origin in Apple Developer.",
     "authError": "Authentication error! Please signin again!",
     "fetchPlannings": "Error on fetching plannings.",
     "amountRequired": "Amount is required",
