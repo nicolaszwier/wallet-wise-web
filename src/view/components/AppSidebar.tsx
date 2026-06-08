@@ -17,7 +17,8 @@ import {
   CircleDollarSign,
   LayoutDashboard,
   LifeBuoy,
-  Send
+  Send,
+  Users,
 } from "lucide-react"
 import * as React from "react"
 import { Link, useLocation } from "react-router-dom"
@@ -52,6 +53,11 @@ const data = {
       title: "global.menu.monthlyBalances",
       url: "/balances",
       icon: ChartPie,
+    },
+    {
+      title: "global.menu.expenseSplitter",
+      url: "/splitter",
+      icon: Users,
     },
   ],
 }

@@ -8,6 +8,7 @@ import {
 } from "@/view/components/ui/sidebar"
 import { ChevronsUpDown } from 'lucide-react';
 import { usePlanning } from '@/app/hooks/usePlanning';
+import { useAuth } from '@/app/hooks/useAuth';
 import { useTranslation } from 'react-i18next';
 import { ViewTypeSelectorDropdown } from '../pages/Transactions/components/ViewTypeSelectorDropdown';
 import { TransactionsProvider } from '@/app/contexts/TransactionsContext';
@@ -17,6 +18,12 @@ export function AppLayout() {
   const { t } = useTranslation()
   const { pathname } = useLocation()
   const { selectedPlanning } = usePlanning()
+  const { signedIn } = useAuth()
+
+  const showPlanningSelector =
+    signedIn &&
+    pathname !== '/select-planning' &&
+    !(pathname === '/tools/expense-splitter' && !selectedPlanning);
 
   return (
     <SidebarProvider className="sm:h-screen sm:overflow-hidden">
@@ -32,7 +39,7 @@ export function AppLayout() {
                 )}
               </div>
               {/* <Separator orientation="vertical" className="mr-2 h-4" /> */}
-              {pathname !== '/select-planning' && (
+              {showPlanningSelector && (
                 <Link to={'/select-planning'}>
                   <SidebarMenuButton
                     size="lg"
