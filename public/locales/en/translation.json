@@ -29,7 +29,9 @@
       "pay": "Pay",
       "duplicate": "Duplicate",
       "cancel": "Cancel",
-      "update": "Update"
+      "update": "Update",
+      "signInWithApple": "Sign in with Apple",
+      "signUpWithApple": "Sign up with Apple"
     },
     "menu": {
       "dashboard": "Dashboard",
@@ -41,7 +43,7 @@
       "logout": "Log out"
     }
   },
-  "errors": {
+  "formsValidation": {
     "nameRequired": "Name is required",
     "emailRequired": "Email is required",
     "emailValid": "Please inform a valid email",
@@ -55,6 +57,7 @@
     "passwordsDontMatch": "Passwords don't match",
     "invalidCredentials": "Invalid credentials",
     "signinGoogleFailed": "Sign in with Google failed",
+    "signinAppleFailed": "Sign in with Apple failed",
     "authError": "Authentication error! Please signin again!",
     "fetchPlannings": "Error on fetching plannings.",
     "amountRequired": "Amount is required",
