@@ -13,10 +13,19 @@ import { useSigninController } from "./useSigninController"
 import { Spinner } from "@/view/components/ui/spinner"
 import { GoogleLogin } from '@react-oauth/google';
 import { useTranslation } from 'react-i18next';
+import { AppleSignInButton } from "@/view/components/AppleSignInButton";
 
 export default function Signin() {
   const {t} = useTranslation()
-  const {handleSubmit, register, handleSignInWithGoogleResponse, isPending, errors} = useSigninController()
+  const {
+    handleSubmit,
+    register,
+    handleSignInWithGoogleResponse,
+    handleSignInWithApple,
+    isPending,
+    isPendingApple,
+    errors,
+  } = useSigninController()
 
   return (
     <div className="flex bg-background h-screen w-full items-center justify-center px-4">
@@ -66,6 +75,11 @@ export default function Signin() {
               {t('global.or')}
             </div>
             <GoogleLogin onSuccess={handleSignInWithGoogleResponse} />
+            <AppleSignInButton
+              onClick={handleSignInWithApple}
+              disabled={isPendingApple}
+              label={t('global.cta.signInWithApple')}
+            />
           </form>
           <div className="mt-4 text-center text-sm">
             {t('signin.doesntHaveAccount')}{" "}

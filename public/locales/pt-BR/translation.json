@@ -29,7 +29,9 @@
       "pay": "Pagar",
       "duplicate": "Duplicar",
       "cancel": "Cancelar",
-      "update": "Alterar"
+      "update": "Alterar",
+      "signInWithApple": "Entrar com a Apple",
+      "signUpWithApple": "Cadastrar com a Apple"
     },
     "menu": {
       "dashboard": "Dashboard",
@@ -55,6 +57,7 @@
     "passwordsDontMatch": "Senhas não são iguais",
     "invalidCredentials": "Email ou senha incorretos",
     "signinGoogleFailed": "Login com o Google não funcionou",
+    "signinAppleFailed": "Login com a Apple não funcionou",
     "authError": "Você não está logado, por favor faça login novamente",
     "fetchPlannings": "Erro ao carregar planejamentos",
     "amountRequired": "Informe um valor",

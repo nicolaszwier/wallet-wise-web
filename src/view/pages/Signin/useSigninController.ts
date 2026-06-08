@@ -2,7 +2,7 @@ import { z } from "zod";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from "react-hook-form";
-import { SigninParams, SigninWithGoogleParams } from "@/services/authService/signin";
+import { SigninParams, SigninWithAppleParams, SigninWithGoogleParams } from "@/services/authService/signin";
 import { authService } from "@/services/authService";
 import { useAuth } from "@/app/hooks/useAuth";
 import { toast } from 'react-hot-toast';
@@ -41,6 +41,12 @@ export function useSigninController() {
     },
   });
 
+  const { mutateAsync: mutateAsyncApple, isPending: isPendingApple, } = useMutation({
+    mutationFn: async (data: SigninWithAppleParams) => {
+      return authService.signinWithApple(data);
+    },
+  });
+
   const { signin } = useAuth();
 
   const handleSubmit = hookFormSubmit(async (data) => {
@@ -65,7 +71,45 @@ export function useSigninController() {
     }
   };
 
-  return { handleSubmit, register, handleSignInWithGoogleResponse, errors, isPending, isPendingGoogle };
+  const handleSignInWithApple = async () => {
+    try {
+      const response = await AppleID.auth.signIn();
+
+      if (!response?.authorization?.id_token) {
+        throw new Error("");
+      }
+
+      const params: SigninWithAppleParams = {
+        token: response.authorization.id_token,
+      };
+
+      if (response.user) {
+        params.user = {
+          email: response.user.email,
+          name: {
+            firstName: response.user.name?.firstName,
+            lastName: response.user.name?.lastName,
+          },
+        };
+      }
+
+      const { accessToken } = await mutateAsyncApple(params);
+      signin(accessToken);
+    } catch {
+      toast.error(t('formsValidation.signinAppleFailed'), { position: "bottom-center" });
+    }
+  };
+
+  return {
+    handleSubmit,
+    register,
+    handleSignInWithGoogleResponse,
+    handleSignInWithApple,
+    errors,
+    isPending,
+    isPendingGoogle,
+    isPendingApple,
+  };
 
 }
 
