@@ -84,7 +84,6 @@ export function useExportExpensesController({
   const { mutateAsync, isPending } = useMutation({
     mutationFn: (payload: FormData & ExportItem) =>
       transactionsService.create({
-        id: '',
         planningId: payload.planningId,
         categoryId: payload.category.id,
         description: payload.description,

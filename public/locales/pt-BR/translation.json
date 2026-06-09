@@ -41,7 +41,8 @@
       "feedback": "Feedback",
       "account": "Minha conta",
       "logout": "Sair",
-      "expenseSplitter": "Divisor de despesas"
+      "expenseSplitter": "Divisor de despesas",
+      "recurringTransactions": "Transações recorrentes"
     }
   },
   "formsValidation": {
@@ -67,7 +68,9 @@
     "amountNumbersOnly": "Valor deve conter apenas números",
     "descriptionRequired": "Informe uma descrição",
     "descriptionLength": "Descrição tem um limite de 100 caracteres",
-    "categoryRequired": "Selecione uma categoria"
+    "categoryRequired": "Selecione uma categoria",
+    "frequencyRequired": "Selecione uma frequência",
+    "endDateAfterStartDate": "A data final deve ser posterior à data inicial"
   },
   "signin":{
     "title": "Fazer login em WalletWise",
@@ -140,7 +143,14 @@
      },
      "deleteTransactionDialog": {
       "title": "Excluir transação?",
-      "description": "Isso vai remover permanentemente a transação {{description}} no valor de {{amount}}."
+      "description": "Isso vai remover permanentemente a transação {{description}} no valor de {{amount}}.",
+      "recurringTitle": "Excluir transação recorrente?",
+      "recurringDescription": "Escolha como excluir {{description}} ({{amount}}).",
+      "optionOccurrenceOnly": "Excluir apenas esta ocorrência",
+      "optionOccurrenceOnlyHint": "As outras ocorrências futuras permanecerão.",
+      "optionStopSeries": "Parar recorrência e excluir todas as futuras",
+      "optionStopSeriesHint": "Desativa a regra recorrente e remove todas as ocorrências futuras não pagas.",
+      "stopRecurring": "Parar recorrência"
      },
      "filterDialog": {
       "title": "Filtrar transações",
@@ -149,6 +159,8 @@
       "sortOrder": "Ordenar por"
      },
      "actionsMessages": {
+      "createSuccess": "Transação criada com sucesso!",
+      "createError": "Erro ao criar transação. Por favor, tente novamente.",
       "updateSuccess": "Transação alterada com sucesso!",
       "updateError": "Erro ao alterar transação. Por favor, tente novamente.",
       "paySuccess": "Transação paga com sucesso!",
@@ -237,6 +249,43 @@
       "success": "Transação criada com sucesso",
       "successAll": "{{count}} transações criadas com sucesso",
       "error": "Falha ao criar transação. Tente novamente."
+    }
+  },
+  "recurringTransactions": {
+    "title": "Transações recorrentes",
+    "description": "Gerencie transações que se repetem em um cronograma. As próximas ocorrências são geradas automaticamente para os próximos 3 meses.",
+    "emptyState": "Nenhuma transação recorrente ainda. Crie uma na página de Transações usando o botão + e ative a opção recorrente.",
+    "toolbarTooltip": "Gerenciar transações recorrentes",
+    "viewConfig": "Ver configuração recorrente",
+    "frequency": {
+      "weekly": "Semanal",
+      "monthly": "Mensal",
+      "yearly": "Anual"
+    },
+    "forms": {
+      "isRecurring": "Recorrente",
+      "isRecurringHint": "Repita esta transação em um cronograma. As próximas ocorrências serão geradas automaticamente.",
+      "recurrenceSection": "Recorrência",
+      "frequency": "Frequência",
+      "startDate": "Data de início",
+      "endDate": "Data final",
+      "endDateOptional": "Sem data final",
+      "clearEndDate": "Limpar data final",
+      "dateHint": "Use sua data de vencimento habitual. Datas passadas no período atual não gerarão duplicata.",
+      "titleEditExpense": "Editar despesa recorrente",
+      "titleEditIncome": "Editar receita recorrente",
+      "editWarning": "A atualização irá regenerar as transações futuras não pagas com base nestas configurações."
+    },
+    "deleteDialog": {
+      "title": "Excluir transação recorrente?",
+      "description": "Isso irá parar {{description}} ({{amount}}) de se repetir e remover todas as transações futuras não pagas geradas."
+    },
+    "actionsMessages": {
+      "createSuccess": "Transação recorrente criada com sucesso!",
+      "updateSuccess": "Transação recorrente alterada com sucesso!",
+      "updateError": "Erro ao alterar transação recorrente. Por favor, tente novamente.",
+      "deleteSuccess": "Transação recorrente excluída com sucesso!",
+      "deleteError": "Erro ao excluir transação recorrente. Por favor, tente novamente."
     }
   },
   "a11y": {

@@ -1,13 +1,14 @@
 import { useIsMobile } from "@/app/hooks/useIsMobile"
 import { Transaction } from "@/app/models/Transaction"
 import { cn } from "@/app/utils/cn"
-import { formatDate, isAfterCurrentDate } from "@/app/utils/date"
+import { formatCalendarDate, formatDate, isAfterCurrentDate } from "@/app/utils/date"
 import { formatCurrency } from "@/app/utils/formatCurrency"
 import { CategoryIcon } from "@/view/components/CategoryIcon"
 import { SwipeToRevealActions } from "@/view/components/SwipeToReveal"
 import { Button } from "@/view/components/ui/button"
 import { Checkbox } from "@/view/components/ui/checkbox"
-import { CalendarClock, CircleAlert, CircleCheck, CircleCheckBig, PencilIcon, Trash } from "lucide-react"
+import { CalendarClock, CircleAlert, CircleCheck, CircleCheckBig, PencilIcon, Repeat, Trash } from "lucide-react"
+import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
 
@@ -89,6 +90,7 @@ export function TransactionListItem({transaction, currency, isSelected, onSelect
 
 function ItemContent({transaction, currency, isSelected, onSelect, onEdit, onPay, onDelete, isMobile }: ComponentProps & { isMobile: boolean }) {
   const { t, i18n } = useTranslation()
+  const navigate = useNavigate()
   const [isHovered, setIsHovered] = useState(false)
 
   const handleCheckedChange = () => {
@@ -141,12 +143,29 @@ function ItemContent({transaction, currency, isSelected, onSelect, onEdit, onPay
               <CalendarClock className="text-red font-semibold" size={15} />
             </span>
           )}
+          {transaction.recurringConfigId && (
+            <button
+              type="button"
+              title={t('recurringTransactions.viewConfig')}
+              className="inline-flex"
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate(`/recurring-transactions?edit=${transaction.recurringConfigId}`);
+              }}
+            >
+              <Repeat className="text-blue" size={15} />
+            </button>
+          )}
 
         </div>
       </div>
       {(!isHovered || isSelected || isMobile) && (
         <div className="flex justify-end flex-col items-end text-right">
-          <span className="truncate text-xs">{formatDate(new Date(transaction.date), i18n.language)}</span>
+          <span className="truncate text-xs">
+            {transaction.recurringConfigId
+              ? formatCalendarDate(transaction.date, i18n.language)
+              : formatDate(new Date(transaction.date), i18n.language)}
+          </span>
           <span className="truncate text-xs font-semibold">{formatCurrency(transaction.amount, currency, i18n.language)}</span>
         </div>
       )}

@@ -11,6 +11,7 @@ import { TransactionType } from "@/app/models/TransactionType";
 import { useEffect, useState } from "react";
 import { useTransactions } from "@/app/hooks/useTransactions";
 import { useTranslation } from "react-i18next";
+import { invalidatePeriodsQueries } from "@/app/utils/timelinePersistence";
 
 const schema = z.object({
   amount: z.string()
@@ -98,6 +99,7 @@ export function useEditTransactionController() {
       
       await mutateAsync(payload as Transaction);
       queryClient.invalidateQueries({queryKey: ['planning']});
+      invalidatePeriodsQueries(queryClient, selectedPlanning?.id || '', undefined);
       toggleEditTransactionDialog(false)
       toast.success(t('transactions.actionsMessages.updateSuccess'), {position: "bottom-center", duration: 6000,})
       reset();

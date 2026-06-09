@@ -10,6 +10,7 @@ import { PlanningGuard } from './PlanningGuard';
 import Timeline from '@/view/pages/Transactions';
 import Balances from '@/view/pages/Balances';
 import ExpenseSplitter from '@/view/pages/ExpenseSplitter';
+import RecurringTransactions from '@/view/pages/RecurringTransactions';
 
 export function Router() {
   return (
@@ -34,6 +35,7 @@ export function Router() {
             <Route element={<PlanningGuard />}>
               <Route path="/" element={<Dashboard />} />
               <Route path="/timeline" element={<Timeline />} />
+              <Route path="/recurring-transactions" element={<RecurringTransactions />} />
               <Route path="/balances" element={<Balances />} />
             </Route>
           </Route>

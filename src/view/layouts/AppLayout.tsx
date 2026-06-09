@@ -61,7 +61,10 @@ export function AppLayout() {
               )}
             </div>
           </header>
-          <div className="flex flex-1 flex-col gap-4 pt-0 overflow-auto">
+          <div
+            id={pathname === '/timeline' ? 'timeline-scroll-container' : undefined}
+            className="flex flex-1 flex-col gap-4 pt-0 overflow-auto"
+          >
             <Outlet />
           </div>
         </SidebarInset>

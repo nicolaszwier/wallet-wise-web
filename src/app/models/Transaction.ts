@@ -12,5 +12,19 @@ export interface Transaction {
   dateCreated?: string;
   isPaid: boolean;
   type: TransactionType;
-  category?: Category
+  category?: Category;
+  recurringConfigId?: string;
+}
+
+export interface CreateTransactionPayload {
+  planningId: string;
+  categoryId: string;
+  description: string;
+  amount: number;
+  date: string;
+  isPaid: boolean;
+  type: TransactionType;
+  isRecurring?: boolean;
+  frequency?: string;
+  endDate?: string;
 }

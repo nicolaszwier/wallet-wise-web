@@ -2,8 +2,9 @@ import { useTransactions } from "@/app/hooks/useTransactions";
 import { Planning } from "@/app/models/Planning";
 import { BalanceCard } from "@/view/components/BalanceCard";
 import { Button } from "@/view/components/ui/button";
-import { Eye, EyeOff, ListFilter } from "lucide-react";
+import { Eye, EyeOff, ListFilter, Repeat } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 interface ComponentProps {
   selectedPlanning: Planning | undefined
@@ -11,6 +12,7 @@ interface ComponentProps {
 }
 export function TransactionsToolbar({selectedPlanning}: ComponentProps) {
   const { t } = useTranslation()
+  const navigate = useNavigate()
   const { 
     showEmptyPeriods, 
     toggleFilterTransactionsDialog, 
@@ -25,6 +27,15 @@ export function TransactionsToolbar({selectedPlanning}: ComponentProps) {
       </Button>
       <Button variant="ghost" size="icon" onClick={() => toggleFilterTransactionsDialog(true)}>
         <ListFilter />
+      </Button>
+      <Button
+        variant="ghost"
+        size="icon"
+        title={t('recurringTransactions.toolbarTooltip')}
+        aria-label={t('recurringTransactions.toolbarTooltip')}
+        onClick={() => navigate('/recurring-transactions')}
+      >
+        <Repeat />
       </Button>
       <BalanceCard className="ml-4" variant='sm' title={t('global.currentBalance')} amount={selectedPlanning?.currentBalance || 0} currency={selectedPlanning?.currency || "BRL"}/>
     {/* <Separator orientation='vertical'  />

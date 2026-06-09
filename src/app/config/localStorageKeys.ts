@@ -3,4 +3,6 @@ export const localStorageKeys = {
   SELECTED_PLANNING: 'ww:planning',
   PREFERRED_VIEW: 'ww:preferredView',
   EXPENSE_SPLITTER_SESSIONS: 'ww:expenseSplitterSessions',
+  TIMELINE_FILTERS: 'ww:timelineFilters',
+  TIMELINE_SCROLL: 'ww:timelineScroll',
 };

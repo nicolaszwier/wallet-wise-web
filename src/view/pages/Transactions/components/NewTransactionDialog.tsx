@@ -20,6 +20,8 @@ import { CategoriesCombobox } from "@/view/components/CategoriesCombobox"
 import { Category } from "@/app/models/Category"
 import { InputCurrency } from "@/view/components/InputCurrency"
 import { ResponsiveDialog, ResponsiveDialogContent, ResponsiveDialogFooter, ResponsiveDialogHeader } from "@/view/components/ResponsiveDialog"
+import { SelectField } from "@/view/components/SelectField"
+import { RecurrenceFrequency } from "@/app/models/RecurrenceFrequency"
 
 export function NewTransactionDialog() {
   const { t, i18n } = useTranslation()
@@ -33,8 +35,16 @@ export function NewTransactionDialog() {
     transactionType, 
     handleTransactionTypeChange,
     drawerOpen,
-    setDrawerOpen
+    setDrawerOpen,
+    isRecurring,
+    setValue,
   } = useNewTransactionController()
+
+  const frequencyOptions = [
+    { value: RecurrenceFrequency.WEEKLY, label: t('recurringTransactions.frequency.weekly') },
+    { value: RecurrenceFrequency.MONTHLY, label: t('recurringTransactions.frequency.monthly') },
+    { value: RecurrenceFrequency.YEARLY, label: t('recurringTransactions.frequency.yearly') },
+  ]
 
   return (
     <>
@@ -137,6 +147,11 @@ export function NewTransactionDialog() {
                       </Popover>
                     )}
                     />
+                    {isRecurring && (
+                      <span className="text-xs text-muted-foreground">
+                        {t('recurringTransactions.forms.dateHint')}
+                      </span>
+                    )}
                     <span className="inline-block text-sm text-destructive">
                     {t(errors.date?.message as string)}
                     </span>
@@ -161,7 +176,92 @@ export function NewTransactionDialog() {
                     </span>
                   </div>
 
-                  
+                  <div className="grid gap-2">
+                    <div className="flex items-center justify-between">
+                      <Label htmlFor="isRecurring">{t('recurringTransactions.forms.isRecurring')}</Label>
+                      <Controller
+                        control={control}
+                        name="isRecurring"
+                        render={({ field: { onChange, value } }) => (
+                          <Switch
+                            id="isRecurring"
+                            checked={value}
+                            onCheckedChange={onChange}
+                          />
+                        )}
+                      />
+                    </div>
+                    <span className="text-xs text-muted-foreground">
+                      {t('recurringTransactions.forms.isRecurringHint')}
+                    </span>
+                  </div>
+
+                  {isRecurring && (
+                    <div className="grid gap-4 rounded-md border border-border-light p-4">
+                      <p className="text-sm font-medium">{t('recurringTransactions.forms.recurrenceSection')}</p>
+                      <div className="grid gap-2">
+                        <Label htmlFor="frequency">{t('recurringTransactions.forms.frequency')}</Label>
+                        <Controller
+                          control={control}
+                          name="frequency"
+                          render={({ field: { onChange, value } }) => (
+                            <SelectField
+                              id="frequency"
+                              value={value ?? RecurrenceFrequency.MONTHLY}
+                              options={frequencyOptions}
+                              onChange={onChange}
+                              placeholder={t('recurringTransactions.forms.frequency')}
+                            />
+                          )}
+                        />
+                        <span className="inline-block text-sm text-destructive">
+                          {t(errors.frequency?.message as string)}
+                        </span>
+                      </div>
+                      <div className="grid gap-2">
+                        <Label htmlFor="endDate">{t('recurringTransactions.forms.endDate')}</Label>
+                        <Controller
+                          control={control}
+                          name="endDate"
+                          render={({ field: { onChange, value } }) => (
+                            <Popover>
+                              <PopoverTrigger asChild>
+                                <Button
+                                  variant="outline"
+                                  className={cn(
+                                    "w-full justify-start text-left font-normal bg-background-tertiary",
+                                    !value && "text-muted-foreground"
+                                  )}
+                                >
+                                  <CalendarIcon />
+                                  {value ? formatDate(value, i18n.language) : t('recurringTransactions.forms.endDateOptional')}
+                                </Button>
+                              </PopoverTrigger>
+                              <PopoverContent className="w-auto p-0" align="start">
+                                <Calendar
+                                  mode="single"
+                                  selected={value ?? undefined}
+                                  onSelect={onChange}
+                                />
+                              </PopoverContent>
+                            </Popover>
+                          )}
+                        />
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          className="justify-start px-0 h-auto text-xs"
+                          onClick={() => setValue('endDate', null)}
+                        >
+                          {t('recurringTransactions.forms.clearEndDate')}
+                        </Button>
+                        <span className="inline-block text-sm text-destructive">
+                          {t(errors.endDate?.message as string)}
+                        </span>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
               <ResponsiveDialogFooter className="sm:flex flex-col-reverse px-4">

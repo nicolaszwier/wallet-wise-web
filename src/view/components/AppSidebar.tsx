@@ -17,6 +17,7 @@ import {
   CircleDollarSign,
   LayoutDashboard,
   LifeBuoy,
+  Repeat,
   Send,
   Users,
 } from "lucide-react"
@@ -48,6 +49,11 @@ const data = {
       title: "global.menu.timeline",
       url: "/timeline",
       icon: CircleDollarSign,
+    },
+    {
+      title: "global.menu.recurringTransactions",
+      url: "/recurring-transactions",
+      icon: Repeat,
     },
     {
       title: "global.menu.monthlyBalances",
