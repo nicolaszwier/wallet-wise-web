@@ -1,4 +1,6 @@
+import { usePlanning } from "@/app/hooks/usePlanning";
 import { useTransactions } from "@/app/hooks/useTransactions";
+import { clearTimelineScroll } from "@/app/utils/timelinePersistence";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -12,6 +14,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export function useFilterTransactionsController() {
+  const { selectedPlanning } = usePlanning();
   const {
     filters,
     isFilterTransactionsDialogOpen, 
@@ -25,7 +28,7 @@ export function useFilterTransactionsController() {
     control,
   } = useForm<FormData>({
     resolver: zodResolver(schema),
-    defaultValues: {
+    values: {
       startDate: new Date(filters.startDate),
       endDate: new Date(filters.endDate),
       sortOrder: filters.sortOrder
@@ -33,6 +36,9 @@ export function useFilterTransactionsController() {
   });
 
   const handleFilter = hookFormSubmit(async (data) => {
+    if (selectedPlanning?.id) {
+      clearTimelineScroll(selectedPlanning.id);
+    }
     setFilters({
       startDate: data.startDate.toISOString(),
       endDate: data.endDate.toISOString(),

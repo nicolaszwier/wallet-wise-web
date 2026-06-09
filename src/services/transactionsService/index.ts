@@ -1,5 +1,5 @@
 
-import { Transaction } from "@/app/models/Transaction";
+import { CreateTransactionPayload, Transaction } from "@/app/models/Transaction";
 import { httpClient } from "../httpClient";
 import { Balance } from "@/app/models/Balance";
 
@@ -14,7 +14,6 @@ export const transactionsService = {
 
 type TransactionsResponse = Transaction[];
 type BalanceResponse = Balance;
-type TransactionPayload = Transaction;
 
 interface DefaultResponse {
   statusCode: number;
@@ -35,12 +34,12 @@ async function fetchMonthlyBalance(planningId: string, month?: string, year?: st
   return data;
 }
 
-export async function create(payload: TransactionPayload) {
+export async function create(payload: CreateTransactionPayload) {
   const { data } = await httpClient.post<DefaultResponse>('/transactions', payload);
   return data;
 }
 
-export async function update(payload: TransactionPayload) {
+export async function update(payload: Transaction) {
   const { data } = await httpClient.put<DefaultResponse>(`/transactions/${payload.id}`, payload);
   return data;
 }

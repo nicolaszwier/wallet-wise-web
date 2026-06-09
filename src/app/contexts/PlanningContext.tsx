@@ -30,7 +30,7 @@ export function PlanningProvider({ children }: { children: React.ReactNode }) {
     return undefined;
   });
 
-  const { isError, isFetching, data, error } = useQuery({
+  const { isError, isLoading, data, error } = useQuery({
     queryKey: ['planning'],
     queryFn: () => planningsService.fetchPlannings(),
     enabled: signedIn,
@@ -70,11 +70,11 @@ export function PlanningProvider({ children }: { children: React.ReactNode }) {
       }}
     >
 
-      {isFetching && (
+      {isLoading && (
         <LoadingScreen />
       )}
 
-      {!isFetching && children}
+      {!isLoading && children}
     </PlanningContext.Provider>
   );
 }

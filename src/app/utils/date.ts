@@ -5,6 +5,37 @@ export function formatDate(date: Date, locale: string) {
   }).format(date);
 }
 
+/** Format a stored calendar date (UTC midnight) without timezone shifting the day. */
+export function formatCalendarDate(date: Date | string, locale: string) {
+  const parsed = typeof date === 'string' ? new Date(date) : date;
+  return Intl.DateTimeFormat(locale, {
+    dateStyle: 'medium',
+    timeZone: 'UTC',
+  }).format(parsed);
+}
+
+/** Send local calendar date as YYYY-MM-DD (avoids toISOString timezone shift). */
+export function toCalendarDateString(date: Date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+/** Parse a stored UTC calendar date into a local Date for date pickers. */
+export function calendarDateToLocalDate(date: Date | string) {
+  const dateOnly = typeof date === 'string' ? date.slice(0, 10) : toCalendarDateStringFromUtc(date);
+  const [year, month, day] = dateOnly.split('-').map(Number);
+  return new Date(year, month - 1, day);
+}
+
+function toCalendarDateStringFromUtc(date: Date) {
+  const year = date.getUTCFullYear();
+  const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+  const day = String(date.getUTCDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
 export function formatShortDate(date: Date, locale: string) {
   return Intl.DateTimeFormat(locale, {
     day: 'numeric',

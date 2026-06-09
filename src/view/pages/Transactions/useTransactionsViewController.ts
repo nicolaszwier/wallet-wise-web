@@ -7,9 +7,17 @@ import { Period } from "@/app/models/Period";
 import { Transaction } from "@/app/models/Transaction";
 import { ViewType } from "@/app/models/ViewType";
 import { periodsService } from "@/services/periodsService";
+import { recurringConfigsService } from "@/services/recurringConfigsService";
 import { transactionsService } from "@/services/transactionsService";
+import { useTimelineScrollPersistence } from "@/app/hooks/useTimelineScrollPersistence";
+import {
+  getPeriodsQueryKey,
+  invalidatePeriodsQueries,
+} from "@/app/utils/timelinePersistence";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+
+export type DeleteScope = 'occurrence' | 'series';
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 
@@ -25,6 +33,7 @@ export function useTransactionsViewController() {
   const {preferredView} = useApp()
   const { 
     filters,
+    filtersHydrated,
     activeTransaction,
     isPayTransactionDialogOpen,
     isDeleteTransactionDialogOpen,
@@ -38,13 +47,18 @@ export function useTransactionsViewController() {
   } = useTransactions()
   const queryClient = useQueryClient();
   const rangeRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [deleteScope, setDeleteScope] = useState<DeleteScope>('occurrence');
+  const isRecurringDelete = !!activeTransaction?.recurringConfigId;
   
-  const { data, isFetching, refetch } = useQuery({
-    queryKey: ['periods', selectedPlanning?.id, filters.startDate, filters.endDate],
+  const { data, isFetching, isPending, refetch } = useQuery({
+    queryKey: getPeriodsQueryKey(selectedPlanning?.id || '', filters),
     queryFn: () => periodsService.fetch(selectedPlanning?.id || "", filters),
-    enabled: !!selectedPlanning?.id && !!ranges,
-    staleTime: 1000 * 60
+    enabled: !!selectedPlanning?.id && !!ranges && filtersHydrated,
+    staleTime: 1000 * 60,
+    placeholderData: (previousData) => previousData,
   });
+
+  const isInitialLoading = isPending && !data;
 
   // useEffect(() => {
   //   console.log('[useEffect] ranges', ranges);
@@ -113,9 +127,18 @@ export function useTransactionsViewController() {
   }
 
   const openDeleteTransactionDialog = (transaction: Transaction) => {
-    toggleDeleteTransactionDialog(true)
+    setDeleteScope('occurrence');
+    toggleDeleteTransactionDialog(true);
     setActiveTransaction(transaction);
-  }
+  };
+
+  const handleDeleteDialogOpenChange = (open: boolean | ((prev: boolean) => boolean)) => {
+    const next = typeof open === 'function' ? open(isDeleteTransactionDialogOpen) : open;
+    if (!next) {
+      setDeleteScope('occurrence');
+    }
+    toggleDeleteTransactionDialog(next);
+  };
 
   const { mutateAsync: payTransaction, isPending: isPendingPayTransaction, error } = useMutation({
     mutationFn: async (data: Transaction | null) => {
@@ -127,6 +150,7 @@ export function useTransactionsViewController() {
     try {
       await payTransaction(activeTransaction);
       queryClient.invalidateQueries({queryKey: ['planning']});
+      invalidatePeriodsQueries(queryClient, selectedPlanning?.id || '', filters);
       toast.success(t('transactions.actionsMessages.paySuccess'), {position: "bottom-center", duration: 6000,})
       togglePayTransactionDialog(false);
     } catch (err) {      
@@ -136,24 +160,45 @@ export function useTransactionsViewController() {
     }
   }
 
-  const { mutateAsync: deleteTransaction, isPending: isPendingDeleteTransaction, error: errorDelete } = useMutation({
+  const { mutateAsync: deleteTransaction, isPending: isPendingDeleteOccurrence, error: errorDeleteOccurrence } = useMutation({
     mutationFn: async (data: Transaction | null) => {
-      return transactionsService.remove(data?.periodId ?? "", data?.id ?? "")
-    }
-  })
+      return transactionsService.remove(data?.periodId ?? "", data?.id ?? "");
+    },
+  });
+
+  const { mutateAsync: deleteRecurringConfig, isPending: isPendingDeleteSeries, error: errorDeleteSeries } = useMutation({
+    mutationFn: async (configId: string) => {
+      return recurringConfigsService.remove(configId);
+    },
+  });
+
+  const isPendingDeleteTransaction = isPendingDeleteOccurrence || isPendingDeleteSeries;
 
   const handleDeleteTransaction = async () => {
     try {
-      await deleteTransaction(activeTransaction);
-      queryClient.invalidateQueries({queryKey: ['planning']});
-      toast.success(t('transactions.actionsMessages.deleteSuccess'), {position: "bottom-center", duration: 6000,})
-      toggleDeleteTransactionDialog(false);
-    } catch (err) {      
+      if (deleteScope === 'series' && activeTransaction?.recurringConfigId) {
+        await deleteRecurringConfig(activeTransaction.recurringConfigId);
+        queryClient.invalidateQueries({ queryKey: ['planning'] });
+        invalidatePeriodsQueries(queryClient, selectedPlanning?.id || '', filters);
+        queryClient.invalidateQueries({ queryKey: ['recurring-configs', selectedPlanning?.id] });
+        toast.success(t('recurringTransactions.actionsMessages.deleteSuccess'), { position: "bottom-center", duration: 6000 });
+      } else {
+        await deleteTransaction(activeTransaction);
+        queryClient.invalidateQueries({ queryKey: ['planning'] });
+        invalidatePeriodsQueries(queryClient, selectedPlanning?.id || '', filters);
+        toast.success(t('transactions.actionsMessages.deleteSuccess'), { position: "bottom-center", duration: 6000 });
+      }
+      handleDeleteDialogOpenChange(false);
+    } catch (err) {
       console.error('Transaction delete error:', err);
+      const deleteError = deleteScope === 'series' ? errorDeleteSeries : errorDeleteOccurrence;
+      const fallbackMessage = deleteScope === 'series'
+        ? t('recurringTransactions.actionsMessages.deleteError')
+        : t('transactions.actionsMessages.deleteError');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      toast.error((errorDelete as any)?.response?.data?.message || t('transactions.actionsMessages.deleteError'), {position: "bottom-center", duration: 6000})
+      toast.error((deleteError as any)?.response?.data?.message || (err as any)?.response?.data?.message || fallbackMessage, { position: "bottom-center", duration: 6000 });
     }
-  }
+  };
 
   // Create a simpler drag-to-scroll implementation
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -215,32 +260,25 @@ export function useTransactionsViewController() {
      rangeRefs.current = rangeRefs.current.slice(0, ranges.length);
    }, [ranges.length]);
    
-   // Scroll to the current range when ranges change or component mounts
-   useEffect(() => {
-     // Find the index of the current range
-     const currentRangeIndex = ranges.findIndex(range => range.isCurrent);
-     
-     if (currentRangeIndex !== -1) {
-       // Scroll to the range before the current with a longer delay to ensure DOM is fully rendered
-       setTimeout(() => {
-         const element = document.getElementById(preferredView === ViewType.COLUMNS ? `period-${currentRangeIndex + 1}` : `period-${currentRangeIndex - 1}`);
-         if (element) {
-           element.scrollIntoView({
-             behavior: 'smooth',
-             block: 'start'
-           });
-         }
-       }, 1200);
-     }
-   }, [preferredView, ranges]);
- 
+  const currentRangeIndex = useMemo(
+    () => ranges.findIndex((range) => range.isCurrent),
+    [ranges],
+  );
+
+  useTimelineScrollPersistence({
+    columnsScrollRef: scrollContainerRef,
+    isReady: !!selectedPlanning?.id && ranges.length > 0,
+    isFetching,
+    currentRangeIndex,
+  });
+
 
   return {
     selectedPlanning,
     ranges,
     rangeRefs,
     visibleRanges,
-    isLoading: isFetching,
+    isLoading: isInitialLoading,
     scrollContainerRef,
     isPayTransactionDialogOpen,
     isDeleteTransactionDialogOpen,
@@ -248,10 +286,13 @@ export function useTransactionsViewController() {
     isPendingPayTransaction,
     isPendingDeleteTransaction,
     showEmptyPeriods,
+    deleteScope,
+    setDeleteScope,
+    isRecurringDelete,
     handleDeleteTransaction,
     handlePayTransaction,
     togglePayTransactionDialog,
-    toggleDeleteTransactionDialog,
+    toggleDeleteTransactionDialog: handleDeleteDialogOpenChange,
     openDeleteTransactionDialog,
     openPayTransactionDialog,
     openEditTransactionDialog,

@@ -5,11 +5,15 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "@/app/hooks/useAuth";
 import { toast } from 'react-hot-toast';
 import { transactionsService } from "@/services/transactionsService";
-import { Transaction } from "@/app/models/Transaction";
+import { CreateTransactionPayload } from "@/app/models/Transaction";
 import { usePlanning } from "@/app/hooks/usePlanning";
 import { TransactionType } from "@/app/models/TransactionType";
 import { useState } from "react";
 import { Category } from "@/app/models/Category";
+import { RecurrenceFrequency } from "@/app/models/RecurrenceFrequency";
+import { useTranslation } from "react-i18next";
+import { toCalendarDateString } from "@/app/utils/date";
+import { invalidatePeriodsQueries } from "@/app/utils/timelinePersistence";
 
 const schema = z.object({
   amount: z.string()
@@ -32,89 +36,130 @@ const schema = z.object({
     icon: z.string(),
   }, { message: 'formsValidation.categoryRequired' }),
   isPaid: z.boolean(),
+  isRecurring: z.boolean(),
+  frequency: z.nativeEnum(RecurrenceFrequency).optional(),
+  endDate: z.date().nullable().optional(),
   categoryId: z.string().optional(),
   planningId: z.string().optional()
-})
+}).superRefine((data, ctx) => {
+  if (data.isRecurring && !data.frequency) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: 'formsValidation.frequencyRequired',
+      path: ['frequency'],
+    });
+  }
+  if (data.isRecurring && data.endDate && data.endDate <= data.date) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: 'formsValidation.endDateAfterStartDate',
+      path: ['endDate'],
+    });
+  }
+});
 
 type FormData = z.infer<typeof schema>;
+
+const defaultValues: FormData = {
+  amount: '0',
+  description: '',
+  date: new Date(),
+  category: { id: '', description: '', userId: '', active: false, type: '', icon: '' },
+  isPaid: true,
+  isRecurring: false,
+  frequency: RecurrenceFrequency.MONTHLY,
+  endDate: null,
+  planningId: '',
+};
 
 export function useNewTransactionController() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const { user } = useAuth();
-  const {selectedPlanning} = usePlanning();
-  const [transactionType, setTransactionType] = useState(TransactionType.EXPENSE)
+  const { selectedPlanning } = usePlanning();
+  const { t } = useTranslation();
+  const [transactionType, setTransactionType] = useState(TransactionType.EXPENSE);
   const {
     register,
     handleSubmit: hookFormSubmit,
-    formState: { errors,  },
+    formState: { errors },
     control,
-    setValue, 
-    reset
+    setValue,
+    reset,
+    watch,
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: {
-      amount: '0',
-      description: '',
-      date: new Date(),
-      category: user?.categories?.[0] || {},
-      isPaid: true,
-      // categoryId: '',
-      planningId: ''
-    }
+      ...defaultValues,
+      category: user?.categories?.[0] || defaultValues.category,
+    },
   });
   const queryClient = useQueryClient();
+  const isRecurring = watch('isRecurring');
   const { mutateAsync, isPending, error } = useMutation({
-    mutationFn: async (data: Transaction) => {
+    mutationFn: async (data: CreateTransactionPayload) => {
       return transactionsService.create(data);
     },
   });
 
-
   const handleSubmit = hookFormSubmit(async (data) => {
-    console.log("data", data);
-    
     try {
-      const payload = {
-        ...data,
+      const payload: CreateTransactionPayload = {
         planningId: selectedPlanning?.id || '',
         categoryId: data.category?.id || '',
+        description: data.description,
         type: transactionType,
-        date: data.date.toISOString(),
-        amount: parseFloat(data.amount),
+        date: toCalendarDateString(data.date),
+        amount: parseFloat(data.amount.replace(',', '.')),
+        isPaid: data.isPaid,
+        ...(data.isRecurring && {
+          isRecurring: true,
+          frequency: data.frequency,
+          endDate: data.endDate ? toCalendarDateString(data.endDate) : undefined,
+        }),
       };
-      
-      await mutateAsync(payload as Transaction);
-      // queryClient.invalidateQueries({queryKey: ['periods', selectedPlanning?.id]});
-      queryClient.invalidateQueries({queryKey: ['planning']});
-      toast.success('Transaction created successfully', {position: "bottom-center", duration: 6000,})
-      setDrawerOpen(false);
-      reset();
 
-    } catch (err) {      
+      await mutateAsync(payload);
+      queryClient.invalidateQueries({ queryKey: ['planning'] });
+      invalidatePeriodsQueries(queryClient, selectedPlanning?.id || '', undefined);
+      if (data.isRecurring) {
+        queryClient.invalidateQueries({ queryKey: ['recurring-configs', selectedPlanning?.id] });
+      }
+      toast.success(
+        data.isRecurring
+          ? t('recurringTransactions.actionsMessages.createSuccess')
+          : t('transactions.actionsMessages.createSuccess', { defaultValue: 'Transaction created successfully' }),
+        { position: "bottom-center", duration: 6000 },
+      );
+      setDrawerOpen(false);
+      reset({
+        ...defaultValues,
+        category: user?.categories?.filter(c => c.type === transactionType)[0] as Category || defaultValues.category,
+      });
+    } catch (err) {
       console.error('Transaction creation error:', err);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      toast.error((error as any)?.response?.data?.message || 'An error occurred while creating the transaction', {position: "bottom-center", duration: 6000})
+      toast.error((error as any)?.response?.data?.message || t('transactions.actionsMessages.createError', { defaultValue: 'An error occurred while creating the transaction' }), { position: "bottom-center", duration: 6000 });
     }
   });
 
   const handleTransactionTypeChange = (type: TransactionType) => {
     setTransactionType(type);
-    setValue('category', user?.categories?.filter(c => c.type === type)[0] as Category || {});
+    setValue('category', user?.categories?.filter(c => c.type === type)[0] as Category || defaultValues.category);
   };
 
-  return { 
-    user, 
+  return {
+    user,
     selectedPlanning,
-    handleSubmit, 
-    register, 
-    errors, 
-    isPending, 
-    control, 
-    transactionType, 
+    handleSubmit,
+    register,
+    errors,
+    isPending,
+    control,
+    transactionType,
     handleTransactionTypeChange,
     drawerOpen,
-    setDrawerOpen
+    setDrawerOpen,
+    isRecurring,
+    setValue,
   };
-
 }
-

@@ -1,10 +1,17 @@
 import { createContext, Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
 import { Transaction } from "../models/Transaction";
 import { PeriodRequestFilters } from "@/services/periodsService";
-import { getRelativeDate } from "../utils/date";
+import {
+  getDefaultTimelineFilters,
+  getInitialTimelineFilters,
+  getStoredTimelineFilters,
+  saveTimelineFilters,
+} from "../utils/timelinePersistence";
+import { usePlanning } from "../hooks/usePlanning";
 
 interface TransactionsContextValue {
   filters: PeriodRequestFilters
+  filtersHydrated: boolean;
   isSelectionMode: boolean;
   selectedTransactionsTotal: number;
   selectedTransactions: Transaction[];
@@ -28,6 +35,7 @@ interface TransactionsContextValue {
 export const TransactionsContext = createContext({} as TransactionsContextValue);
 
 export function TransactionsProvider({ children }: { children: React.ReactNode }) {
+  const { selectedPlanning } = usePlanning();
   const [isSelectionMode, setIsSelectionMode] = useState(false);
   const [selectedTransactions, setSelectedTransactions] = useState<Transaction[]>([]);
   const [selectedTransactionsTotal, setSelectedTransactionsTotal] = useState(0);
@@ -37,12 +45,25 @@ export function TransactionsProvider({ children }: { children: React.ReactNode }
   const [isFilterTransactionsDialogOpen, setIsFilterTransactionsDialogOpen] = useState(false);
   const [activeTransaction, setActiveTransaction] = useState<null | Transaction>(null);
   const [showEmptyPeriods, setShowEmptyPeriods] = useState<boolean>(true);
-  const [filters, setFilters] = useState<PeriodRequestFilters>({
-    sortOrder: 'desc',
-    startDate: getRelativeDate(new Date(), -2, 'month').toISOString(),
-    endDate: getRelativeDate(new Date(), 3, 'month').toISOString()
-  });
-  
+  const [filters, setFilters] = useState<PeriodRequestFilters>(() =>
+    getInitialTimelineFilters(selectedPlanning?.id),
+  );
+  const [filtersHydrated, setFiltersHydrated] = useState(() => !!selectedPlanning?.id);
+
+  useEffect(() => {
+    if (!selectedPlanning?.id) {
+      setFiltersHydrated(false);
+      return;
+    }
+    const stored = getStoredTimelineFilters(selectedPlanning.id);
+    setFilters(stored ?? getDefaultTimelineFilters());
+    setFiltersHydrated(true);
+  }, [selectedPlanning?.id]);
+
+  useEffect(() => {
+    if (!selectedPlanning?.id || !filtersHydrated) return;
+    saveTimelineFilters(selectedPlanning.id, filters);
+  }, [filters, selectedPlanning?.id, filtersHydrated]);
 
   const selectTransaction = (transaction: Transaction) => {
     setSelectedTransactions(prevState => {
@@ -92,6 +113,7 @@ export function TransactionsProvider({ children }: { children: React.ReactNode }
     <TransactionsContext.Provider
       value={{
         filters,
+        filtersHydrated,
         selectedTransactions,
         activeTransaction,
         isSelectionMode,

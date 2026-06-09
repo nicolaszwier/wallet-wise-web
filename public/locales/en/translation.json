@@ -41,7 +41,8 @@
       "feedback": "Feedback",
       "account": "Account",
       "logout": "Log out",
-      "expenseSplitter": "Expense splitter"
+      "expenseSplitter": "Expense splitter",
+      "recurringTransactions": "Recurring transactions"
     }
   },
   "formsValidation": {
@@ -67,7 +68,9 @@
     "amountNumbersOnly": "Amount should contain only numbers",
     "descriptionRequired": "Description is required",
     "descriptionLength": "Description should have less than 100 characters",
-    "categoryRequired": "Please select a category"
+    "categoryRequired": "Please select a category",
+    "frequencyRequired": "Please select a frequency",
+    "endDateAfterStartDate": "End date must be after the start date"
   },
   "signin":{
     "title": "Login to WalletWise",
@@ -140,7 +143,14 @@
    },
    "deleteTransactionDialog": {
     "title": "Delete transaction?",
-    "description": "This action will permanently delete the {{description}} transaction of {{amount}}."
+    "description": "This action will permanently delete the {{description}} transaction of {{amount}}.",
+    "recurringTitle": "Delete recurring transaction?",
+    "recurringDescription": "Choose how to delete {{description}} ({{amount}}).",
+    "optionOccurrenceOnly": "Delete this occurrence only",
+    "optionOccurrenceOnlyHint": "Other future occurrences will remain.",
+    "optionStopSeries": "Stop recurring and delete all future",
+    "optionStopSeriesHint": "Deactivates the recurring rule and removes all future unpaid occurrences.",
+    "stopRecurring": "Stop recurring"
    },
    "filterDialog": {
       "title": "Filter transactions",
@@ -149,6 +159,8 @@
       "sortOrder": "Sort order"
      },
    "actionsMessages": {
+    "createSuccess": "Transaction created successfully",
+    "createError": "An error occurred while creating the transaction. Please try again.",
     "updateSuccess": "Transaction updated successfully",
     "updateError": "An error occurred while updating the transaction. Please try again.",
     "paySuccess": "Transaction paid successfully",
@@ -237,6 +249,43 @@
       "success": "Transaction created successfully",
       "successAll": "{{count}} transactions created successfully",
       "error": "Failed to create transaction. Please try again."
+    }
+  },
+  "recurringTransactions": {
+    "title": "Recurring transactions",
+    "description": "Manage transactions that repeat on a schedule. Future occurrences are generated automatically for the next 3 months.",
+    "emptyState": "No recurring transactions yet. Create one from the Transactions page using the + button and enable the recurring option.",
+    "toolbarTooltip": "Manage recurring transactions",
+    "viewConfig": "View recurring configuration",
+    "frequency": {
+      "weekly": "Weekly",
+      "monthly": "Monthly",
+      "yearly": "Yearly"
+    },
+    "forms": {
+      "isRecurring": "Recurring",
+      "isRecurringHint": "Repeat this transaction on a schedule. Future occurrences will be generated automatically.",
+      "recurrenceSection": "Recurrence",
+      "frequency": "Frequency",
+      "startDate": "Start date",
+      "endDate": "End date",
+      "endDateOptional": "No end date",
+      "clearEndDate": "Clear end date",
+      "dateHint": "Use your usual due date. Past dates in the current period won't generate a duplicate.",
+      "titleEditExpense": "Edit recurring expense",
+      "titleEditIncome": "Edit recurring income",
+      "editWarning": "Updating will regenerate future unpaid transactions based on these settings."
+    },
+    "deleteDialog": {
+      "title": "Delete recurring transaction?",
+      "description": "This will stop {{description}} ({{amount}}) from repeating and remove all future unpaid generated transactions."
+    },
+    "actionsMessages": {
+      "createSuccess": "Recurring transaction created successfully",
+      "updateSuccess": "Recurring transaction updated successfully",
+      "updateError": "An error occurred while updating the recurring transaction. Please try again.",
+      "deleteSuccess": "Recurring transaction deleted successfully",
+      "deleteError": "An error occurred while deleting the recurring transaction. Please try again."
     }
   },
   "a11y": {

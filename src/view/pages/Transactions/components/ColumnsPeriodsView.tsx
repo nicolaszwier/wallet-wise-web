@@ -8,6 +8,7 @@ import { ResponsiveDialog, ResponsiveDialogContent, ResponsiveDialogFooter, Resp
 import { DialogClose, DialogDescription, DialogTitle } from "@/view/components/ui/dialog"
 import { formatCurrency } from "@/app/utils/formatCurrency"
 import { Spinner } from "@/view/components/ui/spinner"
+import { DeleteTransactionDialog } from "./DeleteTransactionDialog"
 import { EditTransactionDialog } from "./EditTransactionDialog"
 
 export function ColumnsPeriodsView() {
@@ -27,6 +28,9 @@ export function ColumnsPeriodsView() {
     handlePayTransaction,
     // handleNextRanges,
     handleDeleteTransaction,
+    deleteScope,
+    setDeleteScope,
+    isRecurringDelete,
     // handlePreviousRanges, 
     loadPeriodByDate,
     handleSelectItem,
@@ -72,27 +76,17 @@ export function ColumnsPeriodsView() {
           </ResponsiveDialogFooter>
         </ResponsiveDialogContent>
       </ResponsiveDialog>
-      <ResponsiveDialog open={isDeleteTransactionDialogOpen} onOpenChange={toggleDeleteTransactionDialog}>
-        <ResponsiveDialogContent>
-          <ResponsiveDialogHeader>
-            <DialogTitle>
-              {t('transactions.deleteTransactionDialog.title')}
-            </DialogTitle>
-            <DialogDescription>
-              {t('transactions.deleteTransactionDialog.description', {description: activeTransaction?.description, amount: formatCurrency(Math.abs(activeTransaction?.amount ?? 0), selectedPlanning?.currency ?? 'BRL', i18n.language)})}
-            </DialogDescription>
-          </ResponsiveDialogHeader>
-          <ResponsiveDialogFooter className="flex flex-col-reverse">
-            <DialogClose asChild>
-              <Button variant="ghost">{t('global.cta.cancel')}</Button>
-            </DialogClose>
-            <Button disabled={isPendingDeleteTransaction} onClick={handleDeleteTransaction}>
-              {isPendingDeleteTransaction && <Spinner />}  
-              {t('global.cta.delete')}
-            </Button>
-          </ResponsiveDialogFooter>
-        </ResponsiveDialogContent>
-      </ResponsiveDialog>
+      <DeleteTransactionDialog
+        isOpen={isDeleteTransactionDialogOpen}
+        onOpenChange={toggleDeleteTransactionDialog}
+        activeTransaction={activeTransaction}
+        selectedPlanning={selectedPlanning}
+        isRecurringDelete={isRecurringDelete}
+        deleteScope={deleteScope}
+        setDeleteScope={setDeleteScope}
+        isPending={isPendingDeleteTransaction}
+        onConfirm={handleDeleteTransaction}
+      />
       <EditTransactionDialog />
       
       <div className="flex-1 min-h-0 w-full relative p-2 pr-8">
@@ -104,7 +98,7 @@ export function ColumnsPeriodsView() {
           <div className="flex gap-2 h-full min-w-max p-4">
             {ranges.map((range, index) => {
               const period = loadPeriodByDate(range.start, range.end)
-              const isVisible = showEmptyPeriods || (period?.transactions ?? []).length > 0 || isLoading
+              const isVisible = showEmptyPeriods || (period?.transactions ?? []).length > 0
               if (!isVisible) return null
 
               return (
