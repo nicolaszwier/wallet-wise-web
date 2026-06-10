@@ -39,8 +39,8 @@ function OptionsList({
           <button
             type="button"
             className={cn(
-              'flex w-full items-center justify-between rounded-md px-3 py-3 text-base text-left hover:bg-accent',
-              value === option.value && 'bg-accent font-medium',
+              'flex w-full items-center justify-between rounded-md px-3 py-3 text-base text-left hover:bg-background-secondary',
+              value === option.value && 'bg-background-secondary font-medium',
             )}
             onClick={() => onSelect(option.value)}
           >

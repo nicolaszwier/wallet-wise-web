@@ -42,7 +42,8 @@
       "account": "Account",
       "logout": "Log out",
       "expenseSplitter": "Expense splitter",
-      "recurringTransactions": "Recurring transactions"
+      "recurringTransactions": "Recurring transactions",
+      "categories": "Categories"
     }
   },
   "formsValidation": {
@@ -294,5 +295,12 @@
     "dueTransaction": "Due transaction",
     "showEmptyPeriods": "Show empty periods",
     "hideEmptyPeriods": "Hide empty periods"
+  },
+  "categories": {
+    "title": "Categories",
+    "description": "Manage custom categories and one-level subcategories.",
+    "newCategory": "New category",
+    "newSubcategory": "New subcategory",
+    "editCategory": "Edit category"
   }
 }

@@ -3,6 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '@/app/hooks/useAuth';
+import { useUserCategories } from '@/app/hooks/useUserCategories';
 import { toast } from 'react-hot-toast';
 import { recurringConfigsService } from '@/services/recurringConfigsService';
 import { RecurringConfig, UpdateRecurringConfigPayload } from '@/app/models/RecurringConfig';
@@ -10,6 +11,7 @@ import { usePlanning } from '@/app/hooks/usePlanning';
 import { TransactionType } from '@/app/models/TransactionType';
 import { RecurrenceFrequency } from '@/app/models/RecurrenceFrequency';
 import { Category } from '@/app/models/Category';
+import { getSelectableCategories } from '@/app/utils/categories';
 import { useTranslation } from 'react-i18next';
 import { calendarDateToLocalDate, toCalendarDateString } from '@/app/utils/date';
 import { invalidatePeriodsQueries } from '@/app/utils/timelinePersistence';
@@ -55,13 +57,14 @@ interface Props {
 
 export function useEditRecurringConfigController({ activeConfig, isOpen, onClose }: Props) {
   const { user } = useAuth();
+  const { categories } = useUserCategories();
   const { selectedPlanning } = usePlanning();
   const { t } = useTranslation();
   const queryClient = useQueryClient();
 
   const transactionType = activeConfig?.type ?? TransactionType.EXPENSE;
 
-  const category = user?.categories?.find((c) => c.id === activeConfig?.categoryId);
+  const category = categories.find((c) => c.id === activeConfig?.categoryId);
 
   const {
     register,
@@ -118,11 +121,12 @@ export function useEditRecurringConfigController({ activeConfig, isOpen, onClose
   });
 
   const handleTransactionTypeChange = (type: TransactionType) => {
-    setValue('category', user?.categories?.filter(c => c.type === type)[0] as Category || { id: '', description: '', userId: '', active: false, type: '', icon: '' });
+    setValue('category', getSelectableCategories(categories, type)[0] as Category || { id: '', description: '', userId: '', active: false, type: '', icon: '' });
   };
 
   return {
     user,
+    categories,
     handleSubmit,
     register,
     errors,

@@ -41,6 +41,7 @@ export function ExportExpensesDialog({ controller, currency }: ExportExpensesDia
     errors,
     isPending,
     categories,
+    allCategories,
     plannings,
     selectedPlanning,
   } = controller;
@@ -126,8 +127,10 @@ export function ExportExpensesDialog({ controller, currency }: ExportExpensesDia
                   render={({ field }) => (
                     <CategoriesCombobox
                       categories={categories}
+                      allCategories={allCategories}
                       value={field.value as Category}
                       onSelect={field.onChange}
+                      transactionType={transactionType}
                     />
                   )}
                 />

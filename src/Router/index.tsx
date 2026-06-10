@@ -11,6 +11,7 @@ import Timeline from '@/view/pages/Transactions';
 import Balances from '@/view/pages/Balances';
 import ExpenseSplitter from '@/view/pages/ExpenseSplitter';
 import RecurringTransactions from '@/view/pages/RecurringTransactions';
+import CategoriesPage from '@/view/pages/Categories';
 
 export function Router() {
   return (
@@ -32,6 +33,7 @@ export function Router() {
             <Route path="/select-planning" element={<SelectPlanning />} />
             <Route path="/account" element={<h1>Account</h1>} />
             <Route path="/support" element={<h1>Support</h1>} />
+            <Route path="/categories" element={<CategoriesPage />} />
             <Route element={<PlanningGuard />}>
               <Route path="/" element={<Dashboard />} />
               <Route path="/timeline" element={<Timeline />} />

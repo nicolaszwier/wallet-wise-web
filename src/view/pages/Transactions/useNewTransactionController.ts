@@ -3,6 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from "react-hook-form";
 import { useAuth } from "@/app/hooks/useAuth";
+import { useUserCategories } from "@/app/hooks/useUserCategories";
 import { toast } from 'react-hot-toast';
 import { transactionsService } from "@/services/transactionsService";
 import { CreateTransactionPayload } from "@/app/models/Transaction";
@@ -10,6 +11,7 @@ import { usePlanning } from "@/app/hooks/usePlanning";
 import { TransactionType } from "@/app/models/TransactionType";
 import { useState } from "react";
 import { Category } from "@/app/models/Category";
+import { getSelectableCategories } from "@/app/utils/categories";
 import { RecurrenceFrequency } from "@/app/models/RecurrenceFrequency";
 import { useTranslation } from "react-i18next";
 import { toCalendarDateString } from "@/app/utils/date";
@@ -75,6 +77,7 @@ const defaultValues: FormData = {
 export function useNewTransactionController() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const { user } = useAuth();
+  const { categories } = useUserCategories();
   const { selectedPlanning } = usePlanning();
   const { t } = useTranslation();
   const [transactionType, setTransactionType] = useState(TransactionType.EXPENSE);
@@ -90,7 +93,7 @@ export function useNewTransactionController() {
     resolver: zodResolver(schema),
     defaultValues: {
       ...defaultValues,
-      category: user?.categories?.[0] || defaultValues.category,
+      category: getSelectableCategories(categories, TransactionType.EXPENSE)[0] || defaultValues.category,
     },
   });
   const queryClient = useQueryClient();
@@ -133,7 +136,7 @@ export function useNewTransactionController() {
       setDrawerOpen(false);
       reset({
         ...defaultValues,
-        category: user?.categories?.filter(c => c.type === transactionType)[0] as Category || defaultValues.category,
+        category: getSelectableCategories(categories, transactionType)[0] || defaultValues.category,
       });
     } catch (err) {
       console.error('Transaction creation error:', err);
@@ -144,11 +147,12 @@ export function useNewTransactionController() {
 
   const handleTransactionTypeChange = (type: TransactionType) => {
     setTransactionType(type);
-    setValue('category', user?.categories?.filter(c => c.type === type)[0] as Category || defaultValues.category);
+    setValue('category', getSelectableCategories(categories, type)[0] as Category || defaultValues.category);
   };
 
   return {
     user,
+    categories,
     selectedPlanning,
     handleSubmit,
     register,

@@ -19,6 +19,7 @@ import {
   LifeBuoy,
   Repeat,
   Send,
+  Tags,
   Users,
 } from "lucide-react"
 import * as React from "react"
@@ -51,15 +52,21 @@ const data = {
       icon: CircleDollarSign,
     },
     {
+      title: "global.menu.monthlyBalances",
+      url: "/balances",
+      icon: ChartPie,
+    },
+    {
       title: "global.menu.recurringTransactions",
       url: "/recurring-transactions",
       icon: Repeat,
     },
     {
-      title: "global.menu.monthlyBalances",
-      url: "/balances",
-      icon: ChartPie,
+      title: "global.menu.categories",
+      url: "/categories",
+      icon: Tags,
     },
+
     {
       title: "global.menu.expenseSplitter",
       url: "/splitter",

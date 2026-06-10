@@ -3,6 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from "react-hook-form";
 import { useAuth } from "@/app/hooks/useAuth";
+import { useUserCategories } from "@/app/hooks/useUserCategories";
 import { toast } from 'react-hot-toast';
 import { transactionsService } from "@/services/transactionsService";
 import { Transaction } from "@/app/models/Transaction";
@@ -44,6 +45,7 @@ type FormData = z.infer<typeof schema>;
 
 export function useEditTransactionController() {
   const { user } = useAuth();
+  const { categories } = useUserCategories();
   const { t } = useTranslation( )
   const {selectedPlanning} = usePlanning();
   const {
@@ -112,7 +114,8 @@ export function useEditTransactionController() {
   });
 
   return { 
-    user, 
+    user,
+    categories,
     selectedPlanning,
     errors, 
     isPending, 
