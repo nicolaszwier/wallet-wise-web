@@ -27,12 +27,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return !!storedAccessToken;
   });
 
-  const { isError, isFetching, isSuccess, data } = useQuery({
+  const { isError, isPending, isSuccess, data } = useQuery({
     queryKey: ['users', 'my-profile'],
     queryFn: () => usersService.myProfile(),
     enabled: signedIn,
     staleTime: Infinity,
   });
+
+  const isInitialLoad = signedIn && isPending;
 
   const signin = useCallback((accessToken: string) => {
     localStorage.setItem(localStorageKeys.ACCESS_TOKEN, accessToken);
@@ -63,11 +65,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }}
     >
 
-      {isFetching && (
+      {isInitialLoad && (
         <LoadingScreen />
       )}
 
-      {!isFetching && children}
+      {!isInitialLoad && children}
     </AuthContext.Provider>
   );
 }

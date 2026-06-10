@@ -18,6 +18,7 @@ import { formatDate } from "@/app/utils/date"
 import { cn } from "@/app/utils/cn"
 import { CategoriesCombobox } from "@/view/components/CategoriesCombobox"
 import { Category } from "@/app/models/Category"
+import { getGroupedCategoriesForPicker } from "@/app/utils/categories"
 import { InputCurrency } from "@/view/components/InputCurrency"
 import { ResponsiveDialog, ResponsiveDialogContent, ResponsiveDialogFooter, ResponsiveDialogHeader } from "@/view/components/ResponsiveDialog"
 import { SelectField } from "@/view/components/SelectField"
@@ -26,7 +27,7 @@ import { RecurrenceFrequency } from "@/app/models/RecurrenceFrequency"
 export function NewTransactionDialog() {
   const { t, i18n } = useTranslation()
   const { 
-    user, 
+    categories,
     handleSubmit, 
     register, 
     isPending, 
@@ -164,9 +165,11 @@ export function NewTransactionDialog() {
                       name="category"
                       render={({ field: { onChange, value } }) => (
                         <CategoriesCombobox 
-                          categories={user?.categories?.filter((category) => category.type === transactionType)} 
+                          categories={getGroupedCategoriesForPicker(categories, transactionType)}
+                          allCategories={categories}
                           onSelect={onChange} 
-                          value={value as Category} 
+                          value={value as Category}
+                          transactionType={transactionType}
                         />
                       )}
                     />

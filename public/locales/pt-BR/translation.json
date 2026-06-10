@@ -42,7 +42,8 @@
       "account": "Minha conta",
       "logout": "Sair",
       "expenseSplitter": "Divisor de despesas",
-      "recurringTransactions": "Transações recorrentes"
+      "recurringTransactions": "Transações recorrentes",
+      "categories": "Categorias"
     }
   },
   "formsValidation": {
@@ -294,5 +295,12 @@
     "dueTransaction": "Transação vencida",
     "showEmptyPeriods": "Mostrar periodos sem transações",
     "hideEmptyPeriods": "Esconder periodos sem transações"
+  },
+  "categories": {
+    "title": "Categorias",
+    "description": "Gerencie categorias personalizadas e subcategorias de um nível.",
+    "newCategory": "Nova categoria",
+    "newSubcategory": "Nova subcategoria",
+    "editCategory": "Editar categoria"
   }
 }

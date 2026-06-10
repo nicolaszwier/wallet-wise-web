@@ -97,7 +97,6 @@ export function NavUser() {
                   {t('global.menu.account')}
                 </DropdownMenuItem>
               </Link>
-              
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem onMouseUp={signout}>

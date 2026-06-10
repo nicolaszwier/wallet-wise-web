@@ -5,9 +5,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
-import { useAuth } from '@/app/hooks/useAuth';
+import { useUserCategories } from '@/app/hooks/useUserCategories';
 import { usePlanning } from '@/app/hooks/usePlanning';
 import { Category } from '@/app/models/Category';
+import { getGroupedCategoriesForPicker } from '@/app/utils/categories';
 import { TransactionType } from '@/app/models/TransactionType';
 import { transactionsService } from '@/services/transactionsService';
 import { planningsService } from '@/services/planningsService';
@@ -47,7 +48,7 @@ export function useExportExpensesController({
   onSettlementExported,
 }: UseExportExpensesControllerProps) {
   const { t } = useTranslation();
-  const { user } = useAuth();
+  const { categories: allCategories } = useUserCategories();
   const { selectedPlanning } = usePlanning();
   const queryClient = useQueryClient();
 
@@ -61,8 +62,7 @@ export function useExportExpensesController({
     enabled: open && !selectedPlanning,
   });
 
-  const categories =
-    user?.categories?.filter((c) => c.type === transactionType) ?? [];
+  const categories = getGroupedCategoriesForPicker(allCategories, transactionType);
 
   const {
     control,
@@ -98,8 +98,7 @@ export function useExportExpensesController({
     (items: ExportItem[], type: TransactionType) => {
       if (items.length === 0) return;
 
-      const typeCategories =
-        user?.categories?.filter((c) => c.type === type) ?? [];
+      const typeCategories = getGroupedCategoriesForPicker(allCategories, type);
 
       setTransactionType(type);
       setItemsToExport(items);
@@ -126,7 +125,7 @@ export function useExportExpensesController({
 
       setOpen(true);
     },
-    [reset, user?.categories, selectedPlanning?.id],
+    [reset, allCategories, selectedPlanning?.id],
   );
 
   const handleSubmit = hookFormSubmit(async (data) => {
@@ -172,6 +171,7 @@ export function useExportExpensesController({
     errors,
     isPending,
     categories,
+    allCategories,
     plannings: plannings ?? [],
     selectedPlanning,
   };

@@ -4,6 +4,7 @@ import { RecurringConfig } from '@/app/models/RecurringConfig';
 import { RecurrenceFrequency } from '@/app/models/RecurrenceFrequency';
 import { TransactionType } from '@/app/models/TransactionType';
 import { Category } from '@/app/models/Category';
+import { getGroupedCategoriesForPicker } from '@/app/utils/categories';
 import { formatCalendarDate } from '@/app/utils/date';
 import { cn } from '@/app/utils/cn';
 import { CategoriesCombobox } from '@/view/components/CategoriesCombobox';
@@ -32,7 +33,7 @@ interface Props {
 export function EditRecurringConfigDialog({ activeConfig, isOpen, onOpenChange }: Props) {
   const { t, i18n } = useTranslation();
   const {
-    user,
+    categories,
     handleSubmit,
     register,
     isPending,
@@ -115,9 +116,11 @@ export function EditRecurringConfigDialog({ activeConfig, isOpen, onOpenChange }
                   name="category"
                   render={({ field: { onChange, value } }) => (
                     <CategoriesCombobox
-                      categories={user?.categories?.filter((c) => c.type === transactionType)}
+                      categories={getGroupedCategoriesForPicker(categories, transactionType)}
+                      allCategories={categories}
                       onSelect={onChange}
                       value={value as Category}
+                      transactionType={transactionType}
                     />
                   )}
                 />

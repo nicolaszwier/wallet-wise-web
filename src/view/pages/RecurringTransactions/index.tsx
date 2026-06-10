@@ -1,4 +1,4 @@
-import { useAuth } from '@/app/hooks/useAuth';
+import { useUserCategories } from '@/app/hooks/useUserCategories';
 import { Skeleton } from '@/view/components/ui/skeleton';
 import { useTranslation } from 'react-i18next';
 import { useRecurringTransactionsController } from './useRecurringTransactionsController';
@@ -8,7 +8,7 @@ import { DeleteRecurringConfigDialog } from './components/DeleteRecurringConfigD
 
 export default function RecurringTransactions() {
   const { t } = useTranslation();
-  const { user } = useAuth();
+  const { categories } = useUserCategories();
   const {
     configs,
     isLoading,
@@ -50,7 +50,7 @@ export default function RecurringTransactions() {
               <RecurringConfigListItem
                 key={config.id}
                 config={config}
-                category={user?.categories?.find((c) => c.id === config.categoryId)}
+                category={categories.find((c) => c.id === config.categoryId)}
                 currency={selectedPlanning?.currency ?? 'BRL'}
                 onEdit={openEditDialog}
                 onDelete={openDeleteDialog}
