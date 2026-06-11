@@ -9,6 +9,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { analytics } from '@/app/analytics/track';
 
 const TOTAL_STEPS = 4;
 
@@ -69,6 +70,7 @@ export function useOnboardingController() {
 
   const skip = useCallback(() => {
     markCompleted();
+    analytics.welcomeCompleted('skipped');
     navigate('/', { replace: true });
   }, [markCompleted, navigate]);
 
@@ -103,6 +105,7 @@ export function useOnboardingController() {
       }
 
       markCompleted();
+      analytics.welcomeCompleted('finished');
       setPendingFirstTransaction();
       navigate('/', { replace: true });
     } catch (error) {

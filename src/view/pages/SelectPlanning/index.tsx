@@ -7,10 +7,18 @@ import { DeletePlanningDialog } from './components/DeletePlanningDialog';
 import { EditPlanningDialog } from './components/EditPlanningDialog';
 import { PlanningListItem } from './components/PlanningListItem';
 import { useSelectPlanningController } from './useSelectPlanningController';
+import { useEffect } from 'react';
+import { analytics } from '@/app/analytics/track';
 
 export default function SelectPlanning() {
   const { t } = useTranslation();
   const controller = useSelectPlanningController();
+
+  useEffect(() => {
+    if (controller.plannings.length === 0) {
+      analytics.emptyStateViewed('select_planning', 'no_plannings');
+    }
+  }, [controller.plannings.length]);
 
   return (
     <div className="flex h-full w-full justify-center px-4 py-6">

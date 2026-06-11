@@ -13,6 +13,7 @@ import {
   getInitialPlanningCurrency,
   resolveNextSelectedPlanning,
 } from './planningManagementUtils';
+import { analytics } from '@/app/analytics/track';
 
 export function useSelectPlanningController() {
   const navigate = useNavigate();
@@ -53,6 +54,7 @@ export function useSelectPlanningController() {
       setCreateOpen(false);
       setCreateName('');
       setCreateCurrency(getInitialPlanningCurrency(i18n.language));
+      analytics.planningCreated();
       toast.success(t('selectPlanning.toasts.created'), { position: 'bottom-center' });
     },
     onError: (error) => {

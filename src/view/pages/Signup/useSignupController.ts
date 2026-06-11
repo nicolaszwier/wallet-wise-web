@@ -6,6 +6,7 @@ import { authService } from "@/services/authService";
 import { useAuth } from "@/app/hooks/useAuth";
 import { toast } from 'react-hot-toast';
 import { SignupParams } from "@/services/authService/signup";
+import { analytics } from "@/app/analytics/track";
 
 const schema = z.object({
    name: z.string()
@@ -56,7 +57,9 @@ export function useSignupController() {
       const { accessToken } = await mutateAsync(data);
 
       signin(accessToken);
-    } catch {      
+      analytics.authSucceeded('signup');
+    } catch {
+      analytics.authFailed('signup');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       toast.error((error as any)?.response?.data.message || 'An error occured while creating your account', {position: "bottom-center"})
     }

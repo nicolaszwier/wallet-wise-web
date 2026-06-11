@@ -16,6 +16,7 @@ import { RecurrenceFrequency } from "@/app/models/RecurrenceFrequency";
 import { useTranslation } from "react-i18next";
 import { toCalendarDateString } from "@/app/utils/date";
 import { invalidatePeriodsQueries } from "@/app/utils/timelinePersistence";
+import { analytics } from "@/app/analytics/track";
 
 const schema = z.object({
   amount: z.string()
@@ -89,7 +90,7 @@ export function useNewTransactionController(options: UseNewTransactionController
   const {
     register,
     handleSubmit: hookFormSubmit,
-    formState: { errors },
+    formState: { errors, isDirty },
     control,
     setValue,
     reset,
@@ -127,6 +128,7 @@ export function useNewTransactionController(options: UseNewTransactionController
       };
 
       await mutateAsync(payload);
+      analytics.transactionCreated();
       queryClient.invalidateQueries({ queryKey: ['planning'] });
       invalidatePeriodsQueries(queryClient, selectedPlanning?.id || '', undefined);
       if (data.isRecurring) {
@@ -163,6 +165,7 @@ export function useNewTransactionController(options: UseNewTransactionController
     handleSubmit,
     register,
     errors,
+    isDirty,
     isPending,
     control,
     transactionType,

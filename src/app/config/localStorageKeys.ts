@@ -7,4 +7,5 @@ export const localStorageKeys = {
   TIMELINE_SCROLL: 'ww:timelineScroll',
   ONBOARDING_COMPLETED: 'ww:onboardingCompleted',
   PENDING_FIRST_TRANSACTION: 'ww:pendingFirstTransaction',
+  ANALYTICS_OPT_OUT: 'ww:analyticsOptOut',
 };

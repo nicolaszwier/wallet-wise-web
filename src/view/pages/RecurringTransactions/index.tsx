@@ -5,6 +5,8 @@ import { useRecurringTransactionsController } from './useRecurringTransactionsCo
 import { RecurringConfigListItem } from './components/RecurringConfigListItem';
 import { EditRecurringConfigDialog } from './components/EditRecurringConfigDialog';
 import { DeleteRecurringConfigDialog } from './components/DeleteRecurringConfigDialog';
+import { useEffect } from 'react';
+import { analytics } from '@/app/analytics/track';
 
 export default function RecurringTransactions() {
   const { t } = useTranslation();
@@ -24,6 +26,12 @@ export default function RecurringTransactions() {
     isPendingDelete,
     setActiveConfig,
   } = useRecurringTransactionsController();
+
+  useEffect(() => {
+    if (!isLoading && configs.length === 0) {
+      analytics.emptyStateViewed('recurring', 'no_recurring_configs');
+    }
+  }, [isLoading, configs.length]);
 
   return (
     <div className="h-full p-2 md:p-4">

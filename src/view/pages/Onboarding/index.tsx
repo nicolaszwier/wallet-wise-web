@@ -11,8 +11,10 @@ import { useTranslation } from 'react-i18next';
 import { PlanningSetupStep } from './components/PlanningSetupStep';
 import { WelcomeStep } from './components/WelcomeStep';
 import { useOnboardingController } from './useOnboardingController';
+import { useRouteAnalytics } from '@/app/analytics/useRouteAnalytics';
 
 export default function Onboarding() {
+  useRouteAnalytics();
   const { t } = useTranslation();
   const {
     step,
