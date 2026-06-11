@@ -23,8 +23,21 @@ import { InputCurrency } from "@/view/components/InputCurrency"
 import { ResponsiveDialog, ResponsiveDialogContent, ResponsiveDialogFooter, ResponsiveDialogHeader } from "@/view/components/ResponsiveDialog"
 import { SelectField } from "@/view/components/SelectField"
 import { RecurrenceFrequency } from "@/app/models/RecurrenceFrequency"
+import { Dispatch, SetStateAction, useCallback } from "react"
 
-export function NewTransactionDialog() {
+interface NewTransactionDialogProps {
+  showTrigger?: boolean;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  onSuccess?: () => void;
+}
+
+export function NewTransactionDialog({
+  showTrigger = true,
+  open,
+  onOpenChange,
+  onSuccess,
+}: NewTransactionDialogProps = {}) {
   const { t, i18n } = useTranslation()
   const { 
     categories,
@@ -39,7 +52,19 @@ export function NewTransactionDialog() {
     setDrawerOpen,
     isRecurring,
     setValue,
-  } = useNewTransactionController()
+  } = useNewTransactionController({ onSuccess })
+
+  const isControlled = open !== undefined;
+  const dialogOpen = isControlled ? open : drawerOpen;
+
+  const handleOpenChange = useCallback<Dispatch<SetStateAction<boolean>>>((value) => {
+    const nextOpen = typeof value === 'function' ? value(dialogOpen) : value;
+    if (isControlled) {
+      onOpenChange?.(nextOpen);
+    } else {
+      setDrawerOpen(nextOpen);
+    }
+  }, [dialogOpen, isControlled, onOpenChange, setDrawerOpen]);
 
   const frequencyOptions = [
     { value: RecurrenceFrequency.WEEKLY, label: t('recurringTransactions.frequency.weekly') },
@@ -49,11 +74,12 @@ export function NewTransactionDialog() {
 
   return (
     <>
-      <Button size="icon-lg" className="border border-border-light shadow-md bg-blue" onClick={() => setDrawerOpen(true)}>
-        <Plus size={30} strokeWidth={3} />
-         {/* {t('transactions.addTransaction')} */}
-      </Button>
-      <ResponsiveDialog open={drawerOpen} onOpenChange={setDrawerOpen}>
+      {showTrigger && (
+        <Button size="icon-lg" className="border border-border-light shadow-md bg-blue" onClick={() => handleOpenChange(true)}>
+          <Plus size={30} strokeWidth={3} />
+        </Button>
+      )}
+      <ResponsiveDialog open={dialogOpen} onOpenChange={handleOpenChange}>
         <ResponsiveDialogContent className="flex justify-center">
           <form className="" onSubmit={handleSubmit}>
             <div className="flex flex-col max-w-[800px] justify-center m-auto w-full">
