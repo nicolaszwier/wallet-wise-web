@@ -150,7 +150,39 @@
   },
   "selectPlanning": {
     "title": "Select planning",
-    "description": "Please select a planning before continue to the application"
+    "description": "Please select a planning before continue to the application",
+    "newPlanning": "New planning",
+    "editPlanning": "Edit",
+    "deletePlanning": "Delete",
+    "helpText": "Plannings are not bank accounts. You can create different plannings for different purposes and add transactions from different bank accounts on the same planning. Consider it a generic budget that gives you an overview of your balance.",
+    "emptyState": "You don't have any plannings yet. Create your first planning to get started.",
+    "actions": {
+      "menu": "Planning actions"
+    },
+    "validation": {
+      "nameRequired": "Planning name should not be empty.",
+      "currencyRequired": "Please select a currency."
+    },
+    "createDialog": {
+      "title": "Add new planning",
+      "description": "Choose a name and the currency you'll be using."
+    },
+    "editDialog": {
+      "title": "Edit planning",
+      "description": "Update the planning name. Currency cannot be changed after creation."
+    },
+    "deleteDialog": {
+      "title": "Delete planning",
+      "description": "Are you sure you want to delete \"{{name}}\"? This action cannot be undone."
+    },
+    "toasts": {
+      "created": "Planning created successfully.",
+      "updated": "Planning updated successfully.",
+      "deleted": "Planning deleted successfully.",
+      "createError": "Error creating planning.",
+      "updateError": "Error updating planning.",
+      "deleteError": "Error deleting planning."
+    }
   },
   "onboarding": {
     "back": "Back",
