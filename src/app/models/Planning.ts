@@ -6,4 +6,5 @@ export interface Planning {
   expectedBalance: number;
   dateOfCreation: string;
   active: boolean;
+  isDefault?: boolean;
 }

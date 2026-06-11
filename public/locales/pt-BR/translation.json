@@ -79,9 +79,64 @@
     "email": "Email",
     "emailPlaceholder": "email@exemplo.com",
     "password": "Senha",
+    "forgotPassword": "Esqueceu sua senha?",
     "doesntHaveAccount": "Ainda não tem uma conta?",
     "signup": "Cadastre-se"
-  }, 
+  },
+  "forgotPassword": {
+    "title": "Esqueceu sua senha?",
+    "description": "Informe seu email e enviaremos um link para redefinir sua senha.",
+    "email": "Email",
+    "emailPlaceholder": "email@exemplo.com",
+    "submit": "Enviar link de redefinição",
+    "backToSignin": "Voltar para o login",
+    "successDescription": "Verifique seu email",
+    "successMessage": "Se existir uma conta com esse email, enviamos um link para redefinir a senha. O link expira em 1 hora.",
+    "error": "Algo deu errado. Tente novamente."
+  },
+  "resetPassword": {
+    "title": "Redefinir sua senha",
+    "description": "Informe sua nova senha abaixo.",
+    "newPassword": "Nova senha",
+    "confirmPassword": "Confirmar senha",
+    "submit": "Redefinir senha",
+    "success": "Senha redefinida com sucesso. Você já pode fazer login.",
+    "error": "Algo deu errado. Tente novamente.",
+    "invalidToken": "Este link de redefinição é inválido ou expirou.",
+    "invalidTokenDescription": "O link de redefinição de senha não é mais válido.",
+    "requestNewLink": "Solicitar um novo link",
+    "backToSignin": "Voltar para o login"
+  },
+  "changePassword": {
+    "title": "Alterar senha",
+    "description": "Atualize a senha da sua conta.",
+    "currentPassword": "Senha atual",
+    "newPassword": "Nova senha",
+    "confirmPassword": "Confirmar nova senha",
+    "submit": "Atualizar senha",
+    "success": "Senha atualizada com sucesso.",
+    "error": "Algo deu errado. Tente novamente."
+  },
+  "account": {
+    "title": "Minha conta",
+    "description": "Gerencie as configurações da sua conta."
+  },
+  "deleteAccount": {
+    "title": "Excluir conta",
+    "description": "Exclua permanentemente sua conta e todos os dados associados. Isso não pode ser desfeito.",
+    "cta": "Excluir conta",
+    "confirmTitle": "Excluir sua conta permanentemente?",
+    "confirmDescription": "Você está prestes a excluir permanentemente sua conta WalletWise. Isso removerá tudo vinculado ao seu perfil.",
+    "warningTitle": "Você perderá acesso a:",
+    "warningPlannings": "Todos os planejamentos e saldos",
+    "warningTransactions": "Todas as transações e regras recorrentes",
+    "warningCategories": "Todas as categorias personalizadas",
+    "warningIrreversible": "Sua conta — isso não pode ser desfeito",
+    "confirmInputLabel": "Digite {{phrase}} para confirmar",
+    "confirmCta": "Excluir conta permanentemente",
+    "success": "Conta excluída com sucesso.",
+    "error": "Algo deu errado. Tente novamente."
+  },
   "signup": {
     "title": "Criar conta em WalletWise",
     "description": "Preencha as informações abaixo para criar a sua conta",
@@ -97,7 +152,40 @@
     "title": "Selecione um planejamento",
     "description": "Por favor selecione um planejamento antes de continuar"
   },
+  "onboarding": {
+    "back": "Voltar",
+    "next": "Próximo",
+    "skip": "Pular por agora",
+    "step1": {
+      "title": "Bem-vindo ao WalletWise!",
+      "description": "O WalletWise ajuda você a acompanhar seu orçamento semanal. Mantenha suas finanças sob controle sabendo exatamente para onde vai seu dinheiro."
+    },
+    "step2": {
+      "title": "Planejamentos",
+      "description": "Um planejamento é um orçamento separado — como finanças pessoais, uma viagem ou um projeto. Planejamentos não estão vinculados a contas bancárias, e você pode ter quantos precisar."
+    },
+    "step3": {
+      "title": "Períodos e transações",
+      "description": "O WalletWise organiza suas finanças em períodos semanais. Adicione transações e os períodos são criados automaticamente, para você sempre saber seu saldo da semana atual."
+    },
+    "step4": {
+      "title": "Quase lá...",
+      "description": "Vamos começar com seu primeiro planejamento. Escolha um nome e a moeda que você vai usar.",
+      "planningName": "Nome do planejamento",
+      "planningNamePlaceholder": "Finanças pessoais",
+      "currency": "Moeda",
+      "searchCurrency": "Buscar moeda...",
+      "nameRequired": "O nome do planejamento é obrigatório",
+      "error": "Não foi possível salvar seu planejamento. Tente novamente.",
+      "start": "Começar a usar o WalletWise"
+    }
+  },
   "dashboard": {
+    "firstTransaction": {
+      "title": "Adicione sua primeira transação",
+      "description": "Registre uma despesa ou receita para começar a acompanhar seu orçamento.",
+      "cta": "Adicionar transação"
+    },
     "pendingTransactionsCard": {
       "title": "Transações pendentes",
       "description": "Transações vencendo essa semana"

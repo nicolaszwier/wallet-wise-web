@@ -5,4 +5,6 @@ export const localStorageKeys = {
   EXPENSE_SPLITTER_SESSIONS: 'ww:expenseSplitterSessions',
   TIMELINE_FILTERS: 'ww:timelineFilters',
   TIMELINE_SCROLL: 'ww:timelineScroll',
+  ONBOARDING_COMPLETED: 'ww:onboardingCompleted',
+  PENDING_FIRST_TRANSACTION: 'ww:pendingFirstTransaction',
 };

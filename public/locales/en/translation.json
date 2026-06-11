@@ -79,8 +79,63 @@
     "email": "Email",
     "emailPlaceholder": "mail@example.com",
     "password": "Password",
+    "forgotPassword": "Forgot your password?",
     "doesntHaveAccount": "Doesn&apos;t have an account?",
     "signup": "Signup"
+  },
+  "forgotPassword": {
+    "title": "Forgot your password?",
+    "description": "Enter your email address and we'll send you a link to reset your password.",
+    "email": "Email",
+    "emailPlaceholder": "mail@example.com",
+    "submit": "Send reset link",
+    "backToSignin": "Back to sign in",
+    "successDescription": "Check your email",
+    "successMessage": "If an account exists for that email, we've sent a password reset link. The link expires in 1 hour.",
+    "error": "Something went wrong. Please try again."
+  },
+  "resetPassword": {
+    "title": "Reset your password",
+    "description": "Enter your new password below.",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm password",
+    "submit": "Reset password",
+    "success": "Password reset successfully. You can now sign in.",
+    "error": "Something went wrong. Please try again.",
+    "invalidToken": "This reset link is invalid or has expired.",
+    "invalidTokenDescription": "The password reset link is no longer valid.",
+    "requestNewLink": "Request a new link",
+    "backToSignin": "Back to sign in"
+  },
+  "changePassword": {
+    "title": "Change password",
+    "description": "Update your account password.",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm new password",
+    "submit": "Update password",
+    "success": "Password updated successfully.",
+    "error": "Something went wrong. Please try again."
+  },
+  "account": {
+    "title": "Account",
+    "description": "Manage your account settings."
+  },
+  "deleteAccount": {
+    "title": "Delete account",
+    "description": "Permanently delete your account and all associated data. This cannot be undone.",
+    "cta": "Delete account",
+    "confirmTitle": "Permanently delete your account?",
+    "confirmDescription": "You are about to permanently delete your WalletWise account. This will remove everything linked to your profile.",
+    "warningTitle": "You will lose access to:",
+    "warningPlannings": "All plannings and balances",
+    "warningTransactions": "All transactions and recurring rules",
+    "warningCategories": "All custom categories",
+    "warningIrreversible": "Your account — this cannot be undone",
+    "confirmInputLabel": "Type {{phrase}} to confirm",
+    "confirmCta": "Permanently delete account",
+    "success": "Account deleted successfully.",
+    "error": "Something went wrong. Please try again."
   },
   "signup": {
     "title": "Signup to WalletWise",
@@ -97,7 +152,40 @@
     "title": "Select planning",
     "description": "Please select a planning before continue to the application"
   },
+  "onboarding": {
+    "back": "Back",
+    "next": "Next",
+    "skip": "Skip for now",
+    "step1": {
+      "title": "Welcome to WalletWise!",
+      "description": "WalletWise helps you track your weekly budget. Stay on top of your finances by knowing exactly where your money goes."
+    },
+    "step2": {
+      "title": "Plannings",
+      "description": "A planning is a separate budget — like personal finances, a trip, or a project. Plannings are not linked to bank accounts, and you can have as many as you need."
+    },
+    "step3": {
+      "title": "Periods and transactions",
+      "description": "WalletWise organizes your finances into weekly periods. Add transactions and periods are created automatically, so you always know your balance for the current week."
+    },
+    "step4": {
+      "title": "You're almost done...",
+      "description": "Let's start with your first planning. Choose a name and the currency you'll be using.",
+      "planningName": "Planning name",
+      "planningNamePlaceholder": "Personal finances",
+      "currency": "Currency",
+      "searchCurrency": "Search currency...",
+      "nameRequired": "Planning name is required",
+      "error": "Could not save your planning. Please try again.",
+      "start": "Start using WalletWise"
+    }
+  },
   "dashboard": {
+    "firstTransaction": {
+      "title": "Add your first transaction",
+      "description": "Log an expense or income to start tracking your budget.",
+      "cta": "Add transaction"
+    },
     "pendingTransactionsCard": {
       "title": "Pending transactions",
       "description": "Transactions due this week"

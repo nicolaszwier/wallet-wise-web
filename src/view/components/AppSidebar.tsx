@@ -18,7 +18,6 @@ import {
   LayoutDashboard,
   LifeBuoy,
   Repeat,
-  Send,
   Tags,
   Users,
 } from "lucide-react"
@@ -31,14 +30,14 @@ const data = {
   navSecondary: [
     {
       title: "global.menu.support",
-      url: "/support",
+      url: "https://www.walletwise.cash/contact",
       icon: LifeBuoy,
     },
-    {
-      title: "global.menu.feedback",
-      url: "#",
-      icon: Send,
-    },
+    // {
+    //   title: "global.menu.feedback",
+    //   url: "#",
+    //   icon: Send,
+    // },
   ],
   items: [
     {
@@ -121,11 +120,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarMenu>
               {data.navSecondary.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild size="sm">
-                    <Link to={item.url}>
-                      <item.icon />
-                      <span>{t(item.title)}</span>
-                    </Link>
+                  <SidebarMenuButton asChild size="sm" onClick={() => setOpenMobile(false)}>
+                    {item.url.startsWith('http') ? (
+                      <a href={item.url} target="_blank" rel="noopener noreferrer">
+                        <item.icon />
+                        <span>{t(item.title)}</span>
+                      </a>
+                    ) : (
+                      <Link to={item.url}>
+                        <item.icon />
+                        <span>{t(item.title)}</span>
+                      </Link>
+                    )}
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
