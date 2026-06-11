@@ -74,7 +74,12 @@ const defaultValues: FormData = {
   planningId: '',
 };
 
-export function useNewTransactionController() {
+interface UseNewTransactionControllerOptions {
+  onSuccess?: () => void;
+}
+
+export function useNewTransactionController(options: UseNewTransactionControllerOptions = {}) {
+  const { onSuccess } = options;
   const [drawerOpen, setDrawerOpen] = useState(false);
   const { user } = useAuth();
   const { categories } = useUserCategories();
@@ -133,6 +138,7 @@ export function useNewTransactionController() {
           : t('transactions.actionsMessages.createSuccess', { defaultValue: 'Transaction created successfully' }),
         { position: "bottom-center", duration: 6000 },
       );
+      onSuccess?.();
       setDrawerOpen(false);
       reset({
         ...defaultValues,
