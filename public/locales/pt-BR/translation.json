@@ -150,7 +150,39 @@
   },
   "selectPlanning": {
     "title": "Selecione um planejamento",
-    "description": "Por favor selecione um planejamento antes de continuar"
+    "description": "Por favor selecione um planejamento antes de continuar",
+    "newPlanning": "Novo planejamento",
+    "editPlanning": "Editar",
+    "deletePlanning": "Excluir",
+    "helpText": "Planejamentos não são contas bancárias. Você pode criar diferentes planejamentos para diferentes propósitos e adicionar transações de diferentes contas bancárias no mesmo planejamento. Considere um orçamento genérico que dá uma visão geral do seu saldo.",
+    "emptyState": "Você ainda não tem planejamentos. Crie seu primeiro planejamento para começar.",
+    "actions": {
+      "menu": "Ações do planejamento"
+    },
+    "validation": {
+      "nameRequired": "O nome do planejamento não pode estar vazio.",
+      "currencyRequired": "Por favor selecione uma moeda."
+    },
+    "createDialog": {
+      "title": "Adicionar novo planejamento",
+      "description": "Escolha um nome e a moeda que você vai usar."
+    },
+    "editDialog": {
+      "title": "Editar planejamento",
+      "description": "Atualize o nome do planejamento. A moeda não pode ser alterada após a criação."
+    },
+    "deleteDialog": {
+      "title": "Excluir planejamento",
+      "description": "Tem certeza que deseja excluir \"{{name}}\"? Esta ação não pode ser desfeita."
+    },
+    "toasts": {
+      "created": "Planejamento criado com sucesso.",
+      "updated": "Planejamento atualizado com sucesso.",
+      "deleted": "Planejamento excluído com sucesso.",
+      "createError": "Erro ao criar planejamento.",
+      "updateError": "Erro ao atualizar planejamento.",
+      "deleteError": "Erro ao excluir planejamento."
+    }
   },
   "onboarding": {
     "back": "Voltar",
