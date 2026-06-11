@@ -10,6 +10,7 @@ import { toast } from 'react-hot-toast';
 import { CredentialResponse } from "@react-oauth/google";
 import { useTranslation } from "react-i18next";
 import { startAppleSignIn } from "@/app/utils/appleAuth";
+import { analytics } from "@/app/analytics/track";
 
 const schema = z.object({
   email: z.string()
@@ -55,7 +56,9 @@ export function useSigninController() {
     try {
       const { accessToken } = await mutateAsync(data);
       signin(accessToken);
+      analytics.authSucceeded('email');
     } catch {
+      analytics.authFailed('email');
       toast.error(t('formsValidation.invalidCredentials'), {position: "bottom-center"})
     }
   });
@@ -68,7 +71,9 @@ export function useSigninController() {
       }
       const { accessToken } = await mutateAsyncGoogle({token : response.credential ?? ""})
       signin(accessToken);
+      analytics.authSucceeded('google');
     } catch {
+      analytics.authFailed('google');
       toast.error(t('formsValidation.signinGoogleFailed'), {position: "bottom-center"})
     }
   };
@@ -82,8 +87,11 @@ export function useSigninController() {
         : null;
 
     if (appleError === "popup_closed_by_user") {
+      analytics.actionAbandoned('signin');
       return;
     }
+
+    analytics.authFailed('apple');
 
     let message = t("formsValidation.signinAppleFailed");
 
@@ -121,6 +129,7 @@ export function useSigninController() {
 
     const { accessToken } = await mutateAsyncApple(params);
     signin(accessToken);
+    analytics.authSucceeded('apple');
   };
 
   const handleSignInWithApple = () => {

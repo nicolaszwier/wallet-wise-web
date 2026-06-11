@@ -1,6 +1,8 @@
 import { Button } from '@/view/components/ui/button';
 import { PlusCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useEffect } from 'react';
+import { analytics } from '@/app/analytics/track';
 
 interface FirstTransactionCardProps {
   onAddTransaction: () => void;
@@ -8,6 +10,10 @@ interface FirstTransactionCardProps {
 
 export function FirstTransactionCard({ onAddTransaction }: FirstTransactionCardProps) {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    analytics.emptyStateViewed('dashboard', 'first_transaction_prompt');
+  }, []);
 
   return (
     <div className="rounded-xl border bg-background-tertiary p-6 shadow-sm">

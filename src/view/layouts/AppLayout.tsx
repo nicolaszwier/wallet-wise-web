@@ -13,8 +13,10 @@ import { useTranslation } from 'react-i18next';
 import { ViewTypeSelectorDropdown } from '../pages/Transactions/components/ViewTypeSelectorDropdown';
 import { TransactionsProvider } from '@/app/contexts/TransactionsContext';
 import { TransactionsToolbar } from '../pages/Transactions/components/TransactionsToolbar';
+import { useRouteAnalytics } from '@/app/analytics/useRouteAnalytics';
 
 export function AppLayout() {
+  useRouteAnalytics();
   const { t } = useTranslation()
   const { pathname } = useLocation()
   const { selectedPlanning } = usePlanning()

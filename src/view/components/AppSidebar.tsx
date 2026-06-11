@@ -25,6 +25,8 @@ import * as React from "react"
 import { Link, useLocation } from "react-router-dom"
 import { Logo } from "./Logo"
 import { useTranslation } from "react-i18next"
+import { analytics } from "@/app/analytics/track"
+import { screenNameFromPath } from "@/app/analytics/events"
 
 const data = {
   navSecondary: [
@@ -104,7 +106,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarMenu>
               {data.items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild onClick={() => {setOpenMobile(false)}} isActive={pathname == item.url}>
+                  <SidebarMenuButton asChild onClick={() => {
+                    setOpenMobile(false);
+                    analytics.tabSelected(screenNameFromPath(item.url));
+                  }} isActive={pathname == item.url}>
                     <Link to={item.url}>
                       <item.icon />
                       <span>{t(item.title)}</span>

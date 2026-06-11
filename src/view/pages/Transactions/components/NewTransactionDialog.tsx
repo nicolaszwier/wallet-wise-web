@@ -23,7 +23,8 @@ import { InputCurrency } from "@/view/components/InputCurrency"
 import { ResponsiveDialog, ResponsiveDialogContent, ResponsiveDialogFooter, ResponsiveDialogHeader } from "@/view/components/ResponsiveDialog"
 import { SelectField } from "@/view/components/SelectField"
 import { RecurrenceFrequency } from "@/app/models/RecurrenceFrequency"
-import { Dispatch, SetStateAction, useCallback } from "react"
+import { Dispatch, SetStateAction, useCallback, useRef } from "react"
+import { analytics } from "@/app/analytics/track"
 
 interface NewTransactionDialogProps {
   showTrigger?: boolean;
@@ -52,13 +53,23 @@ export function NewTransactionDialog({
     setDrawerOpen,
     isRecurring,
     setValue,
+    isDirty,
   } = useNewTransactionController({ onSuccess })
+
+  const wasDirtyRef = useRef(false)
+  if (isDirty) {
+    wasDirtyRef.current = true
+  }
 
   const isControlled = open !== undefined;
   const dialogOpen = isControlled ? open : drawerOpen;
 
   const handleOpenChange = useCallback<Dispatch<SetStateAction<boolean>>>((value) => {
     const nextOpen = typeof value === 'function' ? value(dialogOpen) : value;
+    if (!nextOpen && wasDirtyRef.current) {
+      analytics.actionAbandoned('new_transaction');
+      wasDirtyRef.current = false;
+    }
     if (isControlled) {
       onOpenChange?.(nextOpen);
     } else {

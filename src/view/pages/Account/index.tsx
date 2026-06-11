@@ -13,9 +13,15 @@ import { useTranslation } from 'react-i18next';
 import { useChangePasswordController } from "./useChangePasswordController"
 import { useDeleteAccountController } from "./useDeleteAccountController"
 import { DeleteAccountDialog } from "./components/DeleteAccountDialog"
+import { Switch } from "@/view/components/ui/switch"
+import { isAnalyticsOptedOut, setAnalyticsOptOut } from "@/app/analytics/telemetryDeck"
+import { useState } from "react"
+
+const PRIVACY_POLICY_URL = "https://walletwise.cash/privacy-policy"
 
 export default function Account() {
   const { t } = useTranslation()
+  const [analyticsEnabled, setAnalyticsEnabled] = useState(() => !isAnalyticsOptedOut())
   const {
     handleSubmit,
     register,
@@ -90,6 +96,34 @@ export default function Account() {
               {t('changePassword.submit')}
             </Button>
           </form>
+        </CardContent>
+      </Card>
+
+      <Card className="bg-background-secondary">
+        <CardHeader>
+          <CardTitle>Privacy</CardTitle>
+          <CardDescription>Manage how WalletWise collects anonymous usage data.</CardDescription>
+        </CardHeader>
+        <CardContent className="grid gap-4">
+          <div className="flex items-center justify-between gap-4">
+            <Label htmlFor="analytics-toggle">Share anonymous usage data</Label>
+            <Switch
+              id="analytics-toggle"
+              checked={analyticsEnabled}
+              onCheckedChange={(checked) => {
+                setAnalyticsEnabled(checked);
+                setAnalyticsOptOut(!checked);
+              }}
+            />
+          </div>
+          <a
+            href={PRIVACY_POLICY_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-primary underline-offset-4 hover:underline"
+          >
+            Privacy Policy
+          </a>
         </CardContent>
       </Card>
 
